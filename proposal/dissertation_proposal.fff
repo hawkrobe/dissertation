@@ -1,0 +1,9 @@
+\begin{figure*}[t!]
+\centering
+\includegraphics[scale=.5]{tangrams_results.pdf}
+\includegraphics[scale=.5]{pos_fig.pdf}
+\caption{}
+\label{fig:tangramsresults}
+\end{figure*}
+\efloatseparator
+ 
