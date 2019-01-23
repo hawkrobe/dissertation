@@ -17,43 +17,11 @@ Any computational theory of flexibility and adaptation in communication must the
 \item \textbf{Generalization:} When we encounter the same partner in a new context, we should expect some `stickiness' from previous learning. Language does not reset at context boundaries. In addition, the lexical model we've learned within a conversation should be largely \emph{partner-specific}. Just because we now expect Partner A to be familiar with a \emph{sclerotic aorta} shouldn't radically change our expectations about Partner B. Over enough interactions with different language users, however, our initial representations should be able to shift to take these data into account. To generalize appropriately, we must be able to correctly attribute whether a usage is idiosyncratic to a particular speaker, or a global convention we should expect to hold across the whole community.
 \end{enumerate}
 
-\subsection{Modeling convention formation as hierarchical Bayesian learning}
-
-We begin by proposing a hierarchical Bayesian model of convention formation \cite{GelmanEtAl14_BDA,TenenbaumKempGriffithsGoodman11_Grow_a_Mind_Science} that provides a useful mathematical and conceptual framework for addressing these challenges. Hierarchical models have been key to explaining how the human mind solves difficult inductive problems in domain like causal learning \cite{KempGoodmanTenenbaum10_LearningToLearn,GoodmanUllmanTenenbaum11_TheoryOfCausality} and concept learning \cite{KempPerforsTenenbaum07_HBM} where abstract, shared properties must be jointly inferred with idiosyncratic particulars of instances. More than the relatively fixed, biological concept of a dog, though, language is a moving target. The only data we use to ground our learning is produced by other agents who are in the same position as we are, and our only goal is to coordinate on the same meanings in context \cite{HassonGhazanfar___Keysers12BrainToBrain}. This is the sense in which the meanings we learn are conventional. This \emph{social grounding} is precisely what gives rise to the fascinating idiosyncracies of local convention formation.
-
-We begin by defining a lexicon as a function $$\mathcal{L}_i: (w, o) \rightarrow [0,1]$$ assigning any word-object pair a real-valued meaning in the unit interval \cite{GrafEtAl16_BasicLevel}\footnote{
-We mostly have nouns (\emph{poodle, animal, John}) and property adjectives (\emph{blue, squiggly, delicious}) in mind here, which can be assigned direct semantic meanings. How tricker cases like relational modifiers (\emph{some, barely, former}) are represented in the mental lexicon and how to build a fully compositional semantics from them is a topic of ongoing work in formal semantics, though see \citeA{Yildirim16_TalkerSpecificityQuantifiers} for a study exploring how these too can adapt in partner-specific ways over repeated interaction.
-}. There are \emph{many} potential ways this function could be represented in the mind at the algorithmic level. It could be derived from a store of exemplars, a set of independent prototypes for each word, a neural network embedding words and objects in a vector space, and so on \cite<see>[for a recent review of candidates]{JonesEtAl15_SemanticMemory}.
-
-Just as our concept of a dog, built up over many individual experiences across a lifetime, provides stable expectations about the properties of a new instance -- four legs, wagging tail, barking noises -- our accumulated lexical knowledge provides stable communicative expectations. 
-This knowledge is represented by a `overhypothesis' or shared lexical representation $\Theta_0$, which parameterizes the prior expectations about any individual partner's lexicon: $P(\mathcal{L}_i | \Theta_0)$. 
-
-For the conceptual purposes of this paper, it is not important exactly what form this distribution takes, or what initial prior over the overhypothesis $P(\Theta_0)$ could in principle guide early language learning
-\footnote{
-For simplicity, we could assume $\Theta_0$ is an $\mathcal{W} \times \mathcal{O} \times 2$ tensor containing values $(\alpha_{(w,o)}, \beta_{(w,o)})$ for every entry $(w,o)$ in the lexicon $\mathcal{L}_i$. This would factor the lexical prior $P(\mathcal{L}_i | \Theta_0)$ into independent Beta distributions over intervals $[0,1]$. It would then be straightforward to place an uninformative prior $P(\Theta_0)$ over that tensor which does not overwhelm the likelihood \cite<see>[p. 110, for some reasonable choices]{GelmanEtAl14_BDA}. More generally, we could allow for arbitrarily complex dependencies between entries of the lexicon by using a Bayesian neural network with weight tensor $\Theta_0$.% that takes word-object pairs $(w,o)$ as input. 
-}. It only matters that this knowledge is hierarchical: we expect all members of our language community to share some commonality in what they mean by things. 
-
-Now that we have defined a hierarchical likelihood on lexical beliefs, we must say how we \emph{learn} partner-specific models. Just as years of living with your beloved Fido reveals properties which deviate from your general dog concept -- patches of hair missing from his legs, an odd squeaking noise he makes when excited -- the language we use to talk with a family member or close collaborator may deviate considerably from the usage predicted by global conventions. In other words, our beliefs about a particular partner's lexicon $\mathcal{L}_i$ are formed by integrating our abstract lexical knowledge $\Theta_0$ with particular  observations $D_i$ of that particular individual:
-$$%\begin{array}{rcl}
-P(\mathcal{L}_i | D_i)  \propto \int_{\Theta_0}P(\mathcal{L}_i | D_i,  \Theta_0) P(\Theta_0 | D_i) 
-%                     & = & \mathbb{E}_{\Theta_0}[P(\mathcal{L}_i | \Theta_0, D_i)] 
-%\end{array}
-$$
-where the posteriors in the integral can be computed using Bayes rule:
-$$
-P(\mathcal{L}_i | D_i, \Theta_0) \propto P(D_i | \mathcal{L}_i, \Theta_0) P(\mathcal{L}_i | \Theta_0)
-$$
-While this holds when we only have observations from a single speaker, note that our posterior beliefs about $\Theta_0$ are in fact informed by observations from \emph{all} speakers: $D = \bigcup_{i=1}^k D_i$. For  adult language users who have observed innumerable uses of language over their lifetimes, the contribution of a new data point to the overhypothesis $P(\Theta_0 | D)$ should be negligible; the contribution to a partner-specific model, however, can be quite strong. 
-
-Finally, to fully specify our model and compute our partner-specific lexical posterior $P(\mathcal{L}_i, D_i, \Theta_0)$, we must link our beliefs about a partner's lexica to their actual behavior with a likelihood function $P(D_i | \mathcal{L}_i, \Theta_0)$. This is naturally supplied by the Rational Speech Act framework \cite{FrankGoodman12_PragmaticReasoningLanguageGames,GoodmanFrank16_RSATiCS,BergenLevyGoodman16_LexicalUncertainty,SmithGoodmanFrank13_RecursivePragmaticReasoningNIPS}: we assume speakers produce utterances that are parsimonious yet informative in context with respect to their lexicon, and listeners interpret utterances by inverting a speaker model. Because we expect our partner to use language rationally given some lexicon, the utterance they choose to refer to some object will be probable under some lexica and highly improbable under others. In this way, a particular agent's language use is a cue to their particular lexicon. We omit mathematical details here due to the conceptual nature of the article, but a full account of the non-hierarchical version of this model can be found in \citeA{HawkinsFrankGoodman17_ConventionFormation}.
-
-In summary, our hierarchical model formalizes the intuition that global conventions are learned and generalized over many extended interactions with many different people across a lifetime, and that this shared semantic prototype is the backbone supporting rapid learning for new partners and situations. 
-
-\subsection{Convention formation in the lab}
+\section{Convention formation in the lab}
 
 \begin{figure*}[t!]
 \centering
-\includegraphics[scale=.5]{task_cropped.pdf}
+\includegraphics[scale=.43]{task_cropped.pdf}
 \caption{Generic setup for repeated reference game task in the lab using stimuli from Wilkes-Gibbs \& Clark (1986); on every round, the speaker refers to each target in some context, and the listener attempts to pick out the intended referent. Both players are free to speak at any time.}
 \label{fig:example}
 \end{figure*}
