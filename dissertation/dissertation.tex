@@ -6,25 +6,27 @@
 
 \usepackage{multirow}
 \usepackage{todonotes}
-%\usepackage{enumerate}
+\usepackage{graphicx}            
 \usepackage{booktabs}
-
+\usepackage{nicefrac}
 
 \begin{document}
 
 % the front matter
 \input{frontmatter/personalize}
 \frontmatter
-\setstretch{\dnormalspacing}
+%\setstretch{\dnormalspacing}
 
-% \doublespacing
+\doublespacing
 
 % include each chapter...
 %\setcounter{chapter}{-1}  % start chapter numbering at 0
 \include{chapters/introduction}
-\include{chapters/chapter2}
-\include{chapters/chapter3}
-\include{chapters/chapter4}
+\include{chapters/modeling}
+\include{chapters/nn_modeling}
+\include{chapters/tangrams}
+\include{chapters/artificial}
+\include{chapters/graphical}
 \include{chapters/conclusion}
 
 \setstretch{\dnormalspacing}
