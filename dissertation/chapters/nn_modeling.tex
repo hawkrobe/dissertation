@@ -1,0 +1,21 @@
+%!TEX root = ../dissertation.tex
+\begin{savequote}[75mm]
+This is some random quote to start off the chapter.
+\qauthor{Firstname lastname}
+\end{savequote}
+
+\chapter{Continuous adaptation for efficient machine communication}
+\graphicspath{{./figures/nn_modeling/}}
+
+Because the $N \times M$ word-object matrix used in previous Objectives cannot straightforwardly generalize to unseen words and objects and quickly becomes intractable as the vocabulary and object set grows, here we will instead take $\Theta$ to be an initialization for the weights of an image-captioning neural network (see Fig. \ref{fig:arch}A).
+We will use an architecture that was introduced several years ago \shortcite{karpathy2015deep, vinyals2015show} and has become widespread in the machine learning literature.
+It combines a pre-trained deep convolutional neural network (CNN) vision backbone like VGG-19 with a recurrent neural network (RNN) language module by feeding high-level CNN features into the initial hidden state of the RNN. 
+While these systems are often trained end-to-end, we will freeze the weights of the vision module and isolate the language module as the site of learning in convention formation (i.e. assume that new conventions are not modifying the agent's perceptual system).
+Because the Rational Speech Act framework used throughout this proposal as a linking function %for discriminative production and interpretaion in context 
+has successfully been implemented on top of such CNN-RNN networks in previous work \shortcite{vedantam_context-aware_2017}, the key implementation bottleneck is not the parameterization or the linking function, but the inference algorithm.
+ %We omit mathematical details here due to the conceptual nature of the article, but a full account of the non-hierarchical version of this model can be found in \citeA{hawkins_convention-formation_2017}.
+
+While it is theoretically possible to place priors on all neural network parameters and use the same inferences techniques as above  \shortcite{joshi_personalizing_2017}, current techniques for inference in Bayesian neural networks rely on optimization of noisy gradients of variational objectives and tend not to work well. 
+We will solve this problem through a novel application of recent formal insights from the Dr. Griffith's lab, which recast inference in hierarchical Bayesian models as stochastic gradient-based optimization of the more tractable model agnostic meta-learning (MAML) loss objective \cite{grant_recasting_2018}.
+Finally, because maintaining full hyper-priors is costly and challenging for inference, we will assume agents only represent an \emph{empirical Bayes} point estimate of $\Theta$ \cite{gelman_bayesian_2014}.
+
