@@ -1,18 +1,26 @@
 %!TEX root = ../dissertation.tex
-\begin{savequote}[75mm]
-This is some random quote to start off the chapter.
-\qauthor{Firstname lastname}
+\begin{savequote}[125mm]
+    The speaker wants to be understood. %, so he intends to speak in such a way that he will be interpreted in a certain way. 
+    In order to judge how he will be interpreted, he uses his [...] starting theory of interpretation. % interpreter’s readiness to interpret along certain lines. %Central to this picture is what the speaker believes is 
+%The speaker does not necessarily speak in such a way as to prompt the interpreter to apply this prior theory; he may deliberately dispose the interpreter to modify his prior theory. But the speaker’s view of the interpreter’s prior theory is not irrelevant to what he says, nor to what he means by his words; it is an important part of what he has to go on if he wants to be understood.
+As speaker and interpreter talk, their ``prior'' theories become more alike; so do their ``passing'' theories. %The asymptote of agreement and understanding is when passing theories coincide. 
+%But the passing theory cannot in general correspond to an interpreter’s linguistic competence. 
+Not only does it have its changing list of proper names and gerrymandered vocabulary, but it includes every successful use of any other word or phrase, no matter how far out of the ordinary. 
+Every deviation from ordinary usage, as long as it is agreed on for the moment (knowingly deviant, or not, on one, or both, sides), is in the passing theory as a feature of what the words mean on that occasion. 
+Such meanings, transient though they may be, are literal.
+\qauthor{\vspace{-2em}Donald Davidson, 1986}
 \end{savequote}
 
-\chapter{An inferential model of convention formation}
+\chapter{An inferential model of convention-formation}
 \graphicspath{{./figures/modeling/}}
 
-Here, we present a probabilistic model of language production under uncertainty, which captures several of the signature properties of conventions shown above. 
-This model belongs to the family of Rational Speech Act (RSA) models, which have been successful in explaining a wide range of linguistic phenomena -- including scalar implicature, adjectival vagueness, overinformativeness, indirect questions, and non-literal language use -- as arising from a process of recursive social reasoning. 
-Most previous applications of RSA have focused on the listener's problem of language comprehension, but the puzzle of conventionalization is primarily a question of speaker production. 
+Here, we present a probabilistic model of language use under uncertainty, which captures several of the signature properties of convention formation introduced in Chapter 1. 
 
 \section{Adapting to a single partner}
-An $n$th order pragmatic speaker trying to convey a particular state of affairs $s \in \mathcal{S}$ assuming lexicon $\mathcal{L}$ is assumed to select an utterance $u \in \mathcal{U}$ by trading off its expected informativity (with respect to a rational listener agent) against its cost, usually based on length \cite{GoodmanFrank16_RSATiCS}:
+This model belongs to the family of Rational Speech Act (RSA) models, which have been successful in explaining a wide range of linguistic phenomena -- including scalar implicature, adjectival vagueness, overinformativeness, indirect questions, and non-literal language use -- as arising from a process of recursive social reasoning. 
+%Most previous applications of RSA have focused on the listener's problem of language comprehension, but the puzzle of conventionalization is primarily a puzzle of speaker production. 
+
+In this framework, an $n$th order pragmatic speaker trying to convey a particular state of affairs $s \in \mathcal{S}$ assuming lexicon $\mathcal{L}$ is assumed to select an utterance $u \in \mathcal{U}$ by trading off its expected informativity (with respect to a rational listener agent) against its cost, usually based on length \cite{GoodmanFrank16_RSATiCS}:
 $$S_n(u | s, \mathcal{L}) \propto \exp{\left(\alpha \log L_{n-1}(s | u, \mathcal{L}) - \textrm{cost}(u)\right)}$$
 where $\alpha$ is a soft-max optimality parameter controlling the extent to which the speaker maximizes over listener informativity. The listener, in turn, inverts the speaker model to reason about what underlying state $s$ the speaker is trying to convey, given their utterance $u$:
 $$L_n(s | u, \mathcal{L}) \propto P(s) S_{n}(u | s, \mathcal{L})$$
@@ -30,14 +38,22 @@ The speaker, in turn, considers what utterances would be most informative for su
 $$S_n(u | s, d) \propto \exp( \alpha\log\left(\sum_{\mathcal{L}} P_{S_n}(\mathcal{L} | d) L_{n-1}(s | u, \mathcal{L})\right) - \textrm{cost}(u) )$$
 where the posterior over lexica $P_{S_n}(\mathcal{L} | d)$, uses the listener likelihood $L_{n-1}$. For the purposes of this paper, we fix the depth of recursion at $n = 2$.
 This model is implemented in the probabilistic programming language WebPPL \cite{GoodmanStuhlmuller14_DIPPL}. \footnote{All results can be reproduced running our code in the browser at \url{http://forestdb.org/models/conventions.html}}. 
+
+\subsection{Model Results}
+
+\begin{figure}
+\centering
+    \includegraphics[scale=.8]{modelResults.pdf}
+  \caption{Schematic of model}
+  \label{fig:task1model}
+\end{figure}
+
 Following \cite{SmithGoodmanFrank13_RecursivePragmaticReasoningNIPS}, we begin by showing how a random initial choice is taken to be evidence for a particular lexicon and becomes the base for successful communication even though neither party knows its meaning at the outset.
 Consider an environment with two abstract shapes ($\{s_1, s_2\}$), where the speaker must choose between two utterances ($\{u_1, u_2\}$) incurring equal cost. 
 Their prior $P(\mathcal{L})$ over the meaning of each utterance is given by a Beta distribution\footnote{In our implementation, we enumerate over coarse-grained bins; preliminary experiments using variational inference on the full continuous distribution give similar results}, so on the first round both utterances are equally likely to apply to either shape. 
 If the speaker was trying to get their partner to pick $s_1$, then, since each utterance is equally (un)informative, they would randomly sample one (say, $u_1$), and observe the listener's selection of a shape (say, $s_1$). 
 On the next round, the speaker uses the observed pair $\{u_1, s_1\}$ to update their beliefs about their partner's true lexicon, uses these beliefs to generate a new utterance, and so on. 
 To examine expected dynamics over multiple rounds, we forward sample many possible trajectories.
-
-\subsection{Model Results}
 
 We observe several important qualitative effects in our simulations. 
 First, the fact that a knowledgeable listener responds to utterance $u$ with $s$ provides evidence for lexicons in which $u$ is a good fit for $s$, hence the likelihood of the speaker using $u$ to refer to $s$ increases on subsequent rounds (see Fig.\ref{fig:modelResults}A). 
