@@ -1,9 +1,9 @@
 %!TEX root = ../dissertation.tex
 % the abstract
 
-How do we manage to understand each other, given that we are not telepathic? 
-Human languages are a powerful solution; % posed by communication, 
-they provide stable, shared expectations about how the words we say correspond to the beliefs and intentions in our heads.
+How do we manage to understand each other at all, given that we are not telepathic? 
+Human languages are a powerful solution to this challenging coordination problem.
+They provide stable, shared expectations about how the words we say correspond to the beliefs and intentions in our heads.
 %They allow us to quickly convey abstract knowledge, coordinate our behavior, 
 %Extensive research has focused on how 
 %Languages are learned over years of experience and exposure, and change over centuries of cultural transmission, but the site of language use
@@ -13,22 +13,29 @@ However, to handle an ever-changing environment where we constantly face new thi
 %The \emph{flexibility} with which fully fluent adult language users continuously adapt their prior expectations to coordinate on new, parter-specific meanings remains poorly understood. 
 %, explaining the \emph{flexibility} of language use requires further understanding of the continuing coordination challenges faced by adults on even shorter timescales, like the length of a single conversation. 
 My dissertation investigates the cognitive mechanisms that support this balance between stability and flexibility. % in the meanings of words.
-The core of this work is an inferential model of convention formation that explains how prior linguistic expectations are smoothly integrated with \emph{ad hoc}, partner-specific conventions through Bayesian belief updating. % flexible and adaptive language use over the course of a conversation as a consequence of probabilistic learning. 
+%The core of this work is an inferential model of convention formation that explains how prior linguistic expectations are smoothly integrated with \emph{ad hoc}, partner-specific conventions through Bayesian belief updating. % flexible and adaptive language use over the course of a conversation as a consequence of probabilistic learning. 
 %Through observing their partner's usage, agents attempt to infer and adopt their partner's underlying lexicon using global conventions as a prior. When both agents independently adopt such a social learning strategy, they align to one another, coordinating on and implicitly creating shared conventions. 
 %We constantly experience novel entities and events and thoughts and feelings we want to talk about --- complex referents for which we have no strong and real uncertainty about whether a creative, novel compositional utterance will mean to our partner exactly what we intend it to mean. 
 %First, no monolithic system of conventions is appropriate for all communicative purposes, and no two speakers of a language share exactly the same lexicon. A wine critic, a therapist, and a neuroscience researcher all need to communicate at a fine level of detail about wildly different topics within their respective communities, and have coordinated on their own idiosyncratic terminology to do so. Lingo, proper nouns, nicknames, slang, inside jokes, metaphors, and other creative uses of neologisms all operate in a regime of uncertainty where the same word or phrase may \emph{a priori} mean something different (or nothing at all) to different partners. Second, 
 %Briefly, the dissertation will proceed as follows (extended abstracts and figures for each chapter are included below): 
 %\begin{itemize}
-
-Chapter 1 introduces my overarching theoretical view of communication as a multi-task computational challenge: models of communication must explain both the existing expectations that guide a speaker's initial assumptions about what words will or will not be understood by a novel partner and the dynamics of how these expectations change over the course of a conversation. %, and (c) explain the extent to which agents generalize their adjusted expectations to novel partners.% must come into an interaction with prior expectations, fine-tune and lay out the theoretical and empirical landscape that informs my approach.
-Chapter 2 proposes a computational model that formalizes knowledge of linguistic conventions in a probabilistic framework, which I argue satisfies both of these conditions.
-Community-level expectations provide a prior, and dynamics across an interaction is driven by partner-specific lexical learning. 
-I demonstrate in computational simulations that this model qualitatively captures several core phenomena of dyadic interaction.
-In Chapter 3, I examine behavior in a rich, natural-language communication task that exposes many of the interesting properties discussed above. 
-In this task, participants must coordinate with one another on a way of repeatedly referring to novel, difficult-to-describe tangram shapes. 
-By using techniques from natural language processing to examine the (syntactic) structure and (semantic) content of their referring expressions over the course of interaction, we find that pairs coordinate on equally efficient but idiosyncratic solutions to the problem of reference.
-Chapter 4 transitions to an artificial-language reference game paradigm that deliberately removes participants' dependence on global priors to isolate the dynamics of convention formation. 
-These empirical results demonstrate the effect of communicative context on the conventions that form (i.e. how pragmatic considerations shape lexical conventions), and also provides a tractable arena for empirically fitting and testing the computational model from Chapter 2.
-%In Chapter 5, this model is applied to the problem of adaptive communication in human-robot interaction. I describe a computationally efficient algorithm for convention formation in a neural agent and demonstrate that it displays similar patterns of coordination as humans do.
-%Finally, in Chapter 6, I conclude by discussing the broader implications of the approach.
-Taken together, this work supports a theoretical view of linguistic knowledge not as a monolith that must be acquired across development and then fixed for static use afterwards, but as ever-expanding probabilistic expectations supporting rapid, dynamic adaptation during communication.
+\textbf{Chapter 1} introduces my overarching theoretical framework of communication as a meta-learning problem. 
+Computational models of semantic meaning must explain both the speaker's initial expectations about how words will be understood by novel partners \emph{and} the dynamics of how these expectations may shift over the course of a particular conversation. %, and (c) explain the extent to which agents generalize their adjusted expectations to novel partners.% must come into an interaction with prior expectations, fine-tune and lay out the theoretical and empirical landscape that informs my approach. %the broad expectations that guide a speaker's
+\textbf{Chapter 2} proposes a computational model that formalizes the problem of coordinating on meaning as hierarchical probabilistic inference, which I argue satisfies both of these conditions.
+Community-level expectations provide a stable prior, and dynamics within an interaction are driven by partner-specific learning.
+\textbf{Chapter 3} exploits recent connections between this hierarchical Bayesian framework and continual learning in deep neural networks to propose and evaluate a computationally efficient algorithm implementing this same model at scale in an adaptive neural image-captioning agent.
+%I show that this model can successfully interact in real-time as both speaker and listener with human partners in a challenging reference game using unseen image input. %convention formation in a neural agent and demonstrate that it displays similar patterns of coordination as humans do.
+%I demonstrate in computational simulations that this model qualitatively captures several core phenomena of dyadic interaction.
+In \textbf{Chapter 4}, I provide an empirical basis for further model development by quantitatively characterizing convention formation behavior in a new corpus of natural-language communication in the classic Tangrams task. % task that exposes many of the interesting properties discussed above. 
+%In this task, participants must coordinate with one another on ways of repeatedly referring to novel, difficult-to-describe tangram shapes. 
+By using techniques from natural language processing to examine the (syntactic) structure and (semantic) content of referring expressions, we find that pairs coordinate on equally efficient but increasingly idiosyncratic solutions to the problem of reference. % over the course of interaction,
+%We also find that more \emph{distinctive} words on early trials (i.e. words used to describe one object and no others) are more likely to conventionalize.
+\textbf{Chapter 5} uses an artificial-language reference game paradigm to test the hypothesis that communicative context systematically shapes which conventions form.
+%By removing linguistic priors and manipulating the statistics of the environment, we find that pragmatic mechanisms shape the emergence of semantic meaning in a path-dependent manner.
+%,  that \emph{which} transitions to an artificial-language reference game paradigm that deliberately removes participants' dependence on global priors to isolate the dynamics of convention formation. 
+%These empirical results demonstrate .%, and also provides a tractable arena for empirically fitting and testing the computational model from Chapter 2.
+Finally, \textbf{Chapter 6} investigates the generality of the proposed computational mechanisms by examining convention formation in a \emph{graphical} communication task.
+Across a series of experiments, we found that pairs of participants discover increasingly sparse yet effective ways of depicting objects, which are interaction-specific and go beyond what could be explained by task practice or the visual properties of the drawings alone.
+%I conclude in \textbf{Chapter 7}.
+Taken together, this line of work supports the view that linguistic meaning is not a monolith that must be acquired during development and used statically afterwards.
+Rather, meaning is continually negotiated with every partner and supported by ever-expanding prior expectations.
