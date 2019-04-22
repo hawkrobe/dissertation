@@ -10,21 +10,23 @@ POLONIUS: Very like a whale.\\
 \end{savequote}
 
 
-\chapter{Characterizing conventions: the dynamics of structure and content in repeated reference}
+\chapter{Characterizing conventions: the dynamics of structure and content in referring}
 \graphicspath{{./figures/tangrams/}}
 
 Talking with new partners about new referents poses a challenging coordination problem for social agents. 
 The computational approach developed in Chapters 2 and 3 explains key qualitative features of how speakers may solve this problem, and models derived from this approach function reasonably well in repeated reference games with humans. 
 However, further model development depends critically upon a finer-grained characterization of the \emph{quantitative} signatures of semantic adaptation found in human communication. 
 %That is, distinguishing among different models requires  measurements 
-Certain basic descriptive questions remain unanswered, and important theoretical constructs remain poorly operationalized. 
+Certain fundamental descriptive questions remain unanswered, and important theoretical constructs remain poorly operationalized. 
 
 % in this literature. %on repeated reference games has extensively established a number of important qualitative properties of convention formation through careful experimental manipulations (see Chapter 1), but 
-For example, while reduction in utterance length across a repeated reference game has been widely replicated, a precise characterization \emph{what} gets reduced, and \emph{how}, has remained elusive.
+For example, it has been widely observed that utterances reduce in length as common ground is accumulated.
+But a precise characterization \emph{what} gets reduced, and \emph{how}, has remained elusive.
+How systematic is the structure of reduction over time?
 Which sets of words are dropped together and in what sequence?
 What determines whether a particular word is dropped or preserved? 
-Similarly, while theoretical definitions of constructs like arbitrariness or stability have loomed over the theoretical analysis of conventions \cite{Lewis69_Convention}, it has been unclear how exactly to measure the extent to which these properties hold in a repeated reference game and how they may change over the course of interaction. 
-Without addressing these gaps, it is difficult to distinguish among different models.
+Similarly, while theoretical definitions of constructs like arbitrariness or stability have loomed over the theoretical analysis of conventions \cite{Lewis69_Convention}, it has been unclear how exactly to measure the extent to which these properties hold in a particular task and how they may evolve over the course of interaction. 
+Without addressing these gaps in measurement, it is difficult to set criteria to distinguish among different models.
 
 %While a lifetime of learning the conventions of our language community provides a crucial backbone for understanding each other \cite{Lewis69_Convention}, we frequently find ourselves in situations where our existing lexicon falls short.
 %For one, no two speakers share exactly the same lexicon \cite{Davidson86_DerangementOfEpitaphs, Clark98_CommunalLexicons}. 
@@ -32,74 +34,74 @@ Without addressing these gaps, it is difficult to distinguish among different mo
 %At the same time, because we live in a changing environment, we constantly experience novel entities, events, thoughts, and feelings we want to talk about---complex referents for which we have no pre-existing conventions and real uncertainty about whether a novel compositional expression will mean to our partner exactly what we intend it to mean.
 %What do we do when our lexicon isn't sufficient --- when we have to talk about something we've never had to talk about before with a partner we've never met?
 
-%A family of interactive communication experiments called \emph{repeated reference games} have provided a natural and productive paradigm for studying language use in such scenarios. In a seminal study by \cite{KraussWeinheimer64_ReferencePhrases}, pairs of participants played a cooperative language game where they were presented with arrays of ambiguous shapes in randomized orders. 
-In this chapter, we present a large corpus of messages sent in a web-based reference game replicating the classic Tangrams task \cite{XXX}.
-Analyzing such rich natural language data was limited at the time of classic work, but
-has become newly tractable using modern techniques from natural language processing (NLP). 
-%The players were allowed to talk freely; their goal was to find the correspondence between their boards by producing mutually understood descriptions of the shapes. 
-%Critically, as particular shapes reappeared on successive rounds of the game, descriptions were dramatically shortened: a lengthy early description like ``the upside-down martini glass in a wire stand'' became simply ``martini'' by the end. 
-%In other words, these results suggested that speakers addressed the computational challenge of referring to novel objects with a novel partner by initially drawing on many sources of prior information from existing conventions and then \emph{adapting} with their partner based on shared history.
-
-%This signature reduction effect has been replicated under many conditions testing the boundaries of adaptation, manipulating the kinds of objects used as targets, the contexts in which the objects appear, the identity of one's partner across repetitions, the feedback available, and the medium participants use to communicate. (cite, cite, cite). 
-While this canon of qualitative effects has played an influential role in shaping theories of social coordination in communication, particularly in debates over the role of common ground representations, a \emph{quantitative} characterization of precisely what gets reduced, and how, has remained elusive. 
-Yet these details matter for a number of open questions. 
-How systematic is the structure of changes over time?
-To what extent are idiosyncratic\dots
-\todo[inline]{Refine these questions}
-
-Here we present a large corpus of utterances from a web-based 
-
-%Still, we verified that all results reported were robust to these exclusion criteria, and to our data pre-processing steps\todo{check}.
+In this chapter, we examine these questions in a large corpus of referring expressions from a new web-based replication of the classic Tangrams task \cite{ClarkWilkesGibbs86_ReferringCollaborative}.
+The computational techniques necessary to analyze such rich natural language data were limited at the time of prior work, but have become newly tractable given developments in natural language processing (NLP). 
+Our analyses divide into two broad categories roughly corresponding the dynamics of \emph{content} and \emph{structure} of referring expressions across interaction.
+To examine content, we extracted word embeddings (e.g. GloVe vectors) for each message to calculate the similarity of messages within and across pairs. 
+We found that while different pairs coordinate on a wide range of idiosyncratic solutions to the problem of reference, they do so in an increasingly stable and path-dependent manner. 
+Further, words that are more discriminative in the initial context (i.e. that were used for one target more than others) are more likely to persist through the final round. 
+To examine structure, we extracted parts of speech and syntax trees from the text to understand what was reducing and how.
+We found that pairs systematically drop entire modifying phrases at each repetition, leaving only open-class parts of speech (e.g. an adjective and noun) by the final round. 
+These findings provide higher resolution into the quantitative dynamics of convention formation and support the modeling framework introduced in earlier chapters. 
+Based on usage, new meanings are systematically grounded with a partner to support more efficient communication.
 
 \section{Methods}
 
 \begin{figure}
-\includegraphics[scale=.65]{designAndExample.pdf}
-\caption{(A) Screenshots of the `free matching' and `cued' variants of the tangrams task; (B) Visualization of words used to refer to one tangram on the first round compared to the final round. \todo[inline]{Fix text/formatting in screenshots (maybe use schematic instead); think about less corny representation than wordcloud? figure out where to put the wavy guy, maybe add speech bubble to indicate words came from speaker?}}
+\centering
+\includegraphics[scale=.9]{designAndExample.pdf}
+\caption{`Free matching' and `cued' variants of the tangrams task.}
 \label{fig:design}
 \end{figure}
 
 \subsection{Repeated reference experiment}
 
-To collect a large corpus of natural dialogue that supports computational analyses of how pairs coordinate on meaning over time, we faced two primary decisions.
-First, to observe the \emph{dynamics} of conventions over time, we needed participants to repeatedly face a natural language task where  for performance.
-Second, to observe the formative period of linguistic conventions, we required novel, ambiguous stimuli for which participants didn't already have strong initial conventions.
-These challenge were satisfied by a \emph{repeated reference game} design in which participants refer to the same objects across multiple rounds as they build up a shared history of interaction, or ‘common ground,’ with their partner. 
+To collect a large corpus of natural dialogue that allows us to measure how pairs coordinate on meaning over time, we faced two primary decisions.
+First, to observe the formative period of linguistic conventions, we required novel, ambiguous stimuli for which participants didn't already have strong initial conventions.
+Second, to observe the \emph{dynamics} of conventions over time, we needed the same coordination problem to be repeated over time, such that earlier outcomes are relevant for later decisions.
+These criteria are satisfied by a \emph{repeated reference game} design in which participants refer to the same objects across multiple rounds as they build up a shared history of interaction, or common ground, with their partner. 
 
-We developed two variants of the game. 
-A relatively unconstrained \emph{free-matching} version, and a more tightly controlled \emph{cued} version that allows for higher resolution analyses of how references to individual tangrams changed over time (see Fig. \ref{fig:design}). 
-The \emph{free-matching} version was an exploratory sample, but we pre-registered our full pre-processing and analysis pipeline for the \emph{cued} version\footnote{osf.io/XXXXX}, so while we report results for both versions throughout, we privilege the \emph{cued} version as our confirmatory sample.
+We developed two variants of the game: a relatively unconstrained \emph{free-matching} version that more closely replicates the classic in-lab design, and a more tightly controlled \emph{cued} version that allows for higher resolution analyses of how references to individual tangrams changed over time (see Fig. \ref{fig:design}). 
+The \emph{free-matching} version was an exploratory sample, but we pre-registered our full pre-processing and analysis pipeline for the \emph{cued} version\footnote{osf.io/XXXXX}. While we report results for both versions throughout, we privilege the \emph{cued} version as our confirmatory sample.
 
 \subsubsection{Participants}\label{participants}
 
-A total of XXX participants (YYY in the \emph{free-matching} version and ZZZ in the \emph{cued} version) were recruited from Amazon's Mechanical Turk and paired into dyads to play a real-time communication game using the framework in \cite{Hawkins15_RealTimeWebExperiments}. 
+A total of 480 participants (218 in the \emph{free-matching} version and 262 in the \emph{cued} version) were recruited from Amazon's Mechanical Turk and paired into dyads to play a real-time communication game using the framework in \cite{Hawkins15_RealTimeWebExperiments}. 
 
 \subsection{Exclusion criteria}
 
- e implemented an exclusion criterion based on accuracy. 
+After excluding games that terminated before the completion of the experiment due to server error or network disconnection (40 in \emph{free matching} and 33 in \emph{cued}), as well as games where participants reported a native language different from English (2 in \emph{free matching} and 3 in \emph{cued}), we implemented an additional exclusion criterion based on accuracy. 
 % Because the classic work using the repeated reference game paradigm reported near ceiling accuracy for all pairs, and b
-Specifically, we implemented a 66/66 rule, excluding pairs that got got fewer than 66\% tangrams correct (8 of 12) on fewer than 66\% of blocks (4 of 6). 
-While the majority of pairs (X\%) were at ceiling accuracy by the final round, this excluded K pairs who on examination of their text appeared to be guessing or rushing to completion.
-We also excluded games that terminated before the completion of the experiment, and where participants reported a native language different from English, leaving a corpus of X complete games with a total of X utterances.
+We used a 66/66 rule, excluding pairs that got fewer than 66\% of the tangrams correct ($<=8$ of 12) on more than 66\% of blocks ($>=4$ of 6). 
+While the most pairs were near ceiling accuracy by the final round, this rule excluded 11 in \emph{free matching} and 8 in \emph{cued} who appeared to be guessing or rushing to completion. 
+After all exclusions, we were left with a \emph{free matching} corpus containing a total of 8639 messages over 56 complete games and a \emph{cued} corpus containing 10,097 messages over 91 games.
 
 \subsubsection{Stimuli \& Procedure}\label{stimuli}
 
-Throughout the task, participants were shown a \(6 \times 2\) grid containing twelve tangram shapes, reproduced from \cite{clarkReferringCollaborativeProcess1986}.  
-After passing a short quiz about task instructions, participants were randomly assigned the role of either `director' or `matcher' and automatically paired into virtual rooms containing a chat box and grid of stimuli. 
+On every trial, participants were shown a \(6 \times 2\) grid containing twelve tangram shapes, reproduced from \cite{ClarkWilkesGibbs86_ReferringCollaborative}.  
+After passing a short quiz about task instructions, participants were randomly assigned the role of either `director' or `matcher' and automatically paired into virtual rooms containing a chat box and the grid of stimuli. 
 Both participants could freely use the chat box to communicate at any time. 
 
-In the \emph{free-matching} version, our procedure closely followed \cite{clarkReferringCollaborativeProcess1986}. 
+In the \emph{free-matching} version, our procedure closely followed \cite{ClarkWilkesGibbs86_ReferringCollaborative}. 
 The director and matcher began each round with scrambled boards. 
 The director's tangrams were fixed in place, but the matcher's could be clicked and dragged into new positions.
-The players was instructed to communicate through the chat box such that the matcher could  rearrange their shapes to match the order of the director's board.
+The players was instructed to communicate through the chat box such that the matcher could rearrange their shapes to match the order of the director's board.
 When the players were satisfied that their boards matched, the matcher clicked a `submit' button that gave players batched feedback on their score (out of 12) and scrambled the tangrams for the next round. 
 After six rounds, players were redirected to a short exit survey. 
 Cells were labeled with fixed numbers from one to twelve in order to help participants easily refer to locations in the grid (see Fig. \ref{fig:design}).
 
-While this replicated design allows for highly naturalistic interaction, it poses several problems for text-based analyses. First, utterances must contain not only descriptions of the tangrams but also information about the intended location (e.g. '\emph{number 10} is the \dots'). Additionally, because there are no constraints on the sequence, participants can revisit tangrams out of order or mention multiple tangrams in a single message, making it difficult to isolate exactly which utterances referred to which tangrams without extensive hand-annotation. Finally, the design of the `submit' button makes it easy for players to occasionally advance to the next round without referring to all 12 tangrams. 
+While this replicated design allows for highly naturalistic interaction, it poses several problems for text-based analyses. 
+First, utterances must contain not only descriptions of the tangrams but also information about the intended location (e.g. '\emph{number 10} is the \dots'). 
+Additionally, because there were no constraints on the sequence, participants can revisit tangrams out of order or mention multiple tangrams in a single message, making it difficult to isolate exactly which utterances referred to which tangrams without extensive hand-annotation. 
+Finally, the design of the `submit' button made it easy for players to occasionally advance to the next round without referring to all 12 tangrams. 
 
-For the \emph{cued} version, then, we designed a straightforwardly sequential variation on the task where speakers are privately cued to refer to targets one-by-one and feedback is given on each round; this allows us to straightforwardly conduct analyses at the tangram-by-tangram level. On each trial, one of the twelve tangrams was privately highlighted for the director with a box as the \emph{target} (see Fig. \ref{fig:design}A). Instead of clicking and dragging into place, matchers simply clicked the one they believed was the target. They were not allowed to click until after a message is sent by the speaker.  We constructed a sequence of six blocks of twelve trials (for a total of 72 trials), where each tangram appeared once per block.%, and the same tangram was never the target twice in a row. 
-Because targets were cued one at a time, numbers labeling each square in the grid were irrelevant and we removed them. The context of tangrams was scrambled on every trial, and participants were given full, immediate feedback: the director saw which tangram their partner clicked, and the matcher saw the intended tangram.
+For the \emph{cued} version, then, we designed a more straightforwardly sequential variation on the task where speakers are privately cued to refer to targets one-by-one and feedback is given on each round (see Fig. \ref{fig:design}); this allows us to straightforwardly conduct analyses at the tangram-by-tangram level. 
+On each trial, one of the twelve tangrams was privately highlighted for the director as the \emph{target}. 
+Instead of clicking and dragging into place, matchers simply clicked the one they believed was the target. 
+They were not allowed to click until after a message was sent by the speaker.  
+We constructed a sequence of six blocks of twelve trials (for a total of 72 trials), where each tangram appeared once per block.
+Because targets were cued one at a time, numbers labeling each square in the grid were irrelevant and we removed them. 
+The context of tangrams was scrambled on every trial, and participants were given full, immediate feedback: the director saw which tangram their partner clicked, and the matcher saw the intended tangram.
 
 \subsection{Data pre-processing}
 
@@ -117,17 +119,17 @@ We used a three step pre-processing pipeline to prepare our corpus for subsequen
 
 %Still, we verified that all results reported were robust to these exclusion criteria, and to our data pre-processing steps\todo{check}.
 
-\section{Results: How do meanings change over time?}
+\section{Characterizing the dynamics of content}
 
-Our inferential account makes three key predictions about how speakers change the content of their referring expressions over time.
+The inferential account laid out in earlier chapters makes three key predictions about how speakers change the content of their referring expressions over time.
 \emph{First}, due to sources of variability in the population of speakers, we predict that the referring expressions used by different pairs will increasingly diverge to different, idiosyncratic labels.
 In other words, different pairs will find different but equally successful equilibria in the space of possible linguistic conventions.
 \emph{Second}, as speakers learn and gradually strengthen their expectations about how their partner will interpret their referring expressions, the labels used within each pair for each tangram with stabilize.
 In other words, once there is evidence that a particular label is successfully understood, there is little reason to deviate from it.
 \emph{Third}, if participants are also influenced by pragmatic pressures to be informative, the labels that conventionalize should not be a random draw from the initial description. 
-Instead, we predict that more \emph{distinctive} words in the initial label (e.g. words used exclusively to describe one tangram) will be more likely to remain in later descriptions while less distinctive words contained in many initial descriptions are more likely to be dropped.
+Instead, we predict that more \emph{distinctive} words in initially successful labels (e.g. words used exclusively to describe one tangram) will be more likely to remain in later descriptions while less distinctive words shared across many initial descriptions are more likely to be dropped.
 
-\subsection{Conventions diverge across pairs but converge to stable equilibria within pairs}
+\subsection{Conventions diverge across pairs but stabilize within pairs}
 
 We examine the first two predictions using two different signatures of similarity: one based on distances computed between continuous vector embeddings of referring expressions and the other based on properties of the discrete word count distribution.
 
@@ -140,9 +142,11 @@ We examine the first two predictions using two different signatures of similarit
 
 \subsubsection{Semantic embeddings}
 
-Although the idea of using vector space representations of words to measure similarity is an old one \cite{XXX}, recent breakthroughs in machine learning have yielded rapid improvements in these representations \cite{XXX}.
-To examine the dynamics of semantic context in referring expressions across and within games, we extracted the 300-dimensional GloVe vector for each word \cite{} and averaged word vectors to obtain a single vector for each referring expression.
+Although the idea of using vector space representations of words to measure similarity is an old one \cite{osgood1952nature,landauer_solution_1997,bengio_neural_2003}, recent breakthroughs in machine learning have yielded rapid improvements in these representations \cite<e.g>{mikolov2013distributed,pennington2014glove}.
+To examine the dynamics of semantic context in referring expressions across and within games, we extracted the 300-dimensional GloVe vector for each word and averaged word vectors to obtain a single vector for each referring expression\footnote{Variations on such naive averaging methods are surprisingly strong baselines for sentence representations \cite{arora2017asimple}, performing better than supervised LSTM representations or unsupervised skip-thought vectors \cite{KirosEtAl15_SkipThought}}.
 To avoid artifacts from function words, we only included content words (nouns, adjectives, verbs) in this average.
+
+\todo[inline]{TODO: use tfidf weighted average instead...}
 
 In Fig. \ref{fig:tsne}, we visualize the trajectories of each game in a common vector space using dimensional reduction techniques.
 Specifically, we feed the first 50 components recovered by PCA into the t-SNE algorithm, which stochastically embeds the semantic representations of each utterance used to refer to a given tangram in a common 2D vector space. 
@@ -203,12 +207,12 @@ We operationalized conventionalization as the conditional probability of occurri
 A mixed-effects logistic regression of \dots (see Fig. blah).
 
 
-\section{Quantifying the dynamics of structure}\label{results}
+\section{Characterizing the dynamics of structure}\label{results}
 
 \subsection{Dialogue between speaker and listener}\label{listener-feedback}
 
 Before focusing our analysis on the rich dynamics of how \emph{directors} produce referring expressions over time, we first examine the bi-directional dynamics of dialogue exchanges. 
-An influential result from is that conceptual pacts for referring are established \emph{collaboratively} \cite[see also \cite{KraussWeinheimer66_Tangrams, GarrodFayLeeOberlanderMacLeod07_GraphicalSymbolSystems}]{clarkReferringCollaborativeProcess1986}: 
+An influential result from is that conceptual pacts for referring are established \emph{collaboratively} \cite[see also \cite{KraussWeinheimer66_Tangrams, GarrodFayLeeOberlanderMacLeod07_GraphicalSymbolSystems}]{ClarkWilkesGibbs86_ReferringCollaborative}: 
 directors and matchers engage in a bi-directional process where matchers ask follow-up questions, suggest corrections, and acknowledge or verbally confirm their understanding through a backchannel. 
 This theory predicts that (1) listener feedback should be highest on the first round and drop off once meanings are agreed upon, and (2) dyads with more initial listener feedback should reduce to more efficient conventions. 
 Our use of a chat box rather than in-person verbal communication, along with the automatic feedback we provided each round in the \emph{cued} condition, may have diminished the bi-directionality somewhat, but we find correlational evidence of both patterns in our uncollapsed but otherwise cleaned data. 
