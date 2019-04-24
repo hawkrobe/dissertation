@@ -79,7 +79,7 @@
 \RequirePackage{url}
 \RequirePackage{amssymb}
 \RequirePackage{mathspec}
-\setmathsfont(Digits,Latin,Greek)[Numbers={Proportional}]{EB Garamond}
+%\setmathsfont(Digits,Latin,Greek)[Numbers={Proportional}]{EB Garamond}
 \setmathrm{EB Garamond}
 \AtBeginEnvironment{tabular}{\addfontfeature{RawFeature=+tnum}}
 \widowpenalty=300
