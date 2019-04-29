@@ -126,6 +126,7 @@ Instead, we predict that more \emph{distinctive} words in initially successful l
 In other words, different pairs will find different but equally successful equilibria in the space of possible linguistic conventions.
 \emph{Third}, as speakers learn and gradually strengthen their expectations about how their partner will interpret their referring expressions, the labels used within each pair for each tangram with stabilize.
 In other words, once there is evidence that a particular label is successfully understood, there is little reason to deviate from it.
+Because these analyses depend on tangram-level resolution, we only examine the ``cued'' dataset in this section.
 
 \subsection{Initially distinctive words are more likely to conventionalize}
 \label{sec:distinctive}
@@ -156,20 +157,26 @@ It can be shown for our case that \emph{tf-idf} is the maximum likelihood estima
 \begin{figure}[t!]
 \centering
 \includegraphics[scale=.9]{distinctiveness.pdf}
-\caption{Error bars are bootstrapped 95\% CIs.}
+\caption{More distinctive words are more likely to conventionalize. Points represent estimates of the mean probability of conventionalizing across all words with a given distinctiveness value. Size of the point represents the number of points going into mean. Error bars are bootstrapped 95\% CIs.}
 \label{fig:distinct}
 \end{figure}
 
 Given this measure of word distinctiveness at the speaker-by-speaker level, we were interested in the extent to which it accounts for \emph{conventionalization}, the probability that a word in the speaker's initial description is preserved until the end of the game. 
 More than half of the words used to refer to a tangram on the final round (57\%) appeared in the initial utterance. \footnote{The 43\% of final round words that did not exactly match were often synonyms or otherwise semantically related to words used on the first round, e.g. ``foot'' on the first round and ``leg'' on the last. In other cases, the labels used at the end were introduced after the first repetition, e.g. one pair only started using the label ``portrait'' on repetition 3.}
 We thus restricted our attention to this subset of words, coding them with a 1 if they later appeared in the final round and 0 if they did not.
-We then ran a mixed-effects logistic regression including a fixed effect of initial `distinctiveness (\emph{tf-idf}) and maximal random effect structure with intercepts and slopes for each tangram and pair of participants.
-We found a significant positive effect of distinctiveness: words that were used with fewer tangrams on the initial round were more likely to conventionalize, $b = 0.42, z = 5.4$ (see Fig. \ref{fig:distinct}).
+We then ran a mixed-effects logistic regression including a fixed effect of initial distinctiveness (using the transformed \emph{tf-idf} for stability) and maximal random effect structure with intercepts and slopes for each tangram and pair of participants.
+We found a significant positive effect of distinctiveness: words that were used with a larger number of tangrams on the first round were less likely to conventionalize, $b = -0.23, z = -6.1$ (see Fig. \ref{fig:distinct}). 
+Similar results are found using \emph{tf-idf}.
+
+Finally, we conducted a non-parametric permutation test.
+For each speaker and tangram, we \emph{randomly sampled} a word from the initial utterance and computed the mean probability of this word also being used on the final round.
+Repeating this procedure 1000 times yielded a null distribution ranging from 2.5\% to 6.6\%.
+However, if we instead sample from the words with \emph{maximal distinctiveness}, we obtained a distribution ranging from 24\% to 31\%, which is non-overlapping with the null distribution.
+Thus, if we must make a bet on which words will become conventionalized, placing our bet on the most distinctive ones will yield much higher returns.
 
 \subsection{Conventions diverge across pairs and stabilize within pairs}
 
 To jointly examine our other predictions about the dynamics of content, we introduce two different quantitative measures of similarity: one based on distances computed between continuous vector embeddings of referring expressions and the other based on properties of the discrete word count distribution.
-Because these analyses depend on tangram-level resolution, we only examine the ``cued'' dataset in this section.
 
 \paragraph{Measuring convergence and divergence with discrete word distributions}
 
@@ -283,7 +290,7 @@ Pairs often initially mentioned multiple properties (e.g. ``person raising their
 
 \subsubsection{Discussion}
 
-This discrete measure has both advantages and disadvantages compared to the continuous vector space measures above.
+This discrete measure has both advantages and disadvantages compared to the continuous vector space measures.
 A key advantage is that the entropy is not dependent on any particular choice of pre-trained vector embedding. 
 Due to biases in the training corpora, these representations may not capture some of the more idiosyncratic conventions that participants converge on (e.g. ``YMCA'' or ``zig zag'' or ``Frank'' -- short for ``Frankenstein'').
 To the extent we find converging results, the discrete measure may address concerns about the quality of the continuous representation.
