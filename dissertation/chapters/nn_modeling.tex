@@ -7,6 +7,8 @@ This is some random quote to start off the chapter.
 \chapter{Continuous adaptation for efficient machine communication}
 \graphicspath{{./figures/nn_modeling/}}
 
+\section{Introduction}
+
 Linguistic communication depends critically on shared knowledge about the meanings of words \cite{Lewis69_Convention}. 
 However, the real-world demands of communication often require speakers and listeners to go \emph{beyond} dictionary meanings to understand one another \cite{clark_using_1996,stolk2016conceptual}. 
 The social world continually presents new communicative challenges, and agents must continually coordinate on new meanings to meet them. %adapted to the needs of the current interaction.
@@ -17,35 +19,40 @@ After a week of care, however, they may just ask for their ``Vasotec.''
 
 \begin{figure}[t]
 \centering
-\includegraphics[scale=.7]{frontfig.pdf}
+\includegraphics[scale=.6]{frontfig.pdf}
 \caption{Reference game task, listener architecture, and continual learning approach.}
 \vspace{-1em}
 \label{fig:refgame}
 \end{figure}
 This type of flexible language use poses a challenge for models of language in machine learning.
 Approaches based on deep neural networks typically learn a monolithic meaning function during training, with fixed weights during use.
-For an in-home robot to communicate as flexibly and efficiently with patients as a human nurse, it must be equipped with a continual learning mechanism. Such a mechanism would present two specific advantages for machine learning applications.
+For an in-home robot to communicate as flexibly and efficiently with patients as a human nurse, it must be equipped with a continual learning mechanism. Such a mechanism would present two specific advantages for interaction and communication applications.
 First, to the extent that current models have difficulty communicating in a new setting, an adaptive approach can quickly improve performance on the relevant subset of language.
-Second, for hybrid machine-human contexts, an adaptive model enables speakers to communicate more efficiently as they build up common ground, remaining understandable while expending significantly fewer words as humans naturally do \cite{ClarkWilkesGibbs86_ReferringCollaborative}.
+Second, for human-robot contexts, an adaptive model enables speakers to communicate more efficiently as they build up common ground, remaining understandable while expending significantly fewer words as humans naturally do \cite{ClarkWilkesGibbs86_ReferringCollaborative}.
 
 %For example, when a store sells a gadget they call a `slip joint plier,' a speaker of the language can assume it means the same thing as it meant the previous week, and the same thing meant by the store across town.
 %For instance, a car repairman who needs to repeatedly ask her co-woker to pass the 'slip joint plier' may eventually adapt conventions and ask for the 'slip'. Humans are adept listeners and are able to understand adapted conventions, e.g., that both 'slip' and 'slip joint plier' refer to the same object.
 %For example, many open problems in human-computer interaction require repeatedly referring to novel objects or locations or technical concepts, which may be quite costly and error-prone using existing conventions. \dots %\todo[inline]{refine examples}
-In this paper, we introduce a generic approach for transforming neural language models into \emph{adaptive} models that can be deployed in real-time interactions with other agents (Fig.~\ref{fig:refgame}). 
-Our approach is motivated by hierarchical Bayesian approaches to task-specific adaptation and integrates two core components: (i) a loss function combining speaker and listener information  
+In this paper, we introduce a general framework for transforming neural language models into \emph{adaptive} models that can be deployed in real-time interactions with other agents.
+
+%\begin{quote}
+\emph{Our key insight is that through continual interactions with the same partner in a shared context, a listener can adapt and more efficiently communicate with its partner (Fig.~\ref{fig:refgame}).}
+%\end{quote}
+
+We are motivated by hierarchical Bayesian approaches to task-specific adaptation. Our approach integrates two core components: (i) a loss function combining speaker and listener information  
 to understand descriptions of natural images in context, and (ii) a regularization scheme for fine-tuning the weights of this model based on previous interactions with a partner. %, and (iii) a data augmentation strategy to approximate the compositionality of utterances. 
-We show that these components allow for more effective interaction with human partners over repeated interactions.
+We show that these components enable more effective communication with human partners over repeated interactions.
 
 \section{Approach}
 We begin by recasting communication as a multi-task problem for meta-learning. 
 Each context and communicative partner can be regarded as a related but distinct task making its own demands on the agent's language model. 
-To be effective across many such tasks, a communicative agent must both (1) have a good prior representation they can use to understand novel partners, and (2) have a mechanism to rapidly update this representation from a small number of observations.
+To be effective across many such tasks, a communicative agent must both (1) have a good prior representation they can use to understand novel partners and contexts, and (2) have a mechanism to rapidly update this representation from a small number of interactions.
 %The current work begins with a conventionally pre-trained initialization and focuses on developing the latter mechanism.
 
 \subsection{Repeated reference game task}
-As a benchmark for studying this problem, we use the \emph{repeated reference game} task (Fig. \ref{fig:refgame}), which has been widely used in cognitive science to study partner-specific adaptation in communication \cite{KraussWeinheimer64_ReferencePhrases,ClarkWilkesGibbs86_ReferringCollaborative,WilkesGibbsClark92_CoordinatingBeliefs}.
+As a benchmark for studying this problem, we introduce the \emph{repeated reference game} task (Fig. \ref{fig:refgame}), which has been widely used in cognitive science to study partner-specific adaptation in communication \cite{KraussWeinheimer64_ReferencePhrases,ClarkWilkesGibbs86_ReferringCollaborative,WilkesGibbsClark92_CoordinatingBeliefs}.
 This task is a special case of the more general family of reference games, where a speaker agent is given a context of $N$ images (a target object $o$ among $N-1$ distractors) and must produce an utterance $u$ that allows their partner, a listener agent, to identify $o$ with high probability. 
-In a \emph{repeated} reference game, each image in context appears as the target multiple times, allowing us to evaluate how communication about a particular image changes as the speaker and listener build up a shared history. 
+In a \emph{repeated reference game}, each image in context appears as the target multiple times, allowing us to evaluate how communication about a particular image changes as the speaker and listener build up a shared history. 
 
 \subsection{Continual adaptation with Hierarchical Bayes}
 Before formalizing our algorithm as a generic update rule for neural networks, we describe the theoretical Bayesian foundations of our approach.
@@ -89,6 +96,7 @@ Because these views of the data from past interactions $D_{i}$ provide complemen
 
 \subsection{Continual adaptation for neural language models}
 
+
 While the $N \times M$ word-object matrix used as the semantics in Chapter 2 cannot straightforwardly generalize to unseen words and objects. 
 It also quickly becomes intractable as the vocabulary and object set grows, making it untenable for modeling arbitrary natural language.
 Here we will instead take $\Theta$ to be an initialization for the weights of an image-captioning neural network (see Fig. \ref{fig:arch}A).
@@ -101,10 +109,9 @@ Instead, because maintaining full hyper-priors is costly and challenging for inf
 Additionally, we exploit a deep theoretical connection between the hierarchical Bayesian framework presented in the previous section and recent deep learning approaches to multi-task learning \cite{nagabandi_deep_2018,grant_recasting_2018,jerfel_online_2018}. 
 Given a task-general initialization, regularized gradient descent on a particular task is equivalent to conditioning on new data under a Bayesian prior.
 We exploit this connection to propose an online continual learning scheme for a neural listener model that can adapt to a human speaker in a challenging referential communication task.
-% First, using a neural image caption generator, generate a prior utterances $u_i^0 \in U^0_i$ that describe each image $i \in \mathcal{I}$, where $U^0_i$ is the set of utterances at time $t=0$ for image $i$. \\
 
 Concretely, we consider an image-captioning network that combines a convolutional visual encoder (ResNet-152) with an LSTM decoder \cite{vinyals_show_2015}.
-The LSTM takes a 300-dimensional embedding as input for each word in an utterance and then uses a soft-max layer to linearly project back to a distribution over the vocabulary size.
+The LSTM takes a 300-dimensional embedding as input for each word in an utterance and then uses a softmax layer to linearly project back to a distribution over the vocabulary size.
 An adapter replacing the final fully connected layer of the encoder was jointly pre-trained with the decoder on the COCO training captions and then frozen as our task-general initialization $\Theta$.
  % by the weights of an encoder network and a decoder network, $\{\Theta_E, \Theta_D\}$. 
 For each utterance-object data point observed in the current task, we take a small number of gradient steps fine-tuning the decoder's weights to better account for the speaker's usage (see Algorithm \ref{alg:listener_update}).
@@ -116,17 +123,17 @@ We consider several loss terms and techniques to do so.
 	\caption{: Update step for adaptive language model}
     \label{alg:listener_update}
 \begin{algorithmic}
-    \STATE {\textbf{Input}: $\Theta_t$: weights at time $t$}
-    \STATE {\textbf{Output}: $\Theta_{t+1}$: updated weights}
+    \STATE {\textbf{Input}: $\theta_t$: weights at time $t$}
+    \STATE {\textbf{Output}: $\theta_{t+1}$: updated weights}
     \STATE {\textbf{Data}: ($u_t, o_t$): observed utterance and object at time $t$}
     \FOR{step}
         \STATE sample augmented batch of sub-utterances $\textbf{u} \sim \mathcal{P}(u)$
-        \STATE update $\Theta_t \leftarrow \Theta_t + \beta\nabla[P(\bold{u} | o) + P(o | \bold{u})  + \text{reg}(o,u)]$
+        \STATE update $\theta_t \leftarrow \theta_t + \beta\nabla[P(\bold{u} | o) + P(o | \bold{u})  + \text{reg}(o,u)]$
    \ENDFOR
 \end{algorithmic}
 \end{algorithm}
 
-\paragraph{Speaker and listener likelihood} 
+\paragraph{Speaker and listener likelihood.} 
 The primary signal available for adaptation is the (log-) probability of the new data under speaker and listener likelihoods given in Eqns. \ref{eq:speaker}-\ref{eq:listener}.
 Our speaker likelihood serves to make the observed utterance more likely for the target in \emph{isolation}, while our listener likelihood makes it more likely \emph{relative} to other objects in context. %, thus learning to differentiate between objects. 
 The speaker and listener likelihoods can be computed directly from the neural captioning model, where each word is distributed according to a softmax over the LSTM output given the sentence so far.
@@ -153,7 +160,7 @@ The speaker and listener likelihoods can be computed directly from the neural ca
 %%	\label{eq:listener_loss}
 %%\end{equation}
 
-\paragraph{Regularization} 
+\paragraph{Regularization.} 
 We introduce three kinds of regularization terms to approximate the Bayesian prior on task-specific learning.
 First, rather than directly regularizing weights, a \emph{speaker KL regularization} term minimizes the divergence between the captioning model's output probabilities before and after fine-tuning \cite{yu2013kl, galashov_information_2018}. %.
 %This approach has been popular in adaptive speech processing \cite{yu2013kl} and reinforcement learning \cite{galashov_information_2018}.% but has not to our knowledge been used for interpretation.
@@ -182,7 +189,7 @@ The third form of regularization we consider is \emph{local rehearsal}.
 We evaluate our listener likelihood over prior observations $(u,o) \in D_i$ to prevent overfitting to the most recent observation.
 To capture how the likelihood overwhelms the prior with increasing data in Bayesian updating, we anneal the listener regularization and rehearsal over the course of interaction while reverse-annealing the listener likelihood.
 
-\paragraph{Data augmentation} A final component of our algorithm is the introduction of a data augmentation step on the new utterance $u$.
+\paragraph{Data augmentation.} A final component of our algorithm is the introduction of a data augmentation step on the new utterance $u$.
 Ideally, an adaptive agent should learn that sub-components of the observed utterance are compositionally responsible for this meaning.
 %This fine-tuning approach strengthens the association between sub-utterances of an utterance and its respective image. 
 We thus derive a small training dataset $D(u)$ from $u$; 
@@ -194,14 +201,7 @@ for simplicity, we take the (ordered) powerset $D(u) = \mathcal{P}(u)$ of all su
 %With the updated utterance $u^{t+1}_i$ we then repeat steps 3-5. 
 %We are able to create an adaptive speaker that is able to both model and produce shorter, adapted utterances over time. 
 
-\begin{figure*}[t]
-\centering
-\includegraphics[scale=0.67]{combinedResults.pdf}
-\vspace{-1em}
-\caption{Human speakers grow more efficient and accurate as our model adapts. Error bars are bootstrapped 95\% CIs.}
-\vspace{-1em}
-\label{fig:results}
-\end{figure*}
+ %TODO fill listener reg in 
 
 \section{Evaluations}
 
@@ -212,6 +212,16 @@ To construct challenging contexts $\mathcal{C}$, we used our pre-trained visual 
 We extracted feature vectors for each image, partitioned the images into 100 groups using a $k$-means algorithm, sampled one image from each cluster, and took its 3 nearest neighbors in feature space, yielding 100 unique contexts of 4 images each\footnote{Using pre-trained VGG as the encoder gave qualitatively similar contexts.}.
 
 \subsection{Human baselines}
+
+
+\begin{figure*}[t]
+\centering
+\includegraphics[scale=0.7]{combinedResults.pdf}
+%\vspace{-2em}
+\caption{(A) Human speakers grow more efficient and accurate as our model adapts. Curves show regression fits. (B) Speaker KL regularization prevents catastrophic forgetting. Error bars and ribbons are bootstrapped 95\% CIs.}
+\vspace{-1em}
+\label{fig:results}
+\end{figure*}
 
 We first investigated the baseline performance of human speakers and listeners. % in our repeated reference game task.
 We recruited 113 participants from Amazon Mechanical Turk and automatically paired them into an interactive environment with a chatbox.
@@ -242,11 +252,11 @@ Yet our model rapidly improves in accuracy as it coordinates on appropriate mean
 Similarly, while speakers did not simplify their utterances to the same extent as they did with other humans, perhaps due to early feedback about errors, they nonetheless became significantly more efficient over time, $b = -19, t = -5$ (see Fig. \ref{fig:results}A).
 %Before considering the full reference game context, we show that our fine-tuning scheme leads to systematic utterance reduction with a single image in isolation.
 %We took K images from the coco dataset, and for each image, we used a pre-trained image-captioning model \cite{XXX} to sample an initial utterance (average length XX).
-
 \section{Analysis}
 
 %Having shown that the full loss allows our listener agent to achieve more accurate and efficient communication with a human partner
-We now proceed to a series of lesion analyses that allow us to understand the role played by each component of our approach.
+We proceed to a series of lesion analyses that analyze the role played by each component of our approach.
+%We now proceed to a series of lesion analyses that allow us to understand the role played by each component of our approach.
 
 %\begin{figure}
 %\centering
@@ -267,16 +277,23 @@ We now proceed to a series of lesion analyses that allow us to understand the ro
 %\label{fig:losses}
 %\end{figure}
 
+\begin{figure*}[t]
+\centering
+\includegraphics[scale=0.5]{lossLesions.pdf}
+\caption{Lesions reveal the contributions of each loss term. Error bars and ribbons are bootstrapped 95\% CIs.}
+\label{fig:results}
+\end{figure*}
+
 \subsection{Preventing catastrophic forgetting}
 %First, we examine the role played by our regularization terms.
 Fine-tuning repeatedly on a small number of data points presents a clear risk of catastrophic forgetting \cite{robins_catastrophic_1995}, losing our ability to produce utterances for other images. % it had previously been trained on. 
-Our speaker KL regularization (Eqn. \ref{eq:speaker_reg}) was intended to play the same role as a Bayesian prior, preventing catastrophic forgetting by tethering task-specific behavior to the task-general model.
+Our speaker KL regularization (Eqn.~\ref{eq:speaker_reg}) was intended to play the same role as a Bayesian prior, preventing catastrophic forgetting by tethering task-specific behavior to the task-general model.
 To test the effectiveness of this term, we examined the likelihood of different captions before and after adaptation to the human baseline utterances. 
 First, we sampled a random set of images from COCO that were not used in our experiment as \emph{control} images, and used the initialized state of the LSTM to greedily generate a caption for each.
 We also generated initial captions for the \emph{target} objects in context. % used in our evalutions.
 We recorded the likelihood of all of these sampled captions under the model at the beginning and at each step of adaptation until the final round. 
 Finally, we greedily generated an utterance for each target at the end and retrospectively evaluated its likelihood at earlier states.
-These likelihood curves are shown with and without speaker KL regularization in Fig. \ref{fig:results}B.
+These likelihood curves are shown with and without speaker KL regularization in Fig.~\ref{fig:results}B.
 The final caption becomes more likely in both cases; without the KL term, the initial captions for both targets and unrelated controls are (catastrophically) lost.
  
 \subsection{Lesioning loss terms}
@@ -286,11 +303,15 @@ We next simulated our adaptive listener's performance hearing utterances from th
 We found that rehearsal on previous rounds had the largest qualitative benefit, allowing for faster adaptation on early rounds, while data augmentation and the non-rehearsal listener terms provided small boosts later in the game.
 Compared to a non-adapting baseline, however, even a simple loss only containing the speaker likelihood and speaker KL regularization performed better over time---successfully adapting to human language use.
 
-
 \section{Discussion}
 
 Human language use is flexible, continuously adapting to the needs of the current situation. 
-In this paper, we introduced a repeated reference game benchmark for artificial agents, which requires this adaptability. 
-We proposed a continual learning approach that forms context-specific conventions by adapting from general-purpose linguistic knowledge.
-Even when language models based on this general-purpose knowledge perform poorly on challenging tasks, our approach allows human speakers working with adapted variants of such models to become both more accurate and more efficient over time on challenging tasks.
+In this paper, we introduced a challenging repeated reference game benchmark for artificial agents, which requires such adaptability to succeed. 
+We proposed a continual learning approach that forms context-specific conventions by adapting general-purpose semantic knowledge.
+Even when models based on general-purpose knowledge perform poorly, our approach allows human speakers working with adapted variants of such models to become more accurate and more efficient over time.
 %More broadly, recognizing the tasks language is put to is a first step toward a meta-learning approach to learn better initializations.
+
+% Good to have the following format:
+% Summary.
+% Limitations.
+% Future Work.
