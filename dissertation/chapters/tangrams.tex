@@ -134,7 +134,7 @@ Because these analyses depend on tangram-level resolution, we only examine the `
 We begin by investigating \emph{which} content is dropped and which is preserved.
 Which computational principles may allow us to predict whether a particular word in a speaker's initial description of an object will become established as a convention for referring to it on later rounds?
 In previous chapters, we discussed two principles that are particular relevant for this question.
-First, if speakers are attempting to be informative \emph{in this particular context of tangrams} then the Gricean maxim of quality suggests that a good referring expression is one that applies more strongly to the target than to the distractors. 
+First, if speakers are attempting to be informative in a particular context of other tangrams then the Gricean maxim of quality suggests that a good referring expression is one that applies more strongly to the target than to the distractors. 
 Properties that are shared in common across multiple objects are poor candidates for conventions that must distinguish among them.
 Second, the principles of cross-situational meaning adaptation suggest that these informativity considerations will be strengthened through learning.
 The exclusive usage of a word with one tangram and no others should reinforce the specificity of that meaning in the local discourse context, even if the listener may be \emph{a priori} willing to extend it to other targets.
@@ -156,16 +156,16 @@ It can be shown for our case that \emph{tf-idf} is the maximum likelihood estima
 \begin{figure}[t!]
 \centering
 \includegraphics[scale=.9]{distinctiveness.pdf}
-\caption{More distinctive words are more likely to conventionalize. Points represent estimates of the mean probability of conventionalizing across all words with a given distinctiveness value. Size of the point represents the number of points going into mean. Error bars are bootstrapped 95\% CIs.}
+\caption{More distinctive words are more likely to conventionalize. Points represent estimates of the mean probability of conventionalizing across all words with a given distinctiveness value. Size of points represent the number of words at that value. Curve shows regression fit; error bars are bootstrapped 95\% CIs.}
 \label{fig:distinct}
 \end{figure}
 
-Given this measure of word distinctiveness at the speaker-by-speaker level, we were interested in the extent to which it accounts for \emph{conventionalization}, the probability that a word in the speaker's initial description is preserved until the end of the game. 
-More than half of the words used to refer to a tangram on the final round (57\%) appeared in the initial utterance. \footnote{The 43\% of final round words that did not exactly match were often synonyms or otherwise semantically related to words used on the first round, e.g. ``foot'' on the first round and ``leg'' on the last. In other cases, the labels used at the end were introduced after the first repetition, e.g. one pair only started using the label ``portrait'' on repetition 3.}
+Given this simple but principled measure of word distinctiveness at the speaker-by-speaker level -- the number of tangrams it was initially used with -- we were interested in the extent to which it accounts for conventionalization, the probability that a word in the speaker's initial description is preserved until the end of the game. 
+More than half of the words used to refer to a tangram on the final round (57\%) appeared in the initial utterance. \footnote{The 43\% of final round words that did not exactly match were often synonyms or otherwise semantically related to words used on the first round, e.g. ``foot'' on the first round vs. ``leg'' on the last. In other cases, the labels used at the end were introduced after the first repetition, e.g. one pair only started using the conventionalized label ``portrait'' on repetition 3.}
 We thus restricted our attention to this subset of words, coding them with a 1 if they later appeared in the final round and 0 if they did not.
 We then ran a mixed-effects logistic regression including a fixed effect of initial distinctiveness (using the transformed \emph{tf-idf} for stability) and maximal random effect structure with intercepts and slopes for each tangram and pair of participants.
 We found a significant positive effect of distinctiveness: words that were used with a larger number of tangrams on the first round were less likely to conventionalize, $b = -0.23, z = -6.1$ (see Fig. \ref{fig:distinct}). 
-Similar results are found using \emph{tf-idf}.
+Similar results are found using the derived measure of \emph{tf-idf}.
 
 Finally, we conducted a non-parametric permutation test.
 For each speaker and tangram, we \emph{randomly sampled} a word from the initial utterance and computed the mean probability of this word also being used on the final round.
@@ -175,27 +175,38 @@ Thus, if we must make a bet on which words will become conventionalized, placing
 
 \subsection{Conventions diverge across pairs and stabilize within pairs}
 
-To jointly examine our other predictions about the dynamics of content, we introduce two different quantitative measures of similarity: one based on distances computed between continuous vector embeddings of referring expressions and the other based on properties of the discrete word count distribution.
+To jointly examine our other predictions about the dynamics of content, we introduce two different quantitative measures of similarity: one based on properties of the discrete word count distribution and the other based on distances computed between continuous vector embeddings of referring expressions. 
+Because these analyses depend on the identity of word tokens, we applied a lemmatizer to further standardize the input.
+Lemmatization maps multiple morphological variants (e.g. `played,' `playing,' `plays') to the same stem (`play').
+We do not want an observed difference between two pairs to be driven simply by different forms of the same word.
 
 \paragraph{Measuring convergence and divergence with discrete word distributions}
 
-examine the discrete \emph{distribution of words} that each pair uses to refer to each tangram.
+We begin by examining the discrete \emph{distribution of words} that each pair uses to refer to each tangram, excluding standard stop words.
 If a pair of participants converges on stable labels for a tangram, then this stability should manifest in a highly structured distribution over words throughout the game for that pair.
 If different speakers discover diverging conventions, this idiosyncracy should also manifest in differing word distributions.
 We formalize these intuitions by examining the information-theoretic measure of entropy: $$H(W) = \sum_w P(w) \log P(w)$$
 The entropy of the word distribution for a pair is maximized when all words are used equally often and declines as the distribution becomes more structured, i.e.~when the probability mass is more concentrated on a subset of words.
 
-To compare word distributions across games, we use a permutation test methodology.
-By scrambling utterances across games and recomputing the entropy of the scrambled word distribution, we effectively disrupt any distinctive structure within each pair.
+To compare word distributions across games, we use a permutation test methodology\footnote{Note that directly measuring divergence between distributions is possible, but because of their sparsity (i.e. many pairs use disjoint sets of words) this approach is not as informative as the continuous semantic analyses we present in the next section}.
+By scrambling referring expressions for each tangram across games and recomputing the entropy of the scrambled word distribution, we effectively disrupt any distinctive structure within each pair.
 There are two important inferences we can draw from this test.
-First, in a null scenario where different pairs did \emph{not} diverge as predicted and instead every pair coordinated on roughly the same (optimal) convention for each tangram, this permutation operation would have no effect since it would be mixing together 
-Second, in another null scenario where pairs did not converge and instead varied wildly in the words they used on each round, permuting across games would also have no effect since it would simply mix together word distributions that already have high entropy.
-Hence, scrambling should \emph{increase} the average game's entropy only in the case where both predictions hold: each game's idiosyncratic, concentrated distribution of words would be mixed together to form more heterogeneous and therefore high-entropy distributions.
+
+\begin{figure}[t!]
+\centering
+\includegraphics[scale=.9]{permutedDiscrete.pdf}
+\caption{Permuting utterances across pairs increases entropy of word distribution, consistent with internal stability and multiple equilibria. Mean empirical entropy (red) and mean permuted entropy (blue) are shown for each tangram. Error bars are 95\% CIs for bootstrapped empirical entropy and the permuted distribution, respectively.}
+\label{fig:permuted}
+\end{figure}
+
+First, in a null scenario where different pairs did \emph{not} diverge as predicted and instead every pair coordinated on roughly the same (optimal) convention for each tangram, this permutation operation would have no effect since it would be mixing together copies of the same distribution.
+Second, in another null scenario where pairs did not converge and instead varied wildly in the words they used from round to round, then permuting across games would also have no effect since it would simply mix together word distributions that already have high entropy.
+Hence, scrambling should \emph{increase} the average game's entropy only in the case where both predictions hold: each game's idiosyncratic but concentrated distribution of words would be mixed together to form more heterogeneous and therefore high-entropy distributions.
 
 Following this logic, we computed the average within-game entropy for 1000 different permutations of speaker utterances. 
 We permuted utterances within rounds rather than across the entire data set to control for the fact that earlier rounds may generically differ from later rounds. 
-Since this permutation scheme keeps the number of messages per participant constant and simply swaps out the content of those messages, it also controls for the fact that some speakers sent more messages than others. 
-We found that our null distribution lay within the interval $X, Y$, which is significantly higher than the true entropy (averaged across games) of $Z, p < 0.001$.
+Because we are permuting and measuring entropy at the tangram-level, this yields 12 permuted distributions (see Fig. \ref{fig:permuted}).
+We found that the mean empirical entropy lay well outside the null distribution for all twelve tangrams, $p < .001$, consistent with our predictions of internal stability within pairs and multiple equilibria across pairs.
 
 \paragraph{Measuring similarity using vector space embeddings} 
 An alternative way to quantify convergence within and divergence across different pairs is to use a continuous similarity between vector space embeddings of utterances.
