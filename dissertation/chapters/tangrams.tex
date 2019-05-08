@@ -188,17 +188,15 @@ If different speakers discover diverging conventions, this idiosyncracy should a
 We formalize these intuitions by examining the information-theoretic measure of entropy: $$H(W) = \sum_w P(w) \log P(w)$$
 The entropy of the word distribution for a pair is maximized when all words are used equally often and declines as the distribution becomes more structured, i.e.~when the probability mass is more concentrated on a subset of words.
 
-To compare word distributions across games, we use a permutation test methodology\footnote{Note that directly measuring divergence between distributions is possible, but because of their sparsity (i.e. many pairs use disjoint sets of words) this approach is not as informative as the continuous semantic analyses we present in the next section}.
+To compare word distributions across games, we use a permutation test methodology\footnote{Note that directly measuring divergence between distributions is possible, but because of their sparsity (i.e. many pairs use disjoint sets of words) this information is better captured by the continuous semantic analyses we present in the next section}.
 By scrambling referring expressions for each tangram across games and recomputing the entropy of the scrambled word distribution, we effectively disrupt any distinctive structure within each pair.
 There are two important inferences we can draw from this test.
-
 \begin{figure}[t!]
 \centering
 \includegraphics[scale=.9]{permutedDiscrete.pdf}
 \caption{Permuting utterances across pairs increases entropy of word distribution, consistent with internal stability and multiple equilibria. Mean empirical entropy (red) and mean permuted entropy (blue) are shown for each tangram. Error bars are 95\% CIs for bootstrapped empirical entropy and the permuted distribution, respectively.}
 \label{fig:permuted}
 \end{figure}
-
 First, in a null scenario where different pairs did \emph{not} diverge as predicted and instead every pair coordinated on roughly the same (optimal) convention for each tangram, this permutation operation would have no effect since it would be mixing together copies of the same distribution.
 Second, in another null scenario where pairs did not converge and instead varied wildly in the words they used from round to round, then permuting across games would also have no effect since it would simply mix together word distributions that already have high entropy.
 Hence, scrambling should \emph{increase} the average game's entropy only in the case where both predictions hold: each game's idiosyncratic but concentrated distribution of words would be mixed together to form more heterogeneous and therefore high-entropy distributions.
@@ -209,7 +207,7 @@ Because we are permuting and measuring entropy at the tangram-level, this yields
 We found that the mean empirical entropy lay well outside the null distribution for all twelve tangrams, $p < .001$, consistent with our predictions of internal stability within pairs and multiple equilibria across pairs.
 
 \paragraph{Measuring similarity using vector space embeddings} 
-An alternative way to quantify convergence within and divergence across different pairs is to use a continuous similarity between vector space embeddings of utterances.
+A more direct way to quantify convergence within and divergence across different pairs is to use a continuous similarity between vector space embeddings of utterances.
 Although the idea of using dense vector space representations of words to measure similarity is an old one \cite{osgood1952nature,landauer_solution_1997,bengio_neural_2003}, recent breakthroughs in machine learning have yielded rapid improvements in these representations \cite<e.g>{mikolov2013distributed,pennington2014glove}.
 To quantify the dynamics of semantic context in referring expressions across and within games, we extracted the 300-dimensional GloVe vector for each word. 
 We then averaged these word vectors to obtain a single sentence vector for each referring expression\footnote{Variations on such naive averaging methods are surprisingly strong baselines for sentence representations \cite{arora2017asimple}, performing better than supervised LSTM representations or unsupervised skip-thought vectors \cite{KirosEtAl15_SkipThought}}.
@@ -251,8 +249,8 @@ This difference is likely a consequence of random utterances from different spea
 %We expect that this is a consequence of random pairs beginning as  the beginning, depressing 
 
 \begin{figure}
-\includegraphics[scale=.5]{similarity_analysis.pdf}
-\caption{Utterances within a pair (A) become more dissimilar from initial utterance and (B) become more similar to successive utterances on later repetitions, but (C) utterances across pairs become steadily more dissimilar.}
+\includegraphics[scale=.52]{similarity_analysis.pdf}
+\caption{Utterances within a pair (A) become more dissimilar from initial utterance and (B) become more similar to successive utterances on later repetitions, but (C) utterances across pairs become steadily more dissimilar. Error bars are bootstrapped 95\% CIs; dotted line represents permuted baseline.}
 \label{fig:similarity}
 \end{figure}
 
