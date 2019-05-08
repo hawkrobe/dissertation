@@ -188,7 +188,7 @@ If different speakers discover diverging conventions, this idiosyncracy should a
 We formalize these intuitions by examining the information-theoretic measure of entropy: $$H(W) = \sum_w P(w) \log P(w)$$
 The entropy of the word distribution for a pair is maximized when all words are used equally often and declines as the distribution becomes more structured, i.e.~when the probability mass is more concentrated on a subset of words.
 
-To compare word distributions across games, we use a permutation test methodology\footnote{Note that directly measuring divergence between distributions is possible, but because of their sparsity (i.e. many pairs use disjoint sets of words) this information is better captured by the continuous semantic analyses we present in the next section}.
+To compare word distributions across games, we use a permutation test methodology.
 By scrambling referring expressions for each tangram across games and recomputing the entropy of the scrambled word distribution, we effectively disrupt any distinctive structure within each pair.
 There are two important inferences we can draw from this test.
 \begin{figure}[t!]
@@ -296,14 +296,6 @@ Pairs often initially mentioned multiple properties (e.g. ``person raising their
 %Second, single pairs generally do not jump widely around the space; most trajectories are `spoke'-like, emitting from the center to near the end-state.
 %This suggests that speakers converge fairly monotonically and consistently to their final utterances. 
 
-\subsubsection{Discussion}
-
-This discrete measure has both advantages and disadvantages compared to the continuous vector space measures.
-A key advantage is that the entropy is not dependent on any particular choice of pre-trained vector embedding. 
-Due to biases in the training corpora, these representations may not capture some of the more idiosyncratic conventions that participants converge on (e.g. ``YMCA'' or ``zig zag'' or ``Frank'' -- short for ``Frankenstein'').
-To the extent we find converging results, the discrete measure may address concerns about the quality of the continuous representation.
-A disadvantage is that the entropy is sensitive to the support of the word distribution --- the vocabulary present in the corpus on a particular round --- and thus does not have a natural scale.
-Additionally, because it is based entirely on the frequency of tokens, it may treat even close synonyms as entirely distinct tokens in the word distribution. 
 
 \section{Results: characterizing the dynamics of structure}\label{results}
 
@@ -380,39 +372,26 @@ convention-formation in a large-scale replication of the tangrams task,
 finding evidence of arbitrariness and stability as well as finer-grained
 reduction of meaningful clauses. 
 
+In this section, we delved into the dynamics of semantic content across repeated reference.
+First we found that pairs of participants systematically tend to conventionalize words that are more distinctive in context. 
+Second, we found that the process of conventionalization leads to stable usage within pairs but multiple equilibria across different pairs as predicted by our model in Chapter 2.
+These two results raise a subtle cognitive question about classic definitional notions of arbitrariness in convention \cite{Lewis69_Convention}, which hold that there must counterfactually exist an alternative solution to the coordination problem for any particular solution to be conventional.
+While the existence of many alternative but equally successful referential conventions clearly suggests some degree of arbitrariness at the population level, our results are consistent with two different cognitive realities \emph{within} games.
+
+One possibility is that this arbitrariness is a product of substantial semantic variability in a population of fairly rigid speakers.
+That is, each speaker may have strong but idiosyncratic initial preferences for how to refer to each tangram and, without strong evidence that their partner cannot understand, will persist with the most distinctive features of these preferences.
+A second possibility is that each speaker in the population maintains similar initial uncertainty over the appropriate way to refer to these unfamiliar objects and samples from roughly the same distribution.
+
+Because our results hinged on our quantification of semantic content, it is worth noting some advantages and disadvantages of discrete measures compared to continuous vector space measures.
+A key advantage of measures based on the word distribution is that the entropy is not dependent on any particular choice of pre-trained vector embedding. 
+Due to biases in the training corpora, vector representations also may not capture some of the more idiosyncratic conventions that participants converge on (e.g. ``YMCA'' or ``zig zag'' or ``Frank'' -- short for ``Frankenstein'').
+To the extent we find converging results, the discrete measure may address concerns about the quality of the continuous representation.
+
+A key disadvantage is that the entropy is sensitive to the support of the word distribution --- the vocabulary present in the corpus on a particular round --- and thus does not have a natural scale.
+While directly measuring divergence between word distributions at different repetitions and between different pairs is technically possible, their sparsity makes this approach not as informative at these finer granularities of analysis.
+Many pairs use entirely disjoint sets of words, and on later rounds, the distribution may only contain one or two words. 
+Further, because it is based entirely on the frequency of tokens, it may treat even close synonyms as entirely distinct tokens in the word distribution. 
+Thus, these two approaches provide complementary evidence for the dynamics of content.
+
 %% Paragraph about opportunities for computational models
 While we have focused on broader theoretical questions, our results also serve as a foundation for high-resolution task-performing computational models of communication seeking to explain the full richness of natural data. To build machines that naturally adapt to their interlocutors in human-robot or human-computer interaction scenarios, we must go behind qualitative efforts.
-
-Theories of convention-formation vary in the extent to which social
-reasoning about common ground is required. Our agents lie on a spectrum
-between the heuristic updating agents of Barr (2004) and the
-sophisticated agents of Clark \& Wilkes-Gibbs (1986), who
-collaboratively build up explicit representations of mutual knowledge.
-Speakers and listeners in our model implicitly coordinate their beliefs
-through a shared history of observations, which serves as ``common
-ground'' in an informal sense. They make critical use of pragmatic,
-social reasoning in order to learn meanings, but do not explicitly
-consider the fact that this history is shared, or represent their
-partner's own uncertainty.
-
-By capturing reduction, which purely heuristic theories have not yet
-demonstrated, we showed that minimal assumptions of social reasoning go
-a long way in accounting for key phenomena. Still, our model falls short
-in some ways. For instance, because we do not provide a mechanisms for
-the listener agent to respond with confirmation, repair, or follow-up
-questions, we cannot make explicit predictions about the reduction in
-\emph{listener messages} (as in Fig. \ref{fig:replication}) or the
-impact of early listener responses on conventionalization. These
-phenomena require our model to deal with planning over extended
-dialogues, and to potentially weaken the assumption that one's partner
-knows the true lexicon with complete certainty. Similarly, while our
-model was explicitly designed with linguistic conventions in mind, it
-remains to be seen whether the same formulation generalizes to broader
-behavioral conventions. For example, the real-time coordination games
-used in Hawkins \& Goldstone (2016) may not require players to reason
-about a structured lexicon with noise, but an action policy
-representation may play a similar role. While there remain many complex
-aspects of convention-formation in communication games left for future
-research, our approach nonetheless serves as a lower bound on the degree
-of social reasoning needed to capture lexical conventions in these
-games.
