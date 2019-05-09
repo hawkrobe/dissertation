@@ -36,7 +36,7 @@ For example, we are often called upon to make fine distinctions between people i
 
 \begin{figure*}[t]
 \begin{center}
-{\includegraphics[scale=.6]{fig.png}}
+{\includegraphics[scale=.55]{fig.png}}
 {\caption{{(A) Example of \emph{fine} context where one of the distractors belongs to the same fine-grained branch of the hierarchy as the target (i.e.\ another striped circle), so any abstract label would be insufficient to disambiguate them. The target is highlighted for the speaker with a black square. (B) Drag-and-drop chat box interface. (C) Hierarchical organization of stimuli.\label{exp}}}}
 \vspace{-2ex}
 \end{center}
@@ -114,22 +114,29 @@ To test this prediction, we counted the number of words in each participant's re
 
 \begin{figure*}[t]
 \begin{center}
-{\includegraphics[scale=0.73]{resultsFig_v1.pdf}}
-\vspace{-2ex}
-{\caption{{Pragmatic demands of context shape the formation of abstractions. (A) Mean number of words participants reported with specific meanings (applying to 1 object) or abstract meanings (applying to 2 objects).
+\includegraphics[scale=0.9]{resultsFig_v1.pdf}
+\caption{Pragmatic demands of context shape the formation of abstractions. Mean number of words participants reported with specific meanings (applying to 1 object) or abstract meanings (applying to 2 objects).}
 %Each participant provided meanings for all sixteen words in their vocabulary box (including selecting no objects if it had no meaning). 
 %In the \emph{coarse} condition, participants reported fewer total words in their vocabulary and more of the words they did have were abstractions applying to more than one object. %Distribution of extension sizes in lexica reported across conditions, including those with no extensions  
 %\todo[inline]{KS: You'll have to explain how a word can have no extensions, but I'd be tempted to not show these in these graphs? Assuming these are uninteresting (?), showing proportion of  1 vs more-than-1 object words would make the result much clearer. Do you have this in to also show the lexicon size difference? Could show that more straightforwardly with a plot of number of words poer condition?} . 
 %Nearly every word reported in the \emph{fine} condition referred to a single object and the \emph{mixed} condition is more similar to the \emph{fine} condition than the \emph{coarse} condition.
-(B) Diversity of terms within reported lexica: many participants in the \emph{coarse} condition reported a mixture of abstract and specific terms.% \todo[inline]{TODO: A/B labels; use \# words instead of \%; change axis labels in B to `'' and ``\# words referring to multiple objects'';}  
-\label{fig:lexiconContent}}}}
+%(B) Diversity of terms within reported lexica: many participants in the \emph{coarse} condition reported a mixture of abstract and specific terms.% \todo[inline]{TODO: A/B labels; use \# words instead of \%; change axis labels in B to `'' and ``\# words referring to multiple objects'';}  
+\label{fig:lexiconContent}
+\end{center}
+\end{figure*}
+
+If participants in the \emph{coarse} condition can get away with fewer words in their lexicon, what are the meanings of the words they do have? We counted the numbers of `specific' terms (e.g.\ words that refer to only one object) and `abstract' terms (e.g.\ words that refer to two objects) in the post-test. We found that the likelihood of lexicalizing abstractions differed systematically across conditions (see Fig.\ \ref{fig:lexiconContent}). Participants in the \emph{fine} condition reported lexica containing exclusively specific terms, while participants in the \emph{coarse} condition reported significantly more abstract terms ($m = 2.5, p < 0.001$). 
+
+\begin{figure*}[t]
+\begin{center}
+\includegraphics[scale=0.73]{results2Dhist.pdf}
+\caption{{Diversity of terms within reported lexica: many participants in the \emph{coarse} condition reported a mixture of abstract and specific terms.}}
+\label{fig:2dhist}
 \end{center}
 \vspace{-2ex}
 \end{figure*}
 
-If participants in the \emph{coarse} condition can get away with fewer words in their lexicon, what are the meanings of the words they do have? We counted the numbers of `specific' terms (e.g.\ words that refer to only one object) and `abstract' terms (e.g.\ words that refer to two objects) in the post-test. We found that the likelihood of lexicalizing abstractions differed systematically across conditions (see Fig.\ \ref{fig:lexiconContent}A). Participants in the \emph{fine} condition reported lexica containing exclusively specific terms, while participants in the \emph{coarse} condition reported significantly more abstract terms ($m = 2.5, p < 0.001$). 
-
-These data also reveal an interesting asymmetry in lexicon content across conditions: while abstractions are entirely absent from the \emph{fine} condition, participants in the other conditions often reported a mixture of terms (see Fig.\ \ref{fig:lexiconContent}B). In the \emph{coarse} condition, for instance, participants could in principle perform optimally with only four abstract terms and no specific terms. While this was the modal system that emerged (reported in the post-test by nearly 1/3 of participants), the average proportion of abstract (vs.\ specific) terms \emph{within} each participant's lexicon in the \emph{coarse} condition ($m = 0.56$) was significantly higher than in the other conditions ($p < 0.001$, exploratory).
+These data also reveal an interesting asymmetry in lexicon content across conditions: while abstractions are entirely absent from the \emph{fine} condition, participants in the other conditions often reported a mixture of terms (see Fig.\ \ref{fig:2dhist}). In the \emph{coarse} condition, for instance, participants could in principle perform optimally with only four abstract terms and no specific terms. While this was the modal system that emerged (reported in the post-test by nearly 1/3 of participants), the average proportion of abstract (vs.\ specific) terms \emph{within} each participant's lexicon in the \emph{coarse} condition ($m = 0.56$) was significantly higher than in the other conditions ($p < 0.001$, exploratory).
 %\ndg{`average entropy of the distribution of abstract vs.\ specific terms within each participant's lexicon' is a lot to swallow at once...}
 
 \section{Model-based Analysis}
@@ -187,7 +194,7 @@ The approximating family for each random variable is Gaussian. We approximate th
 
 \begin{figure*}[t]
 \begin{center}
-\includegraphics[scale=0.84]{modelFig.pdf}
+\includegraphics[scale=0.7]{modelFig.pdf}
 \vspace{-1ex}
 {\caption{{Model-based results. (A) A logistic classifier based on inferred lexical entries accurately predicts post-test responses. (B) Entropy of posterior word extensions show coalescence across epochs for each condition. (C) Mean change in entropy at the word level from trial to trial (error bars are $\pm 1$ SE)}  \label{fig:postTestPrediction}}}
 \end{center}
