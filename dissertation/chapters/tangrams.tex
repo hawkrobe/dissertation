@@ -305,7 +305,7 @@ Here, we examine the structure of reduction, testing commonalities not just in t
 \begin{figure}[t]
 \centering
 \includegraphics[scale=.85]{listenerFeedback_combined.pdf}
-\caption{(A) similar reduction in \# words per tangram for both variants of the task (B) word counts broken down by part of speech, combined across both variants.}
+\caption{(A) Listeners reply with interactive feedback less often over repetitions, and (B) speakers are sensitive to listener response feedback, increasing message length on the subsequent repetition of a tangram after an error is made.}
 \label{fig:feedback}
 \end{figure}
 
@@ -317,78 +317,85 @@ directors and matchers engage in a bi-directional process where matchers ask fol
 In the absence of feedback, descriptions may not necessarily get shorter.
 
 While we automatically gave feedback on listener responses each round, this theory predicts that additional feedback from (optional) listener  replies should be highest on the first round and drop off once meanings are agreed upon. 
-To test this prediction, we coded whether the listener sent a message or not on each trial. 
-In a mixed-effects logistic regression with a fixed effect of repetition and random intercepts and slopes for each target and pair of participants, we found that the probability of the listener sending a message decreased significantly over the game $(b=-0.85, t = -9.1, p < 0.001; Fig. \ref{fig:reduction}A)$.
+To test this prediction, we coded whether the listener sent a message or not on each trial and fit a mixed-effects logistic regression model with a fixed effect of repetition, random intercepts and slopes for each pair of participants, and a random intercept for each target. 
+We found that the probability of the listener sending a message decreased significantly over the game $(b=-0.84, t = -9.1, p < 0.001; Fig. \ref{fig:feedback}A)$.
 In aggregate, 76\% of listeners send at least one message in the first repetition block, but only 6\% sent a message in the last block.
 These rates found in our online text-based replication are lower overall than in-person lab experiments, but we nonetheless strongly replicated the overall trend.
 
-\todo[inline]{Put paragraph about effect of feedback Fig. }
-%, and there is a small but significant effect of the (logged) number of initial listener messages on overall \% reduction in the number of words used by the director, $r = 0.26, 95\% CI = [0.57, 0.45], p = 0.014$.
-%\todo[inline]{Note: this last result isn't actually saying much because when listeners say more on the first round, speaker often say more in response\dots they therefore have a higher initial word count to reduce from than if the listener didn't say anything, so it's not surprising that \% reduction is larger... we need to revise the analysis to control for this, e.g. by only considering reduction from the words used \emph{before} the listener's first message, i.e. what they \emph{would} have initially said if the listener didn't chime in? The more simple \& obvious regression formulation would be whether \# of initial listener messages predicts \emph{absolute} round 6 message length rather than \% reduction; this didn't come out, but I switched to the \% reduction version because I was worried that it was just due to pair-level variance in final round length}
-%\todo[inline]{This could also be a good place to put an effect of, like, more words used for tangrams that were incorrect in the previous round.}
+Next, we examined the extent to which speakers were sensitive to listener response feedback in modulating their utterances.
+If the listener failed to select the correct target, the speaker may take this as evidence that their description was insufficient and attempt to provide more detail the next time they must refer to the same tangram. 
+If the listener is correct, on the other hand, the speaker may take this as evidence of understanding and reduce their level of detail on future repetitions.
+We tested these predictions by comparing the proportional change in utterance length on the repetition after an error against the change in length after a correct response (i.e. $(n_t - n_{t-1})/n_{t-1}$).
+This measure could be positive, indicating a net increase in utterance length, or negative, indicating a reduction.
+
+We fit a mixed-effects regression model predicting this measure with an effect-coded categorical fixed effect of previous round feedback and a (centered) continuous effect of repetition number, including random intercepts and effects of feedback for each speaker.
+Controlling for repetition, we found a significant main effect of feedback: utterances were shorter after correct responses than after negative responses, $b = -0.18, t = -6.2$ (see Fig. \ref{fig:feedback}B).
+Indeed, speakers were more likely on average to \emph{add} words on the repetition after an error at any point in the game.
+Because repetitions of the same tangram were spaced out and errors were relatively rare, this effect is unlikely to simply reflect heightened attention on the trials after an error.
+Instead, this pattern of results is consistent with responding to tangram-specific evidence of understanding.
 
 \begin{figure}[t]
 \includegraphics[scale=.65]{reduction.pdf}
-\caption{(A) similar reduction in \# words per tangram for both variants of the task (B) word counts broken down by part of speech, combined across both variants (C) phrasal reduction based on syntactic parse \todo[inline]{Maybe showing \% reduction is better than raw numbers, i.e. normalizing by occurrence on first round (or version mike suggested w/ bars showing proportions at beginning and end.}}
+\caption{(A) similar reduction in \# words per tangram for both variants of the task (B) word counts broken down by part of speech, combined across both variants (C) phrasal reduction based on syntactic parse.} % \todo[inline]{Maybe showing \% reduction is better than raw numbers, i.e. normalizing by occurrence on first round (or version mike suggested w/ bars showing proportions at beginning and end.}}
 \label{fig:reduction}
 \end{figure}
 
-\subsection{Reduction in number of words}\label{reduction}
+\subsection{Understanding reduction}\label{reduction}
 
 Next, we turn to a set of analyses examining reduction in utterance length over the course of the experiment. 
-At the coarsest level, we find that the mean number of words used by speakers decreases over time (see Fig. \ref{fig:replication}). 
-This decrease replicates a highly reliable reduction effect found throughout the literature on iterated reference games (Brennan \& Clark, 1996; Krauss \& Weinheimer, 1964), although due to our text-based (vs.~spoken) interface, participants in our task used many fewer words overall than previously reported. 
+At the coarsest level, we find that the mean number of words used by speakers decreases over time (see Fig. \ref{fig:reduction}A). 
+This decrease replicates a highly reliable reduction effect found throughout the literature on iterated reference games \cite<e.g>{krauss1964changes,BrennanClark96_ConceptualPactsConversation}, although due to our text-based (vs.~spoken) interface, participants in our task used fewer words overall than previously reported. 
 The following analyses break down this broad reduction into a finer-grained set of phenomena.
 
-\subsection{Reduction in parts of speech}
+\paragraph{Reduction in parts of speech}
 The next level of granularity motivating our model approach concerns which kinds of words are most likely to be dropped. 
 What sequence of transformations is applied to reduce long initial descriptions into shorter final ones?
-Is the speaker adopting a shorthand where they drop uninformative function words, or are they simplifying or narrowing their descriptions by omitting meaningful details (Clark \& Wilkes-Gibbs, 1986)? 
-We used the Stanford CoreNLP part-of-speech tagger (Toutanova, Klein, Manning, \& Singer, 2003) to count the number of words belonging to each part of speech in each message. Fig. \ref{fig:pos} shows the percent reduction of different parts of speech from the first round to the sixth round. 
-We find that determiners (`the', `a', `an') are the most likely class of words to be dropped with an X\% reduction rate, on average. 
-Nouns (`dancer', `rabbit') are the least likely class to be dropped with only an Y\% rate. 
-Closed-class parts of speech are strictly more likely to be dropped than open-class parts of speech.
+Is the speaker adopting a shorthand where they drop uninformative function words, or are they simplifying or narrowing their descriptions by omitting meaningful details \cite{ClarkWilkesGibbs86_ReferringCollaborative}? 
+We used the SpaCy part-of-speech tagger \cite{spacy2} to count the number of words belonging to each part of speech in each message.
+Fig. \ref{fig:reduction}B shows the percent reduction of different parts of speech from the first round to the sixth round. 
+We find that determiners (`the', `a', `an') are the most likely class of words to be dropped and nouns (`dancer', `rabbit') are the least likely class to be dropped.% with only an Y\% rate. 
+Closed-class parts of speech are strictly more likely to be dropped than open-class parts of speech (Fig. \ref{fig:pos}).
 
 While this finding suggests that speakers might just be adopting a
 shorthand using more ungrammatical fragments as the game proceeds, we
 find a more complex dynamic by examining the table of unigrams and
-bigrams most likely to be dropped (see Table \ref{tab:words}). Note that
-alongside dropped articles, there are a number of words that form
-conjunctions (`and') and modifiers (`of', `with', `the right'). In other
-words, it may be more likely that when function words are dropped, it is
+bigrams most likely to be dropped.% (see Table \ref{tab:words}). Note that
+Alongside dropped articles, there are a number of words that form
+conjunctions (`and') and modifiers (`of', `with', `the right'). 
+In other words, it may be more likely that when function words are dropped, it is
 primarily as part of larger grammatical units that provide additional
 information in identifying the target.
 
-\subsection{Reduction in syntactic constituents}
+\begin{figure}[t!]
+\centering
+\includegraphics[scale=.5]{posReduction.png}
+\caption{Closed-class parts of speech are more likely to be dropped than open-class parts of speech.} % \todo[inline]{Maybe showing \% reduction is better than raw numbers, i.e. normalizing by occurrence on first round (or version mike suggested w/ bars showing proportions at beginning and end.}}
+\label{fig:pos}
+\end{figure}
+
+\paragraph{Reduction in syntactic constituents}
 We explicitly examined this hypothesis by running the Stanford
 constituency parser (Schuster \& Manning, 2016), tagging the occurrence
-of subordinate/adverbial clauses (`sitting \emph{facing left}') and
-adjectival clauses (`angel \emph{that is praying}').\footnote{Specifically,
+of conjunctions, dependent clauses, and
+prepositional phrases.\footnote{Specifically,
   we used the Universal Dependencies tags \texttt{csubj, ccomp, xcomp},
-  and \texttt{advcl} for subordinate clauses and \texttt{acl} for
-  adjectival clauses (Schuster \& Manning, 2016)} We found that both
-were reduced over the course of the game (see Fig.
-\ref{fig:replication}), lending additional support for the hypothesis
-that meaningful details are increasingly omitted. Initial phrases pile
+  and \texttt{advcl} for dependent clauses (Schuster \& Manning, 2016)} 
+We found that all were reduced over the course of the game (see Fig.
+\ref{fig:reduction}C), lending additional support for the hypothesis
+that meaningful structural units are omitted. Initial phrases pile
 on multiple ambiguous, partially redundant modifiers and descriptors: as
 the game progresses and ambiguity of reference decreases, these
 additional meaningful units become less useful and can be dropped.
-
 This result accords with early observations by \cite{Carroll80_NamingHedges}, which found that in three-quarters of transcripts from \cite{KraussWeinheimer64_ReferencePhrases} the short names that participants converged upon were prominent in some syntactic construction at the beginning, often as a head noun that was initially modified or qualified by other information. 
 
-\subsection{Shared dynamics across pairs}
-
-Tree-edit distance\dots
+%\subsection{Shared dynamics across pairs}
+%
+%Tree-edit distance\dots
 
 
 \section{Discussion}\label{general-discussion}
 
-In this paper, we revisited the classic phenomenon of
-convention-formation in a large-scale replication of the tangrams task,
-finding evidence of arbitrariness and stability as well as finer-grained
-reduction of meaningful clauses. 
-
-In this section, we delved into the dynamics of semantic content across repeated reference.
+In this chapter, we delved into the semantic content and structure of referring expressions across convention formation in a replication of the classic tangrams task.
 First we found that pairs of participants systematically tend to conventionalize words that are more distinctive in context. 
 Second, we found that the process of conventionalization leads to stable usage within pairs but multiple equilibria across different pairs as predicted by our model in Chapter 2.
 These two results raise a subtle cognitive question about classic definitional notions of arbitrariness in convention \cite{Lewis69_Convention}, which hold that there must counterfactually exist an alternative solution to the coordination problem for any particular solution to be conventional.
@@ -410,4 +417,5 @@ Further, because it is based entirely on the frequency of tokens, it may treat e
 Thus, these two approaches provide complementary evidence for the dynamics of content.
 
 %% Paragraph about opportunities for computational models
-While we have focused on broader theoretical questions, our results also serve as a foundation for high-resolution task-performing computational models of communication seeking to explain the full richness of natural data. To build machines that naturally adapt to their interlocutors in human-robot or human-computer interaction scenarios, we must go behind qualitative efforts.
+While we have focused on broader theoretical questions, our results also serve as a foundation for high-resolution task-performing computational models of communication seeking to explain the full richness of natural data. 
+To build machines that naturally adapt to their interlocutors in human-robot or human-computer interaction scenarios, we must go behind qualitative efforts.
