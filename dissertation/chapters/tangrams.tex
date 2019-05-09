@@ -299,18 +299,33 @@ Pairs often initially mentioned multiple properties (e.g. ``person raising their
 
 \section{Results: characterizing the dynamics of structure}\label{results}
 
-Having established \dots
+While the referring expressions used by different pairs diverge systematically in their semantic content, more abstract structural patterns of their language use may be shared in common.
+Here, we examine the structure of reduction, testing commonalities not just in the extent of reduction, but \emph{how} different pairs reduce.
+
+\begin{figure}[t]
+\centering
+\includegraphics[scale=.85]{listenerFeedback_combined.pdf}
+\caption{(A) similar reduction in \# words per tangram for both variants of the task (B) word counts broken down by part of speech, combined across both variants.}
+\label{fig:feedback}
+\end{figure}
 
 \subsection{Dialogue between speaker and listener}\label{listener-feedback}
 
-Before focusing our analysis on the rich dynamics of how \emph{directors} produce referring expressions over time, we first examine the bi-directional dynamics of dialogue exchanges. 
-An influential result from is that conceptual pacts for referring are established \emph{collaboratively} \cite[see also \cite{KraussWeinheimer66_Tangrams, GarrodFayLeeOberlanderMacLeod07_GraphicalSymbolSystems}]{ClarkWilkesGibbs86_ReferringCollaborative}: 
+Before focusing our analysis on the rich dynamics of how \emph{directors} transform their referring expressions over time, we first examine dialogue exchanges.
+It is well-established is that conceptual pacts are formed \emph{collaboratively} \cite[see also \cite{KraussWeinheimer66_Tangrams, GarrodFayLeeOberlanderMacLeod07_GraphicalSymbolSystems}]{ClarkWilkesGibbs86_ReferringCollaborative}: 
 directors and matchers engage in a bi-directional process where matchers ask follow-up questions, suggest corrections, and acknowledge or verbally confirm their understanding through a backchannel. 
-This theory predicts that (1) listener feedback should be highest on the first round and drop off once meanings are agreed upon, and (2) dyads with more initial listener feedback should reduce to more efficient conventions. 
-Our use of a chat box rather than in-person verbal communication, along with the automatic feedback we provided each round in the \emph{cued} condition, may have diminished the bi-directionality somewhat, but we find correlational evidence of both patterns in our uncollapsed but otherwise cleaned data. 
-The number of listener messages decreases significantly over the game $(b=-0.5, t = -10.6, p < 0.001)$, and there is a small but significant effect of the (logged) number of initial listener messages on overall \% reduction in the number of words used by the director, $r = 0.26, 95\% CI = [0.57, 0.45], p = 0.014$.
-\todo[inline]{Note: this last result isn't actually saying much because when listeners say more on the first round, speaker often say more in response\dots they therefore have a higher initial word count to reduce from than if the listener didn't say anything, so it's not surprising that \% reduction is larger... we need to revise the analysis to control for this, e.g. by only considering reduction from the words used \emph{before} the listener's first message, i.e. what they \emph{would} have initially said if the listener didn't chime in? The more simple \& obvious regression formulation would be whether \# of initial listener messages predicts \emph{absolute} round 6 message length rather than \% reduction; this didn't come out, but I switched to the \% reduction version because I was worried that it was just due to pair-level variance in final round length}
-\todo[inline]{This could also be a good place to put an effect of, like, more words used for tangrams that were incorrect in the previous round.}
+In the absence of feedback, descriptions may not necessarily get shorter.
+
+While we automatically gave feedback on listener responses each round, this theory predicts that additional feedback from (optional) listener  replies should be highest on the first round and drop off once meanings are agreed upon. 
+To test this prediction, we coded whether the listener sent a message or not on each trial. 
+In a mixed-effects logistic regression with a fixed effect of repetition and random intercepts and slopes for each target and pair of participants, we found that the probability of the listener sending a message decreased significantly over the game $(b=-0.85, t = -9.1, p < 0.001; Fig. \ref{fig:reduction}A)$.
+In aggregate, 76\% of listeners send at least one message in the first repetition block, but only 6\% sent a message in the last block.
+These rates found in our online text-based replication are lower overall than in-person lab experiments, but we nonetheless strongly replicated the overall trend.
+
+\todo[inline]{Put paragraph about effect of feedback Fig. }
+%, and there is a small but significant effect of the (logged) number of initial listener messages on overall \% reduction in the number of words used by the director, $r = 0.26, 95\% CI = [0.57, 0.45], p = 0.014$.
+%\todo[inline]{Note: this last result isn't actually saying much because when listeners say more on the first round, speaker often say more in response\dots they therefore have a higher initial word count to reduce from than if the listener didn't say anything, so it's not surprising that \% reduction is larger... we need to revise the analysis to control for this, e.g. by only considering reduction from the words used \emph{before} the listener's first message, i.e. what they \emph{would} have initially said if the listener didn't chime in? The more simple \& obvious regression formulation would be whether \# of initial listener messages predicts \emph{absolute} round 6 message length rather than \% reduction; this didn't come out, but I switched to the \% reduction version because I was worried that it was just due to pair-level variance in final round length}
+%\todo[inline]{This could also be a good place to put an effect of, like, more words used for tangrams that were incorrect in the previous round.}
 
 \begin{figure}[t]
 \includegraphics[scale=.65]{reduction.pdf}
@@ -322,11 +337,12 @@ The number of listener messages decreases significantly over the game $(b=-0.5, 
 
 Next, we turn to a set of analyses examining reduction in utterance length over the course of the experiment. 
 At the coarsest level, we find that the mean number of words used by speakers decreases over time (see Fig. \ref{fig:replication}). 
-This decrease replicates a highly reliable reduction effect found throughout the literature on iterated reference games (Brennan \& Clark, 1996; Krauss \& Weinheimer, 1964), although perhaps due to our purely textual (vs.~spoken) interface, participants in our task used many fewer words overall than previously reported. 
+This decrease replicates a highly reliable reduction effect found throughout the literature on iterated reference games (Brennan \& Clark, 1996; Krauss \& Weinheimer, 1964), although due to our text-based (vs.~spoken) interface, participants in our task used many fewer words overall than previously reported. 
 The following analyses break down this broad reduction into a finer-grained set of phenomena.
 
 \subsection{Reduction in parts of speech}
 The next level of granularity motivating our model approach concerns which kinds of words are most likely to be dropped. 
+What sequence of transformations is applied to reduce long initial descriptions into shorter final ones?
 Is the speaker adopting a shorthand where they drop uninformative function words, or are they simplifying or narrowing their descriptions by omitting meaningful details (Clark \& Wilkes-Gibbs, 1986)? 
 We used the Stanford CoreNLP part-of-speech tagger (Toutanova, Klein, Manning, \& Singer, 2003) to count the number of words belonging to each part of speech in each message. Fig. \ref{fig:pos} shows the percent reduction of different parts of speech from the first round to the sixth round. 
 We find that determiners (`the', `a', `an') are the most likely class of words to be dropped with an X\% reduction rate, on average. 
