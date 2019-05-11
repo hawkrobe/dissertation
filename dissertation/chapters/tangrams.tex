@@ -339,15 +339,16 @@ Instead, this pattern of results is consistent with sensitivity to tangram-speci
 
 \begin{figure}[t]
 \centering
-\includegraphics[scale=.9]{reduction.pdf}
-\caption{(A) similar reduction in \# words per tangram for both variants of the task (B) word counts broken down by part of speech.} % \todo[inline]{Maybe showing \% reduction is better than raw numbers, i.e. normalizing by occurrence on first round (or version mike suggested w/ bars showing proportions at beginning and end.}}
+\includegraphics[scale=.8]{reduction.pdf}
+\caption{Similar reduction in \# words per tangram for both variants of the task. Error ribbons are 95\% confidence intervals.} % \todo[inline]{Maybe showing \% reduction is better than raw numbers, i.e. normalizing by occurrence on first round (or version mike suggested w/ bars showing proportions at beginning and end.}}
 \label{fig:reduction}
 \end{figure}
+
 
 \subsection{Understanding reduction}\label{reduction}
 
 Next, we turn to a set of analyses examining the reduction in utterance length over the course of the experiment. 
-At the coarsest level, we find that the mean number of words used by speakers decreases over time (see Fig. \ref{fig:reduction}A) in both the free matching and cued variants of the task. 
+At the coarsest level, we find that the mean number of words used by speakers decreases over time (see Fig. \ref{fig:reduction}) in both the free matching and cued variants of the task. 
 Free matching required more words overall because participants needed to additionally mention which tangram they were referring to (i.e. ``number 3 is the \dots``).
 This result replicates the highly reliable reduction effect found throughout the literature on repeated reference games \cite<e.g>{krauss1964changes,BrennanClark96_ConceptualPactsConversation}, including our own results in Chapter 3. 
 Perhaps because of the text-based (vs.~spoken) interface, participants in our task used fewer words overall than reported by \cite{ClarkWilkesGibbs86_ReferringCollaborative}. 
@@ -377,58 +378,83 @@ The following analyses break down this broad reduction into a finer-grained set 
   \#15 & head & have a & a diamond on \\ 
    \hline
 \end{tabular}
-\caption{Top 15 unigrams, bigrams, and trigrams with the highest numeric reduction from first round to last round.} 
+\caption{Top 15 unigrams, bigrams, and trigrams with the highest numeric reduction from first round to last round. Text lemmatized before n-grams computed. } 
 \label{tab:words}
 \end{table*}
 
-The first level of granularity concerns which \emph{kinds} of words are most likely to be dropped. 
-We used the SpaCy part-of-speech tagger \cite{spacy2} to count the number of words belonging to different parts of speech in each message.
-Fig. \ref{fig:reduction}B shows the percent reduction of different parts of speech from the first round to the sixth round. 
-We find that determiners (`the', `a', `an') are the most likely class of words to be dropped (90\%) and nouns (`dancer', `rabbit') are the least likely to be dropped (61\%).% with only an Y\% rate. 
-Closed-class parts of speech are strictly more likely to be dropped than open-class parts of speech (Fig. \ref{fig:pos}) 
-
-While one explanation of this finding is that speakers might be adopting an ungrammatical shorthand using fragments as the game proceeds, we find a different dynamic by examining the table of unigrams and bigrams most likely to be dropped (see Table \ref{tab:words}). 
-Alongside dropped articles, there are a number of words that form conjunctions (`and') and modifiers (`of', `with', `the right'). 
-Instead, it may be more likely that when these words are dropped, it is primarily as part of larger grammatical units that provide additional information in identifying the target.
-Additionally, because open-class parts of speech are statistically more likely to supply \emph{distinctive} words than closed-class parts of speech, they may therefore be less likely to be dropped under the contextual pragmatic pressures discussed in section \ref{sec:distinctive}.
-
 \begin{figure}[t!]
 \centering
-\includegraphics[scale=.5]{posReduction.png}
-\caption{Closed-class parts of speech are more likely to be dropped than open-class parts of speech.} 
+\includegraphics[scale=.8]{posResults.pdf}
+\caption{(A) proportion of words in different part of speech on each repetition. (B) Closed-class parts of speech are more likely to be dropped than open-class parts of speech. Error bars are bootstrapped 95\% confidence intervals.} 
 \label{fig:pos}
 \end{figure}
 
+The first level of granularity concerns which \emph{kinds} of words are most likely to be dropped. 
+We used the SpaCy part-of-speech tagger \cite{spacy2} to count the number of words belonging to different parts of speech in each message.
+In Fig. \ref{fig:pos}A, we show the shifting proportions of different parts of speech at each repetition, 
+We find that nouns account for proportionally more of the words being used over time, while determiners and prepositions account for fewer.
+To test which kinds of words are more likely to be dropped, we measured the percent reduction in the number of words in each part of speech from the first round to the sixth round. 
+We find that determiners (`the', `a', `an') are the most likely class of words to be dropped (90\%) and nouns (`dancer', `rabbit') are the least likely to be dropped (61\%).% with only an Y\% rate. 
+More generally, closed-class parts of speech, including function words like determiners, are strictly more likely to be dropped than open-class parts of speech (Fig. \ref{fig:pos}B).
+Because open-class parts of speech are statistically more likely to supply \emph{distinctive} words than closed-class parts of speech, these structural considerations may contribute to the patterns in distinctiveness reported in section \ref{sec:distinctive}.
+
+One possible interpretation of these findings is that reduction may be driven mostly by the loss of function words as speakers shift to a less grammatical shorthand over the course of the task.
+However, when examining the n-grams most likely to be dropped (see Table \ref{tab:words}), we find that many of the most dropped closed-class words are used to form conjunctions (`and') or prepositional phases (`of', `with').
+Others are modifiers (`the right \dots'). 
+These examples suggest an alternative explanation: the higher reduction of closed-class function words may be a consequence of entire meaningful grammatical units being dropped at once.
+If initial descriptions tend to be syntactically complex, combining multiple partially redundant sources of information for identifying the target, then the speaker may omit entire modifying clauses with additional evidence of a listener's understanding.
+
 \paragraph{Reduction in syntactic constituents} 
-We explicitly examined this hypothesis by running the Stanford constituency parser (Schuster \& Manning, 2016), tagging the occurrence of conjunctions, dependent clauses, and
-prepositional phrases.\footnote{Specifically,
-  we used the Universal Dependencies tags \texttt{csubj, ccomp, xcomp},
-  and \texttt{advcl} for dependent clauses (Schuster \& Manning, 2016)} 
-We found that all were reduced over the course of the game (see Fig.
-\ref{fig:reduction}C), lending additional support for the hypothesis
-that meaningful structural units are omitted. Initial phrases pile
-on multiple ambiguous, partially redundant modifiers and descriptors: as
-the game progresses and ambiguity of reference decreases, these
-additional meaningful units become less useful and can be dropped.
+We explicitly examined this hypothesis by examining whether dropped words tend to come from the same syntactic units, relative to a random deletion baseline.
+We quantified the extend to which dropped words `cluster' by examining dependency lengths between the dropped words \cite{jurafsky2014speech,futrell2015large}.
+Specifically, we compared each referring expression to the one produced on the subsequent repetition to determine which words were dropped.
+Then we looked up each pair of dropped words and found the shortest path between them in the dependency parse tree (see Fig. \ref{fig:dependency}).
+We then took the mean dependency length across all such pairs in all games.
+
+This empirical `syntactic clustering' statistic was then compared to a random baseline.
+For this baseline, instead of examining dependency lengths for the words that were actually dropped, we randomly sampled the same number of words from the referring expression and computed the dependency length between them.
+By running this procedure many times, we obtain a null distribution of the mean dependency length that would be expected if words were being dropped \emph{randomly from anywhere in the message.}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[scale=.8]{dependency.pdf}
+\caption{Example dependency parse for referring expression. If the sub-phase ``arms out in front'' were dropped, we would find a mean dependency length of 1.33 among the dropped words.} 
+\label{fig:dependency}
+\end{figure}
+
+%running the SpaCy dependency parser
+We found \dots
 This result accords with early observations by \cite{Carroll80_NamingHedges}, which found that in three-quarters of transcripts from \cite{KraussWeinheimer64_ReferencePhrases} the short names that participants converged upon were prominent in some syntactic construction at the beginning, often as a head noun that was initially modified or qualified by other information. 
-
-%\subsection{Shared dynamics across pairs}
-%
-%Tree-edit distance\dots
-
 
 \section{Discussion}\label{general-discussion}
 
-In this chapter, we delved into the semantic content and structure of referring expressions across convention formation in a replication of the classic tangrams task.
-First we found that pairs of participants systematically tend to conventionalize words that are more distinctive in context. 
-Second, we found that the process of conventionalization leads to stable usage within pairs but multiple equilibria across different pairs as predicted by our model in Chapter 2.
-These two results raise a subtle cognitive question about classic definitional notions of arbitrariness in convention \cite{Lewis69_Convention}, which hold that there must counterfactually exist an alternative solution to the coordination problem for any particular solution to be conventional.
-While the existence of many alternative but equally successful referential conventions clearly suggests some degree of arbitrariness at the population level, our results are consistent with two different cognitive realities \emph{within} games.
+In this chapter, we characterized the dynamics of convention formation in a classic repeated reference game paradigm.
+First, we found that pairs of participants systematically tend to conventionalize words that are more distinctive in the initial context.
+Using both discrete and continuous measures of semantic content, we found this process leads to stable usage within pairs but multiple equilibria across different pairs.
+Second, speakers reduce the length of their descriptions over the course of the task in a way that is sensitive to evidence of listener understanding and syntactically structured to omit entire meaningful units.
+In sum, these results establish new benchmark phenomena that computational models of adaptation and convention formation must account for.
 
-One possibility is that this arbitrariness is a product of substantial semantic variability in a population of fairly rigid speakers.
-That is, each speaker may have strong but idiosyncratic initial preferences for how to refer to each tangram and, without strong evidence that their partner cannot understand, will persist with the most distinctive features of these preferences.
-A second possibility is that each speaker in the population maintains similar initial uncertainty over the appropriate way to refer to these unfamiliar objects and samples from roughly the same distribution.
+\paragraph{Symmetry-breaking}
+These results raise a subtle cognitive question about classic definitional notions of arbitrariness in convention \cite{Lewis69_Convention}, which hold that there must counterfactually exist an alternative solution to the coordination problem for any particular solution to be conventional.
+How can such systematicity in the formation process co-exist with conventionality?
+The symmetry of different solutions must break somewhere to account for the empirical existence of many alternative but equally successful referential conventions at the population level, but our results are consistent with two different cognitive realities \emph{within} games.
 
+One possibility is that this arbitrariness is a product of substantial variability in a population of fairly rigid speakers.
+That is, each individual speaker may have strong but idiosyncratic initial preferences for how to refer to each tangram. 
+They may begin with additional elaboration given their representation of uncertainty about whether these strong preferences are shared, but without strong evidence that their partner cannot understand, they will persist with their preferred and pre-meditated label.
+
+A second possibility is that the population of speakers is homogenous but only weakly constrained by prior preferences. 
+That is, speakers may not only be uncertain of which messages their partner will understand, but are themselves unclear on an appropriate way to refer to these unfamiliar objects.
+If speakers initially sample from a variable distribution, and then from their updated distribution on subsequent rounds, different pairs may end up in different equilibria due to the path-dependence of the process. 
+In this way, the symmetry may be broken through randomness in the sampling step (or in the updating step, if learning is stochastic.)
+These possibilities are not mutually exclusive.
+Our experiments ruled out the possibility of a homogeneously rigid population, but it is possible that some speakers have strong preferences while others do not.
+
+While prior empirical work has indirectly tested expectations and prior preferences -- for instance, by asking speakers to either produce descriptions for others or for themselves in the future \cite{FussellKrauss89_IntendedAudienceCommonGround} -- an important direction for further work is to design experiments that disentangle these possibilities.
+For instance, a Bayesian truth serum approach \cite{prelec2004bayesian} could estimate both an individual's own subjective preferences and their expectations about whether these would be shared by others.
+More broadly, following recent attempts to estimate the true variability across speakers in phonetic properties of speech production \cite{kleinschmidt2019structure}, it would be valuable to estimate how much variability in semantic expectations there really is in the population \cite{FurnasEtAl87_VocabularyProblem}.
+
+\paragraph{Discrete vs. continuous semantic measures}
 Because our results hinged on our quantification of semantic content, it is worth noting some advantages and disadvantages of discrete measures compared to continuous vector space measures.
 A key advantage of measures based on the word distribution is that the entropy is not dependent on any particular choice of pre-trained vector embedding. 
 Due to biases in the training corpora, vector representations also may not capture some of the more idiosyncratic conventions that participants converge on (e.g. ``YMCA'' or ``zig zag'' or ``Frank'' -- short for ``Frankenstein'').
@@ -440,6 +466,3 @@ Many pairs use entirely disjoint sets of words, and on later rounds, the distrib
 Further, because it is based entirely on the frequency of tokens, it may treat even close synonyms as entirely distinct tokens in the word distribution. 
 Thus, these two approaches provide complementary evidence for the dynamics of content.
 
-%% Paragraph about opportunities for computational models
-While we have focused on broader theoretical questions, our results also serve as a foundation for high-resolution task-performing computational models of communication seeking to explain the full richness of natural data. 
-To build machines that naturally adapt to their interlocutors in human-robot or human-computer interaction scenarios, we must go behind qualitative efforts.
