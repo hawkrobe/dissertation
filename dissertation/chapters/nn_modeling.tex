@@ -1,25 +1,24 @@
 %!TEX root = ../dissertation.tex
-\begin{savequote}[75mm]
-This is some random quote to start off the chapter.
-\qauthor{Firstname lastname}
-\end{savequote}
+%\begin{savequote}[75mm]
+%This is some random quote to start off the chapter.
+%\qauthor{Firstname lastname}
+%\end{savequote}
 
 \chapter{Continuous adaptation for efficient machine communication}
 \graphicspath{{./figures/nn_modeling/}}
 
-\section{Introduction}
+%\section{Introduction}
 
 Linguistic communication depends critically on shared knowledge about the meanings of words \cite{Lewis69_Convention}. 
 However, the real-world demands of communication often require speakers and listeners to go \emph{beyond} dictionary meanings to understand one another \cite{clark_using_1996,stolk2016conceptual}. 
 The social world continually presents new communicative challenges, and agents must continually coordinate on new meanings to meet them. %adapted to the needs of the current interaction.
-
 For example, consider a nurse visiting a bed-ridden patient in a cluttered home.
 The first time they ask the nurse to retrieve a particular medication, the patient must painstakingly refer to unfamiliar pills, e.g.~``my vasoprex-tecnoblek meds for blood pressure, in a small bluish bottle, on the bookcase in my bathroom.''
 After a week of care, however, they may just ask for their ``Vasotec.'' 
 
 \begin{figure}[t]
 \centering
-\includegraphics[scale=.6]{frontfig.pdf}
+\includegraphics[scale=.65]{frontfig.pdf}
 \caption{Reference game task, listener architecture, and continual learning approach.}
 \vspace{-1em}
 \label{fig:refgame}
@@ -33,13 +32,12 @@ Second, for human-robot contexts, an adaptive model enables speakers to communic
 %For example, when a store sells a gadget they call a `slip joint plier,' a speaker of the language can assume it means the same thing as it meant the previous week, and the same thing meant by the store across town.
 %For instance, a car repairman who needs to repeatedly ask her co-woker to pass the 'slip joint plier' may eventually adapt conventions and ask for the 'slip'. Humans are adept listeners and are able to understand adapted conventions, e.g., that both 'slip' and 'slip joint plier' refer to the same object.
 %For example, many open problems in human-computer interaction require repeatedly referring to novel objects or locations or technical concepts, which may be quite costly and error-prone using existing conventions. \dots %\todo[inline]{refine examples}
-In this paper, we introduce a general framework for transforming neural language models into \emph{adaptive} models that can be deployed in real-time interactions with other agents.
-
+In this chapter, we  introduce a general framework for transforming neural language models into \emph{adaptive} models that can be deployed in real-time interactions with other agents.
 %\begin{quote}
-\emph{Our key insight is that through continual interactions with the same partner in a shared context, a listener can adapt and more efficiently communicate with its partner (Fig.~\ref{fig:refgame}).}
+Our key insight is that through continual interactions with the same partner in a shared context, a listener can adapt and more efficiently communicate with its partner (Fig.~\ref{fig:refgame}).
 %\end{quote}
-
-We are motivated by hierarchical Bayesian approaches to task-specific adaptation. Our approach integrates two core components: (i) a loss function combining speaker and listener information  
+We are motivated by the hierarchical Bayesian approaches to task-specific adaptation from Chapter 2. 
+We implement this theoretical approach at scale by integrating two core components: (i) a loss function combining speaker and listener information  
 to understand descriptions of natural images in context, and (ii) a regularization scheme for fine-tuning the weights of this model based on previous interactions with a partner. %, and (iii) a data augmentation strategy to approximate the compositionality of utterances. 
 We show that these components enable more effective communication with human partners over repeated interactions.
 

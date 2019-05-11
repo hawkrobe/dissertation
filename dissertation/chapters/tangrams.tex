@@ -425,6 +425,7 @@ We repeated this procedure 100 times to obtain a null distribution of the mean d
 %running the SpaCy dependency parser
 We found a mean empirical dependency length of 4.22, which lay outside the null distribution ($95\% CI: [4.38, 4.44]$), indicating a small but reliable effect of syntactic clustering.
 The words that were dropped tended to be closer to one another in the dependency parse than expected by chance.
+Other statistics such as the minimum dependency path or the raw distance in the sequence of words gave similar results.
 This result accords with early observations by \cite{Carroll80_NamingHedges}, which found that in three-quarters of transcripts from \cite{KraussWeinheimer64_ReferencePhrases} the short names that participants converged upon were prominent in some syntactic construction at the beginning, often as a head noun that was initially modified or qualified by other information. 
 
 \section{Discussion}\label{general-discussion}
@@ -435,8 +436,20 @@ Using both discrete and continuous measures of semantic content, we found this p
 Second, speakers reduce the length of their descriptions over the course of the task in a way that is sensitive to evidence of listener understanding and syntactically structured to omit entire meaningful units.
 In sum, these results establish new benchmark phenomena that computational models of adaptation and convention formation must account for.
 
+\paragraph{Discrete vs. continuous semantic measures}
+Because our results hinged on our quantification of semantic content, it is worth noting some advantages and disadvantages of discrete measures compared to continuous vector space measures.
+A key advantage of measures based on the word distribution is that the entropy is not dependent on any particular choice of pre-trained vector embedding. 
+Due to biases in the training corpora, vector representations also may not capture some of the more idiosyncratic conventions that participants converge on (e.g. ``YMCA'' or ``zig zag'' or ``Frank'' -- short for ``Frankenstein'').
+To the extent we find converging results, the discrete measure may address concerns about the quality of the continuous representation.
+
+A key disadvantage is that the entropy is sensitive to the support of the word distribution --- the vocabulary present in the corpus on a particular round --- and thus does not have a natural scale.
+While directly measuring divergence between word distributions at different repetitions and between different pairs is technically possible, their sparsity makes this approach not as informative at these finer granularities of analysis.
+Many pairs use entirely disjoint sets of words, and on later rounds, the distribution may only contain one or two words. 
+Further, because it is based entirely on the frequency of tokens, it may treat even close synonyms as entirely distinct tokens in the word distribution. 
+Thus, these two approaches provide complementary evidence for the dynamics of content.
+
 \paragraph{Symmetry-breaking}
-These results raise a subtle cognitive question about classic definitional notions of arbitrariness in convention \cite{Lewis69_Convention}, which hold that there must counterfactually exist an alternative solution to the coordination problem for any particular solution to be conventional.
+Our results in this chapter raise a subtle cognitive question about classic definitional notions of arbitrariness in convention \cite{Lewis69_Convention}, which hold that there must counterfactually exist an alternative solution to the coordination problem for any particular solution to be conventional.
 How can such systematicity in the formation process co-exist with conventionality?
 The symmetry of different solutions must break somewhere to account for the empirical existence of many alternative but equally successful referential conventions at the population level, but our results are consistent with two different cognitive realities \emph{within} games.
 
@@ -454,16 +467,3 @@ Our experiments ruled out the possibility of a homogeneously rigid population, b
 While prior empirical work has indirectly tested expectations and prior preferences -- for instance, by asking speakers to either produce descriptions for others or for themselves in the future \cite{FussellKrauss89_IntendedAudienceCommonGround} -- an important direction for further work is to design experiments that disentangle these possibilities.
 For instance, a Bayesian truth serum approach \cite{prelec2004bayesian} could estimate both an individual's own subjective preferences and their expectations about whether these would be shared by others.
 More broadly, following recent attempts to estimate the true variability across speakers in phonetic properties of speech production \cite{kleinschmidt2019structure}, it would be valuable to estimate how much variability in semantic expectations there really is in the population \cite{FurnasEtAl87_VocabularyProblem}.
-
-\paragraph{Discrete vs. continuous semantic measures}
-Because our results hinged on our quantification of semantic content, it is worth noting some advantages and disadvantages of discrete measures compared to continuous vector space measures.
-A key advantage of measures based on the word distribution is that the entropy is not dependent on any particular choice of pre-trained vector embedding. 
-Due to biases in the training corpora, vector representations also may not capture some of the more idiosyncratic conventions that participants converge on (e.g. ``YMCA'' or ``zig zag'' or ``Frank'' -- short for ``Frankenstein'').
-To the extent we find converging results, the discrete measure may address concerns about the quality of the continuous representation.
-
-A key disadvantage is that the entropy is sensitive to the support of the word distribution --- the vocabulary present in the corpus on a particular round --- and thus does not have a natural scale.
-While directly measuring divergence between word distributions at different repetitions and between different pairs is technically possible, their sparsity makes this approach not as informative at these finer granularities of analysis.
-Many pairs use entirely disjoint sets of words, and on later rounds, the distribution may only contain one or two words. 
-Further, because it is based entirely on the frequency of tokens, it may treat even close synonyms as entirely distinct tokens in the word distribution. 
-Thus, these two approaches provide complementary evidence for the dynamics of content.
-
