@@ -413,7 +413,7 @@ We then took the mean dependency length across all such pairs in all games.
 
 This empirical `syntactic clustering' statistic was then compared to a random baseline.
 For this baseline, instead of examining dependency lengths for the words that were actually dropped, we randomly sampled the same number of words from the referring expression and computed the dependency length between them.
-By running this procedure many times, we obtain a null distribution of the mean dependency length that would be expected if words were being dropped \emph{randomly from anywhere in the message.}
+We repeated this procedure 100 times to obtain a null distribution of the mean dependency length that would be expected if words were being dropped \emph{randomly} from anywhere in the message.
 
 \begin{figure}[t!]
 \centering
@@ -423,7 +423,8 @@ By running this procedure many times, we obtain a null distribution of the mean 
 \end{figure}
 
 %running the SpaCy dependency parser
-We found \dots
+We found a mean empirical dependency length of 4.22, which lay outside the null distribution ($95\% CI: [4.38, 4.44]$), indicating a small but reliable effect of syntactic clustering.
+The words that were dropped tended to be closer to one another in the dependency parse than expected by chance.
 This result accords with early observations by \cite{Carroll80_NamingHedges}, which found that in three-quarters of transcripts from \cite{KraussWeinheimer64_ReferencePhrases} the short names that participants converged upon were prominent in some syntactic construction at the beginning, often as a head noun that was initially modified or qualified by other information. 
 
 \section{Discussion}\label{general-discussion}
