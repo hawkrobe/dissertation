@@ -14,38 +14,40 @@ Such meanings, transient though they may be, are literal.
 \chapter{An inferential model of convention-formation}
 \graphicspath{{./figures/modeling/}}
 
-Here, we present a model of speakers coordinating on meaning under uncertainty, which captures several of the signature properties of convention formation reviewed in Chapter 1. 
-
-\section{Adapting to a single partner}
-This model belongs to the family of Rational Speech Act (RSA) models, which have been successful in explaining a wide range of linguistic phenomena -- including scalar implicature, adjectival vagueness, overinformativeness, indirect questions, and non-literal language use -- as arising from a process of recursive social reasoning. 
+In this chapter, we present a computational model formalizing our theoretical account of how speakers coordinate on meaning under uncertainty. 
+Our formal approach is grounded in the family of Rational Speech Act (RSA) models, which have been successful in explaining a wide range of linguistic phenomena---including scalar implicature \cite{GoodmanStuhlmuller13_KnowledgeImplicature}, adjectival vagueness \cite{LassiterGoodman15_AdjectivalVagueness}, overinformativeness \cite{degen2019redundancy}, indirect questions \cite{hawkins_why_2015}, and other non-literal language use \cite{KaoWuBergenGoodman14_NonliteralNumberWords}---as arising from a process of recursive social reasoning.% \cite{GoodmanFrank16_RSATiCS}. 
 %Most previous applications of RSA have focused on the listener's problem of language comprehension, but the puzzle of conventionalization is primarily a puzzle of speaker production. 
 
-At the core of any model of referential communication is the notion of a \emph{lexicon} giving the meanings of the tokens in the language. 
-We define the lexicon as a function $\mathcal{L}: (w_n, o_m) \rightarrow \mathbb{R}$, assigning any word-object pair a real-valued meaning according to how well the word $w_n$ applies to the object $o_m$. 
-This is a continuous generalization of classic truth-conditional semantics \shortcite{graf_animal_2016}, where utterances may be better or worse descriptions of particular referents. 
-For instance, the utterance "dancer" may initially be expected to apply to a photorealistic image of a ballerina ($\mathcal{L}(\textrm{'dancer'}, \textit{ballerina}) = 0.99$) more than an abstract image of one ($\mathcal{L}(\textrm{'dancer'}, \textit{abstract ballerina}) =0.6$), but apply to both better than a non-category member like an image of a not very graceful dog ($\mathcal{L}(\textrm{'dancer'}, \textit{dog}) = 0.05$).
+At the core of any model of referential communication is the notion of a \emph{semantics} giving the meanings of utterances in the language. 
+For the minimal examples in this chapter, it suffices to define a lexical function $\mathcal{L}: (w, o) \rightarrow \mathbb{R}$, assigning any word-object pair a real-valued meaning according to how well the word $w$ applies to the object $o$. 
+This is a continuous generalization of classic truth-conditional semantics \shortcite{GrafEtAl16_BasicLevel}, where utterances may apply more or less well to different referents. 
+For instance, the utterance \emph{dancer} may initially be expected to apply to a photorealistic image of a \texttt{ballerina} ($\mathcal{L}(\textit{dancer}, \texttt{ballerina}) = 0.99$) more than an abstract sketch of one ($\mathcal{L}(\textit{dancer}, \texttt{ballerina drawing}) =0.6$), but apply to both better than a non-category member like an image of dog falling down the stairs ($\mathcal{L}(\textit{dancer}, \texttt{dog}) = 0.05$).
 
-In this framework, an $n$th order pragmatic speaker trying to convey a particular state of affairs $s \in \mathcal{S}$ assuming lexicon $\mathcal{L}$ is assumed to select an utterance $u \in \mathcal{U}$ by trading off its expected informativity (with respect to a rational listener agent) against its cost, usually based on length \cite{GoodmanFrank16_RSATiCS}:
-$$S_n(u | s, \mathcal{L}) \propto \exp{\left(\alpha \log L_{n-1}(s | u, \mathcal{L}) - \textrm{cost}(u)\right)}$$
-where $\alpha$ is a soft-max optimality parameter controlling the extent to which the speaker maximizes over listener informativity. The listener, in turn, inverts the speaker model to reason about what underlying state $s$ the speaker is trying to convey, given their utterance $u$:
-$$L_n(s | u, \mathcal{L}) \propto P(s) S_{n}(u | s, \mathcal{L})$$
-\indent This recursion bottoms out in a \emph{literal listener} who directly looks up the meaning of the utterance in the lexicon:
-$$L_0(s | u, \mathcal{L}) \propto \mathcal{L}(u, s)\cdot P(s)$$
+In this framework, an $n$th order pragmatic speaker trying to refer to particular object $o \in \mathcal{O}$ assuming lexicon $\mathcal{L}$ selects an utterance $u \in \mathcal{U}$ by trading off its expected informativity (with respect to a rational listener agent) against its cost, usually based on length:
+$$S_n(u | o, \mathcal{L}) \propto \exp{\left(\alpha \log L_{n-1}(o | u, \mathcal{L}) - \textrm{cost}(u)\right)}$$
+where $\alpha$ is a soft-max optimality parameter controlling the extent to which the speaker maximizes over listener informativity. 
+The listener, in turn, inverts the speaker model to reason about what underlying object $o$ the speaker is trying to convey, given their utterance $u$:
+$$L_n(o | u, \mathcal{L}) \propto S_{n}(u | o, \mathcal{L})P(o)$$
+\indent This recursion eventually bottoms out in a \emph{literal listener} who directly looks up the meaning of the utterance in the lexicon:
+$$L_0(o | u, \mathcal{L}) \propto \mathcal{L}(u, o)\cdot P(o)$$
 
-Our approach to convention-formation begins with the additional assumption of \emph{lexical uncertainty} \cite{SmithGoodmanFrank13_RecursivePragmaticReasoningNIPS,BergenLevyGoodman16_LexicalUncertainty}. 
-In other words, we assume that instead of having perfect knowledge of $\mathcal{L}$, the listener has uncertainty over the exact meanings of lexical items in the current context (e.g. it may be initially unclear what "the dancer" might refer to). 
-This extends the lexicon from a lookup table or a static logical form untouched after childhood to a dynamic, parameterized representation that is constantly being updated.
+\section{Adapting to a single partner}
+Now, we extend the lexicon from a lookup table or a static logical form into a dynamic, parameterized representation that can be constantly being updated.
+To formalize this notion of semantic meaning, we begin with the additional assumption of \emph{lexical uncertainty} \cite{SmithGoodmanFrank13_RecursivePragmaticReasoningNIPS,BergenLevyGoodman16_LexicalUncertainty}. 
+That is, instead of assuming agents have fixed knowledge of $\mathcal{L}$, we allow for uncertainty over the exact meanings of lexical items in the current context (e.g. it may be initially unclear what ``the dancer" might refer to). 
+Concretely, we put a prior $P(\mathcal{L})$ over the identity of a partner's true lexicon, which may be initially biased toward certain meanings from previous experience. 
 
-Concretely, we begin with some prior $P(\mathcal{L})$ about the identity of a partner's true lexicon, which may be initially biased toward certain meanings. 
-Bayesian updating then gives a rule for inferring this true lexicon conditioned on repeated observations of a partner's behavior:
-$$P_{L_n}(\mathcal{L} | d) \propto P(\mathcal{L})\prod_i S_n(s_i|u_i, \mathcal{L})$$
-where $d = \{s_i, u_i\}$ is a set of observations of $s_i$ and $u_i$ coming from previous exchanges\footnote{There is a broader debate over the timescales at which lexicons and lexicon learning mechanisms operate; here, we assume a discourse-level structure to the lexicon, where there is uncertainty over how words are used \emph{in the given conversation, by the current partner}. See \cite{FrankGoodmanTenenbaum09_Wurwur} and others for a related approach at the developmental timescale of cross-situational word learning.}. 
-The listener marginalizes over this posterior when interpreting the speaker's utterance:
-$$L_n(s | u, d) \propto \sum_\mathcal{L}P_{L_n}(\mathcal{L}|d)L_n(s|u,\mathcal{L})$$
+Bayesian updating then gives a rule for updating expectations about this true lexicon conditioned on repeated observations of a partner's behavior:
+$$P_{L_n}(\mathcal{L} | d) \propto P(\mathcal{L})\prod_i S_n(o_i | u_i, \mathcal{L})$$
+where $d = \{o_i, u_i\}$ is a set of observations containing utterances $u_i$ referring to objects $o_i$ from previous exchanges with that partner.
+The listener marginalizes over this posterior when interpreting a new utterance $u$ from the speaker:
+$$L_n(o | u, d) \propto \sum_\mathcal{L}P_{L_n}(\mathcal{L}|d)L_n(o | u,\mathcal{L})$$
 The speaker, in turn, considers what utterances would be most informative for such a listener:
-$$S_n(u | s, d) \propto \exp( \alpha\log\left(\sum_{\mathcal{L}} P_{S_n}(\mathcal{L} | d) L_{n-1}(s | u, \mathcal{L})\right) - \textrm{cost}(u) )$$
-where the posterior over lexica $P_{S_n}(\mathcal{L} | d)$, uses the listener likelihood $L_{n-1}$. For the purposes of this paper, we fix the depth of recursion at $n = 2$.
-This model is implemented in the probabilistic programming language WebPPL \cite{GoodmanStuhlmuller14_DIPPL}. \footnote{All results can be reproduced running our code in the browser at \url{http://forestdb.org/models/conventions.html}}. 
+$$S_n(u | o, d) \propto \exp( \alpha\log\left(\sum_{\mathcal{L}} P_{S_n}(\mathcal{L} | d) L_{n-1}(o | u, \mathcal{L})\right) - \textrm{cost}(u) )$$
+where the posterior over lexica $P_{S_n}(\mathcal{L} | d)$, uses the listener likelihood $L_{n-1}$ instead of the speaker likelihood:
+$$P_{S_n}(\mathcal{L} | d) \propto P(\mathcal{L})\prod_i L_{n-1}(u_i | o_i, \mathcal{L})$$
+For the purposes of this paper, we fix the depth of recursion at $n = 2$.
+This model is implemented in the probabilistic programming language WebPPL \cite{GoodmanStuhlmuller14_DIPPL}. \footnote{These results can be reproduced running our code in the browser at \url{http://forestdb.org/models/conventions.html}}. 
 
 \subsection{Model Results}
 
@@ -56,30 +58,51 @@ This model is implemented in the probabilistic programming language WebPPL \cite
   \label{fig:modelResults}
 \end{figure}
 
-Following \cite{SmithGoodmanFrank13_RecursivePragmaticReasoningNIPS}, we begin by showing how a random initial choice is taken to be evidence for a particular lexicon and becomes the base for successful communication even though neither party knows its meaning at the outset.
-Consider an environment with two abstract shapes ($\{s_1, s_2\}$), where the speaker must choose between two utterances ($\{u_1, u_2\}$) incurring equal cost. 
-Their prior $P(\mathcal{L})$ over the meaning of each utterance is given by a Beta distribution\footnote{In our implementation, we enumerate over coarse-grained bins; preliminary experiments using variational inference on the full continuous distribution give similar results}, so on the first round both utterances are equally likely to apply to either shape. 
-If the speaker was trying to get their partner to pick $s_1$, then, since each utterance is equally (un)informative, they would randomly sample one (say, $u_1$), and observe the listener's selection of a shape (say, $s_1$). 
-On the next round, the speaker uses the observed pair $\{u_1, s_1\}$ to update their beliefs about their partner's true lexicon, uses these beliefs to generate a new utterance, and so on. 
+\paragraph{Coordination}
+First, we show how agents updating their meaning functions in this way can coordinate even in the absence of strong initial priors. 
+The initial choices in an interaction can be taken as evidence for a particular lexicon and become the basis for successful communication, even when both speaker and listener are uncertain at the beginning.
+As a simple test case, consider an environment with two objects ($\{o_1, o_2\}$), where the speaker must choose between two utterances ($\{u_1, u_2\}$) with equal production costs. 
+For the prior $P(\mathcal{L})$ over the meaning of each utterance, we define a Beta distribution\footnote{In our implementation, we use exact enumeration over coarse-grained bins; experiments using variational inference on the full continuous distribution give similar results}, so on the first round both utterances are equally likely to apply to either shape. 
+If the speaker were trying to get their partner to pick $o_1$, then because each utterance is equally (un)informative, they could only randomly sample one (say, $u_1$), and observe the listener's selection of a shape (say, $o_1$, a correct response). 
+On the next round, the speaker uses the observed pair $\{u_1, o_1\}$ to update their beliefs about their partner's true lexicon, uses these beliefs to generate a new utterance, and so on. 
 To examine expected dynamics over multiple rounds, we forward sample many possible trajectories.
 
 We observe several important qualitative effects in our simulations. 
-First, the fact that a knowledgeable listener responds to utterance $u$ with $s$ provides evidence for lexicons in which $u$ is a good fit for $s$, hence the likelihood of the speaker using $u$ to refer to $s$ increases on subsequent rounds (see Fig.\ref{fig:modelResults}A). 
+First, and more fundamentally, the evidence that a knowledgeable listener responded to utterance $u$ by choosing a particular object $o$ provides support for lexicons in which $u$ is a good fit for $o$. 
+Hence, the likelihood of the speaker using $u$ to refer to $o$ will increase on subsequent rounds (see Fig.\ref{fig:modelResults}A). 
 In other words, the initial symmetry between the meanings can be broken by initial random choices, leading to completely arbitrary but stable mappings in future rounds. 
-Second, because the listener is also learning the lexicon from these observations under the same set of assumptions, they converge on a shared set of meanings; hence, expected accuracy rises on future rounds (see Fig. \ref{fig:modelResults}B). 
-Third, because one's partner is assumed to be pragmatic, agents can also learn about unheard utterances. 
-Observing $d = \{u_1, s_1\}$ also provides evidence that $u_2$ is \emph{not} a good fit for $s_1$ by Gricean maxims: if $u_2$ were a better fit for $s_1$, the speaker would have used it instead \cite{Grice75_LogicConversation}. 
-Finally, \emph{failed references} can lead to conventions just as effectively as successful references: if the speaker intends $s_1$ and says $u_1$, but then the listener incorrectly picks $s_2$, the speaker will take this as evidence that $u_1$ actually means $s_2$ in their partner's lexicon and become increasingly likely to use it that way on subsequent rounds.
 
-Finally, we show how our model explains reduction of utterance length over multiple interactions. For utterances to be reduced, of course, they must vary in length. Motivated by our empirical observation that meaningful clauses are the primary unit of reduction, we extend our grammar to include \emph{conjunctions}. This is one of the simplest ways to constructing longer utterances compositionally from lexical primitives, using the product rule:
+Second, because the listener is updating their meaning representation from the same observations under the same set of assumptions, both partners converge on a \emph{shared} set of meanings; hence, the expected accuracy of selecting the target object rises on future rounds (see Fig. \ref{fig:modelResults}B). 
+Third, because one's partner is assumed to be pragmatic via recursive Rational Speech Act mechanisms, agents can also learn about \emph{unheard} utterances. 
+Observing $d = \{(u_1, o_1)\}$ also provides evidence that $u_2$ is \emph{not} a good fit for $o_1$.
+This effect arises from Gricean maxims: if $u_2$ were a better fit for $o_1$, the speaker would have used it instead \cite{Grice75_LogicConversation}. 
+Fourth, \emph{failed references} can lead to conventions just as effectively as successful references: if the speaker intends $o_1$ and says $u_1$, but then the listener incorrectly picks $o_2$, the speaker will take this as evidence that $u_1$ actually means $o_2$ in their partner's lexicon and become increasingly likely to use it that way on subsequent rounds.
+
+\paragraph{Reduction}
+Next, we show how our model explains reduction of utterance length over multiple interactions. 
+For utterances to be reduced, of course, they must vary in length, so we extend our grammar to include \emph{conjunctions}. 
+Conjunctions are one of the simplest ways to constructi longer utterances compositionally from lexical primitives, using the product rule:
 $$\mathcal{L}(u_i \textrm{ and } u_j, o) = \mathcal{L}(u_i, o) \times \mathcal{L}(u_j, o)$$
-\indent Analogous to our tangram stimuli, which have many ambiguous features and figurative perspectives that may be evoked in speaker descriptions, we consider a simplified scenario where speakers can refer to two different features of the two objects $\{o_1, o_2\}$. The speaker has four primitive words at their disposal -- two words for shape ($\{u_{s1}, u_{s2}\}$) and two for color $\{u_{c1}, u_{c2}\}$ -- and has uncertainty over the initial meanings of all four.
+\indent Analogous to the \emph{tangram} stimuli used in the reference game reviewed in Chapter 1, which have many ambiguous features and figurative perspectives that may be evoked in speaker descriptions, we consider a scenario the two objects $\{o_1, o_2\}$ differ along two different features. 
+The speaker thus has four primitive words at their disposal -- two words for the first feature ($\{u_{11}, u_{12}\}$) and two for the second $\{u_{21}, u_{22}\}$. 
 
-While we established in the previous section that conventions can emerge over a reference game in the complete absence of initial preferences, players often bring such preferences to the table. A player who hears 'ice skater' on the first round of our tangrams task is more likely to select some objects more than others, even though they still have some uncertainty over its meaning in the context. To show that our model can accommodate this fact, we allow the speaker's initial prior meanings to be slightly biased. $u_{s1}$ and $u_{c1}$ are more likely to mean $o_1$; $u_{s2}$ and $u_{c2}$ are more likely to mean $o_2$.
+While we established in the previous section that conventions can emerge over a reference game in the complete absence of initial preferences, players often bring such preferences to the table. 
+A player who hears `ice skater' on the first round of a tangrams task is more likely to select some objects more than others, even though they still have some uncertainty over its meaning in the context. 
+To show that our model can accommodate this fact, we allow the speaker's initial prior meanings to be slightly biased. 
+We assume $u_{11}$ and $u_{21}$ are a priori more likely to mean $o_1$ and $u_{12}$ and $u_{22}$ are more likely to mean $o_2$.
 
-We ran 1000 forward samples of 6 rounds of speaker-listener interaction, and averaged over the utterance length at each round \footnote{In our simulations, we used $\alpha = 10$ and found the basic reduction effect over a range of different biases}. Our results are shown in Figure \ref{fig:modelResults}C: the expected utterance length decreases systematically over each round. To illustrate in more detail how this dynamic is driven by an initial rational preference for redundancy relaxing as reference becomes more reliable, we walk step-by-step through a single trajectory. 
+We ran 1000 forward samples of 6 rounds of speaker-listener interaction, and averaged over the utterance length at each round \footnote{In our simulations, we used $\alpha = 10$ and found the basic reduction effect over a range of different biases}. 
+Our results are shown in Figure \ref{fig:modelResults}C: the expected utterance length decreases systematically over each round. 
+To illustrate in more detail how this dynamic is driven by an initial rational preference for redundancy relaxing as reference becomes more reliable, we walk step-by-step through a single trajectory. 
 
-Consider a speaker who wants to refer to object $o_1$. They believe their knowledgeable partner is slightly more likely to interpret their language using a lexicon in which $u_{s1}$ and $u_{c1}$ apply to this object, due to their initial bias. However, there is still a reasonable chance that one or the other alone actually refers strongly to $o_2$ in the true lexicon. Thus, it is useful to produce the conjunction "$u_{s1}$ and $u_{c1}$" to hedge against this possibility, despite its higher cost. Upon observing the listener's response (say, $o_1$), the evidence is indeterminate about the separate meanings of $u_{s1}$ and $u_{c1}$ but both become increasingly likely to refer to $o_1$. In the trade-off between informativity and cost, the shorter utterances remain probable options. Once the speaker chooses one of them, the symmetry collapses and that utterance remains most probable in future rounds. In this way, meaningful sub-phrases are omitted over time as the speaker becomes more confident about the true lexicon. 
+Consider a speaker who wants to refer to object $o_1$. 
+They believe their knowledgeable partner is slightly more likely to interpret their language using a lexicon in which $u_{11}$ and $u_{12}$ apply to this object, due to their initial bias. 
+However, there is still a reasonable chance that one or the other alone actually refers more strongly to $o_2$ in the true lexicon. 
+Thus, it is useful to produce the conjunction "$u_{11}$ and $u_{12}$" to hedge against this possibility, despite its higher cost. 
+Upon observing the listener's response (say, $o_1$), the evidence is indeterminate about the separate meanings of $u_{11}$ and $u_{12}$ but both become increasingly likely to refer to $o_1$. 
+In the trade-off between informativity and cost, the shorter utterances remain probable options. 
+Once the speaker chooses one of them, the symmetry collapses and that utterance remains most probable in future rounds. 
+In this way, meaningful sub-phrases are omitted over time as the speaker becomes more confident about the true lexicon. 
 
 \section{Generalizing to new partners: introducing hierarchical structure}
 
@@ -90,23 +113,30 @@ Consider a speaker who wants to refer to object $o_1$. They believe their knowle
   \label{fig:task1model}
 \end{figure}
 
-Next, we can straightforwardly extend this model to multiple partners, thus providing the first opportunity to test how collective patterns emerge from rich, repeated interactions with known partners in a community. 
+Next, we can straightforwardly extend this model to multiple partners, thus providing the first opportunity to test partner-specificity and generalization.
+To do so, we create an additional We use a hierarchical  \cite{GelmanEtAl14_BDA,TenenbaumKempGriffithsGoodman11_Grow_a_Mind_Science,KleinschmidtJaeger15_RobustSpeechPerception} that provides a useful mathematical and conceptual framework for addressing these challenges. Hierarchical models have been key to explaining how the human mind solves difficult inductive problems in domain like causal learning \cite{KempGoodmanTenenbaum10_LearningToLearn,GoodmanUllmanTenenbaum11_TheoryOfCausality} and concept learning \cite{KempPerforsTenenbaum07_HBM} where abstract, shared properties must be jointly inferred with idiosyncratic particulars of instances. More than the relatively fixed, biological concept of a dog, though, language is a moving target. The only data we use to ground our learning is produced by other agents who are in the same position as we are, and our only goal is to coordinate on the same meanings in context \cite{HassonGhazanfar___Keysers12BrainToBrain}. This is the sense in which the meanings we learn are conventional. This \emph{social grounding} is precisely what gives rise to the fascinating idiosyncracies of local convention formation.
+
 %Here we sketch the ``ideal'' mathematical form of the proposed model, leaving implementational details for the following section.
-Hierarchical Bayesian models have been key to quantitatively explaining how the human mind solves difficult inductive problems in domains like causal learning and concept learning where idiosyncratic particulars of instances must be jointly inferred with knowledge that is shared across instances \shortcite{tenenbaum_how_2011}.
-For instance, the concept of a ``dog'' abstracts away from our experiences with different instances of dogs across a lifetime, and provides stable expectations about the properties of a new instance -- four legs, wagging tail, barking noises.
+%Hierarchical Bayesian models have been key to quantitatively explaining how the human mind solves difficult inductive problems in domains like causal learning and concept learning where idiosyncratic particulars of instances must be jointly inferred with knowledge that is shared across instances \shortcite{tenenbaum_how_2011}.
+%For instance, the concept of a ``dog'' abstracts away from our experiences with different instances of dogs across a lifetime, and provides stable expectations about the properties of a new instance -- four legs, wagging tail, barking noises.
 
 %More than the relatively fixed, biological concept of a dog, though, language can be seen as a moving target. The only data we use to ground our learning is produced by other agents who are in the same position as we are, and our only goal is to coordinate on the same meanings in context. This is the sense in which the meanings we learn are conventional. 
 However, extensive experience with a particular dog \emph{Fido} reveals idiosyncratic properties, like the pattern of spots on his coat.
 This example from concept learning can be adapted as a novel perspective on how conventions work: accumulated knowledge about linguistic conventions in one's community provides stable communicative ``priors'' that guide how we approach new partners, but the language we use to talk with a family member or close collaborator may deviate considerably from the usage predicted by population-level conventions.
 Hierarchical Bayesian models thus provide a formal method for both smoothly integrating population-level expectations with partner-specific ones, and also appropriately \emph{updating} population-level knowledge through additional partner-specific observations (see Fig. \ref{fig:task1model}).
 
-We begin by proposing a hierarchical Bayesian model of convention formation \cite{GelmanEtAl14_BDA,TenenbaumKempGriffithsGoodman11_Grow_a_Mind_Science,KleinschmidtJaeger15_RobustSpeechPerception} that provides a useful mathematical and conceptual framework for addressing these challenges. Hierarchical models have been key to explaining how the human mind solves difficult inductive problems in domain like causal learning \cite{KempGoodmanTenenbaum10_LearningToLearn,GoodmanUllmanTenenbaum11_TheoryOfCausality} and concept learning \cite{KempPerforsTenenbaum07_HBM} where abstract, shared properties must be jointly inferred with idiosyncratic particulars of instances. More than the relatively fixed, biological concept of a dog, though, language is a moving target. The only data we use to ground our learning is produced by other agents who are in the same position as we are, and our only goal is to coordinate on the same meanings in context \cite{HassonGhazanfar___Keysers12BrainToBrain}. This is the sense in which the meanings we learn are conventional. This \emph{social grounding} is precisely what gives rise to the fascinating idiosyncracies of local convention formation.
-
 Just as our concept of a dog, built up over many individual experiences across a lifetime, provides stable expectations about the properties of a new instance -- four legs, wagging tail, barking noises -- our accumulated lexical knowledge provides stable communicative expectations. 
 At the highest level of the hierarchical lexical representation is a \emph{community-level} variable $\Theta$ parameterizing the agent's prior expectations for the likely lexicon $\mathcal{L}_i$ used by a novel community member $i$: $P(\mathcal{L}_i | \Theta)$. 
 
-For the conceptual purposes of this chapter, it is not important exactly what form this distribution takes, or what initial prior over the over-hypothesis $P(\Theta)$ could in principle guide early language learning
-For simplicity, we could assume $\Theta$ is an $\mathcal{W} \times \mathcal{O} \times 2$ tensor containing values $(\alpha_{(w,o)}, \beta_{(w,o)})$ for every entry $(w,o)$ in the lexicon $\mathcal{L}_i$. 
+\begin{figure}
+\centering
+    \includegraphics[scale=1.1]{partnerspecificity.pdf}
+  \caption{Hierarchical model}
+  \label{fig:specificity}
+\end{figure}
+
+%For the conceptual purposes of this chapter, it is not important exactly what form this distribution takes, or what initial prior over the over-hypothesis $P(\Theta)$ could in principle guide early language learning
+For simplicity, we assume $\Theta$ parameterizes %an $\mathcal{W} \times \mathcal{O} \times 2$ tensor containing values $(\alpha_{(w,o)}, \beta_{(w,o)})$ for every entry $(w,o)$ in the lexicon $\mathcal{L}_i$. 
 This would factor the lexical prior $P(\mathcal{L}_i | \Theta)$ into independent Beta distributions over intervals $[0,1]$. It would then be straightforward to place an uninformative prior $P(\Theta)$ over that tensor which does not overwhelm the likelihood \cite<see>[p. 110, for some reasonable choices]{GelmanEtAl14_BDA}. 
 More generally, we could allow for arbitrarily complex dependencies between entries of the lexicon by using a Bayesian neural network with weight tensor $\Theta$.
 In Chapter 4 we will propose a neural network approximation for empirical Bayes, representing only a point estimate of $\Theta$ rather than a whole distribution.
@@ -141,6 +171,8 @@ In summary, our hierarchical model formalizes the intuition that global conventi
 
 
 \section{Discussion}
+
+There is a broader debate over the timescales at which lexicons and lexicon learning mechanisms operate; here, we assume a discourse-level structure to the lexicon, where there is uncertainty over how words are used \emph{in the given conversation, by the current partner}. See \cite{FrankGoodmanTenenbaum09_Wurwur} and others for a related approach at the developmental timescale of cross-situational word learning.
 
 Theories of convention-formation vary in the extent to which social reasoning about common ground is required. 
 Our agents lie on a spectrum between the heuristic updating agents of Barr (2004) and the sophisticated agents of Clark \& Wilkes-Gibbs (1986), who collaboratively build up explicit representations of mutual knowledge. 
