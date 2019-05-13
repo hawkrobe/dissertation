@@ -20,7 +20,6 @@ After a week of care, however, they may just ask for their ``Vasotec.''
 \centering
 \includegraphics[scale=.65]{frontfig.pdf}
 \caption{Reference game task, listener architecture, and continual learning approach.}
-\vspace{-1em}
 \label{fig:refgame}
 \end{figure}
 This type of flexible language use poses a challenge for models of language in machine learning.
@@ -53,10 +52,9 @@ This task is a special case of the more general family of reference games, where
 In a \emph{repeated reference game}, each image in context appears as the target multiple times, allowing us to evaluate how communication about a particular image changes as the speaker and listener build up a shared history. 
 
 \subsection{Continual adaptation with Hierarchical Bayes}
-Before formalizing our algorithm as a generic update rule for neural networks, we describe the theoretical Bayesian foundations of our approach.
-At the core of any communication model is a notion of the \emph{semantics} of language, which supplies the relationship between utterances and states of the world. 
+Before formalizing our algorithm as a generic update rule for neural networks, we describe the theoretical Bayesian foundations of our approach, reviewing material from previous chapters in the context of machine learning.
 % \ndg{i generally think of this as the semantics, and a lexicon maps single words to meanings.... you could change or clarify, though i don't feel strongy}
-Under a Bayesian approach, this representation can be viewed probabilistically: we represent some uncertainty over meanings.
+Under a Bayesian approach, semantic representations can be viewed probabilistically: we represent some uncertainty over meanings.
 %We define the lexicon as a function $\mathcal{L}: (w_n, o_m) \rightarrow \mathbb{R}$, assigning any word-object pair a real-valued meaning according to how well the word $w_n$ applies to the object $o_m$. 
 %This is a continuous generalization of classic truth-conditional semantics. %\shortcite{graf_animal_2016}. 
 %We view the lexicon not as a lookup table or a static logical form untouched after childhood, but as a dynamic, parameterized representation that is constantly being updated.
