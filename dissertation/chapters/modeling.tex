@@ -85,7 +85,6 @@ Conjunctions are one of the simplest ways to constructi longer utterances compos
 $$\mathcal{L}(u_i \textrm{ and } u_j, o) = \mathcal{L}(u_i, o) \times \mathcal{L}(u_j, o)$$
 \indent Analogous to the \emph{tangram} stimuli used in the reference game reviewed in Chapter 1, which have many ambiguous features and figurative perspectives that may be evoked in speaker descriptions, we consider a scenario the two objects $\{o_1, o_2\}$ differ along two different features. 
 The speaker thus has four primitive words at their disposal -- two words for the first feature ($\{u_{11}, u_{12}\}$) and two for the second $\{u_{21}, u_{22}\}$. 
-
 While we established in the previous section that conventions can emerge over a reference game in the complete absence of initial preferences, players often bring such preferences to the table. 
 A player who hears `ice skater' on the first round of a tangrams task is more likely to select some objects more than others, even though they still have some uncertainty over its meaning in the context. 
 To show that our model can accommodate this fact, we allow the speaker's initial prior meanings to be slightly biased. 
@@ -94,7 +93,6 @@ We assume $u_{11}$ and $u_{21}$ are a priori more likely to mean $o_1$ and $u_{1
 We ran 1000 forward samples of 6 rounds of speaker-listener interaction, and averaged over the utterance length at each round \footnote{In our simulations, we used $\alpha = 10$ and found the basic reduction effect over a range of different biases}. 
 Our results are shown in Figure \ref{fig:modelResults}C: the expected utterance length decreases systematically over each round. 
 To illustrate in more detail how this dynamic is driven by an initial rational preference for redundancy relaxing as reference becomes more reliable, we walk step-by-step through a single trajectory. 
-
 Consider a speaker who wants to refer to object $o_1$. 
 They believe their knowledgeable partner is slightly more likely to interpret their language using a lexicon in which $u_{11}$ and $u_{12}$ apply to this object, due to their initial bias. 
 However, there is still a reasonable chance that one or the other alone actually refers more strongly to $o_2$ in the true lexicon. 
@@ -141,7 +139,6 @@ We formalize this model as a straightforward extension of the RSA model above.
 Specifically, we add an additional community-level representation parameterizing the lexical prior to create a hierarchical dependency structure (see Fig. \ref{fig:task1model}). 
 %Here we sketch the ``ideal'' mathematical form of the proposed model, leaving implementational details for the following section.
 At the highest level of the hierarchical lexical representation is a \emph{community-level} variable $\Theta$ parameterizing the agent's prior expectations for the likely lexicon $\mathcal{L}_i$ used by a novel community member $i$: $P(\mathcal{L}_i | \Theta)$. 
-
 %For the conceptual purposes of this chapter, it is not important exactly what form this distribution takes, or what initial prior over the over-hypothesis $P(\Theta)$ could in principle guide early language learning
 For simplicity, we generalize our Beta prior in the earlier section by assuming $\Theta$ is a tensor parameterizing a matrix containing an entry for every $(w,o)$ in the lexicon $\mathcal{L}_i$.  
 We can then place an uninformative prior $P(\Theta)$ over that tensor which does not overwhelm the likelihood.
@@ -167,39 +164,65 @@ Critically for predictions about generalization, new language data (i.e. particu
 If two or three partners all happen to use the same language, however, it starts to become more likely that a novel partner will share it as well (this transfer is sometimes referred to as ``sharing of statistical strength.'')
 This formalizes the intuition sketched in Chapter 1.
 
-\begin{figure}
-\centering
-    \includegraphics[scale=1.1]{partnerspecificity.pdf}
-  \caption{Hierarchical model}
-  \label{fig:specificity}
-\end{figure}
-
-
 %For  adult language users who have observed innumerable uses of language over their lifetimes, the contribution of a new data point to the overhypothesis $P(\Theta_0 | D)$ should be negligible; the contribution to a partner-specific model, however, can be quite strong. 
 
-Finally, to fully specify our model and compute our partner-specific lexical posterior $P(\mathcal{L}_i, D_i, \Theta_0)$, we must link our beliefs about a partner's lexica to their actual behavior with a likelihood function $P(D_i | \mathcal{L}_i, \Theta_0)$. 
-This is naturally supplied by the Rational Speech Act framework in the previous section \cite{FrankGoodman12_PragmaticReasoningLanguageGames,GoodmanFrank16_RSATiCS,BergenLevyGoodman16_LexicalUncertainty,SmithGoodmanFrank13_RecursivePragmaticReasoningNIPS}: we assume speakers produce utterances that are parsimonious yet informative in context with respect to their lexicon, and listeners interpret utterances by inverting a speaker model. Because we expect our partner to use language rationally given some lexicon, the utterance they choose to refer to some object will be probable under some lexica and highly improbable under others. 
+Finally, to fully specify our model and compute our partner-specific lexical posterior $P(\mathcal{L}_i | D_i, \Theta)$, we must link our beliefs about a partner's lexica to their actual behavior with a likelihood function $P(D_i | \mathcal{L}_i, \Theta)$. 
+This is naturally supplied by the Rational Speech Act framework used in the previous section \cite{FrankGoodman12_PragmaticReasoningLanguageGames,GoodmanFrank16_RSATiCS,BergenLevyGoodman16_LexicalUncertainty,SmithGoodmanFrank13_RecursivePragmaticReasoningNIPS}: we assume speakers produce utterances that are parsimonious yet informative in context with respect to their lexicon, and listeners interpret utterances by inverting a speaker model. Because we expect our partner to use language rationally given some lexicon, the utterance they choose to refer to some object will be probable under some lexica and highly improbable under others. 
 In this way, a particular agent's language use is a cue to their particular lexicon as well as a cue to the communal lexicon shared. 
-In summary, our hierarchical model formalizes the intuition that global conventions are learned and generalized over many extended interactions with many different people across a lifetime, and that this shared semantic prototype is the backbone supporting rapid learning for new partners and situations. 
+
+In summary, our hierarchical model formalizes the intuition that global conventions are learned and generalized over repeated interactions with many different people, and that this shared semantic prototype is the backbone supporting rapid learning for new partners and situations. 
 
 \subsection{Model Results}
 
+Our primary aim in this section is to examine the gradient of generalization produced by our hierarchical model across different partners.
+To test this behavior, we used the same simple scenario with two objects and two words as we used to test adaptation to a single partner.
+As our measure of interest, we focus on a listener agent's shifting expectations about which target is being referred to as they adapt their semantic representations.
+Instead of presenting a stream of data from a single partner, however, we swap in a new partner every $k$ rounds of the reference game.
 
+To derive quantitive behavior in this scenario, we must concretely specify the agent's lexical priors and a method to perform inference.
+We used independent Gaussian distributions for each $\theta_{ij} \in \Theta$ as a hyper-prior and centered our partner-specific prior $\ell_{ij} \in \mathcal{L}$ at the shared value for a particular partner:
+$$\begin{array}{rcl}
+P(\theta_{ij}) & \sim & \mathcal{N}(0, 5)\\
+P(\ell_{ij}) & \sim & \mathcal{N}(\theta_{ij}, 1)
+\end{array}$$
+The variances chosen in these priors are assumptions about how strongly adaptation is regularized. 
+Using a higher variance for the hyper-prior than for the partner-specific prior corresponds to the assumption that the agent has substantial uncertainty over the population-level lexicon, but that individuals in the population shouldn't vary too much from whatever that lexicon is.
 
-\section{Discussion}
+\begin{figure}
+\centering
+    \includegraphics[scale=1.1]{partnerspecificity.pdf}
+  \caption{Listener predictions as more evidence accumulated from different partners.}
+  \label{fig:specificity}
+\end{figure}
 
-There is a broader debate over the timescales at which lexicons and lexicon learning mechanisms operate; here, we assume a discourse-level structure to the lexicon, where there is uncertainty over how words are used \emph{in the given conversation, by the current partner}. See \cite{FrankGoodmanTenenbaum09_Wurwur} and others for a related approach at the developmental timescale of cross-situational word learning.
+We used a variational method \cite<VI;>{RanganathGerrishBlei13_BlackBoxVariationalInference,blei_variational_2017} to perform inference in our model.
+Variational methods transform probabilistic inference problems into optimization problems by approximating the true posterior with a parameterized family.
+Specifically, we make a \emph{mean-field} approximation and assume that the full posterior can be factored into independent Gaussians for each random variable in the lexicon.
+We then optimize the parameters of these posterior Gaussians by minimizing the evidence lower bound (ELBO) objective \cite<see>[for more details]{murphy2012machine}.
+To examine how inferences change over time, we amortize inference. 
+We run 10,000 steps of gradient descent on the first observation to obtain a lexical posterior, compute the listener's marginal prediction for the next observation, then continue running gradient descent on the same stored parameters after including the new observation in the data.
 
-Theories of convention-formation vary in the extent to which social reasoning about common ground is required. 
-Our agents lie on a spectrum between the heuristic updating agents of Barr (2004) and the sophisticated agents of Clark \& Wilkes-Gibbs (1986), who collaboratively build up explicit representations of mutual knowledge. 
-Speakers and listeners in our model implicitly coordinate their beliefs through a shared history of observations, which serves as ``common ground'' in an informal sense.
-They make critical use of pragmatic, social reasoning in order to learn meanings, but do not explicitly consider the fact that this history is shared, or represent their partner's own uncertainty.
+Our simulation results are shown in Fig. \ref{fig:specificity}.
+To observe behavior in the simplest case, we feed the model the same object-target pair ($\{o_1, w_1\}$) on every trial.  
+We find that the adapting listener begins at chance because of its uninformative prior, but after interacting with that partner for several rounds, it adapts its lexicon to select the target well above chance. 
+When a new partner is introduced, however, it reverts nearly to its original state: because of the hierarchical structure of its lexical expectations, it was ambiguous whether the evidence from the first partner was idiosyncratic or due to shared structure.
+After adapting similarly to the second partner, however, it begins its interaction with a third partner with nearly the accuracy at the end of its interaction with the first partner.
+Thus, its expectations about individual partners' lexica are gradually being incorporated into community-level expectations.
 
-By capturing reduction, which purely heuristic theories have not yet demonstrated, we showed that minimal assumptions of social reasoning go a long way in accounting for key phenomena. 
-Still, our model falls short in some ways. 
-For instance, because we do not provide a mechanisms for the listener agent to respond with confirmation, repair, or follow-up questions, we cannot make explicit predictions about the reduction in \emph{listener messages} (as in Fig. \ref{fig:replication}) or the impact of early listener responses on conventionalization. 
-These phenomena require our model to deal with planning over extended dialogues, and to potentially weaken the assumption that one's partner knows the true lexicon with complete certainty. 
-
-Similarly, while our model was explicitly designed with linguistic conventions in mind, it remains to be seen whether the same formulation generalizes to broader behavioral conventions. 
-For example, the real-time coordination games used in Hawkins \& Goldstone (2016) may not require players to reason about a structured lexicon with noise, but an action policy representation may play a similar role. 
-While there remain many complex aspects of convention-formation in communication games left for future research, our approach nonetheless serves as a lower bound on the degree of social reasoning needed to capture lexical conventions in these games.
+%\section{Discussion}
+%
+%There is a broader debate over the timescales at which lexicons and lexicon learning mechanisms operate; here, we assume a discourse-level structure to the lexicon, where there is uncertainty over how words are used \emph{in the given conversation, by the current partner}. See \cite{FrankGoodmanTenenbaum09_Wurwur} and others for a related approach at the developmental timescale of cross-situational word learning.
+%
+%Theories of convention-formation vary in the extent to which social reasoning about common ground is required. 
+%Our agents lie on a spectrum between the heuristic updating agents of Barr (2004) and the sophisticated agents of Clark \& Wilkes-Gibbs (1986), who collaboratively build up explicit representations of mutual knowledge. 
+%Speakers and listeners in our model implicitly coordinate their beliefs through a shared history of observations, which serves as ``common ground'' in an informal sense.
+%They make critical use of pragmatic, social reasoning in order to learn meanings, but do not explicitly consider the fact that this history is shared, or represent their partner's own uncertainty.
+%
+%By capturing reduction, which purely heuristic theories have not yet demonstrated, we showed that minimal assumptions of social reasoning go a long way in accounting for key phenomena. 
+%Still, our model falls short in some ways. 
+%For instance, because we do not provide a mechanisms for the listener agent to respond with confirmation, repair, or follow-up questions, we cannot make explicit predictions about the reduction in \emph{listener messages} (as in Fig. \ref{fig:replication}) or the impact of early listener responses on conventionalization. 
+%These phenomena require our model to deal with planning over extended dialogues, and to potentially weaken the assumption that one's partner knows the true lexicon with complete certainty. 
+%
+%Similarly, while our model was explicitly designed with linguistic conventions in mind, it remains to be seen whether the same formulation generalizes to broader behavioral conventions. 
+%For example, the real-time coordination games used in Hawkins \& Goldstone (2016) may not require players to reason about a structured lexicon with noise, but an action policy representation may play a similar role. 
+%While there remain many complex aspects of convention-formation in communication games left for future research, our approach nonetheless serves as a lower bound on the degree of social reasoning needed to capture lexical conventions in these games.
