@@ -7,7 +7,7 @@
 %\end{figure}
 \end{savequote}
 
-\chapter{Graphical convention formation during visual communication}
+\chapter{Disentangling contributions of visual information and interaction history in the formation of graphical conventions}
 \graphicspath{{./figures/graphical/}}
 
 From ancient etchings on cave walls to modern digital displays, visual communication lies at the heart of key human innovations (e.g., cartography, data visualization) and forms a durable foundation for the cultural transmission of knowledge and higher-level reasoning.
@@ -467,24 +467,23 @@ For example, sketchers may focus on drawing the backrest if it strongly distingu
 %A more complex yet revealing analysis would be examining whether certain semantic parts of a drawing are more diagnostic than others.
  % that relate to the semantic structure of the object, while keeping diagnostic parts intact.
 Future work should disentangle these possibilities empirically and via development of computational models of visual communication that can learn from task-related feedback, as well as judge which strokes would be most diagnostic.
-Visual communication is a powerful vehicle for the cultural transmission of knowledge.
-Over time, advancing our knowledge of the cognitive mechanisms underlying the formation of graphical conventions may lead to a deeper understanding of the origins of modern symbolic systems for communication and the design of better visual communication tools.
 %, in combination with the development of computational models of drawing production that account for part-level semantic structure.
 %\ndg{this last part is a little too technical and in the weeds for this point in the paper? at any rate its not clear why you need those particular ingredients... perhaps instead say that the importance / lesion analysis is a future direction with applications such as determining which strokes are dropped?}
 
-\subsection{Convention formation is domain-general}
+\paragraph{Similarities and differences across communication modalities}
 
-%\begin{quote}
-%the oral modality assumed the segmented and combi- natorial code not because of its strengths but to com- pensate for its weaknesses. The oral modality is not well suited to conveying messages mimetically [i.e., iconically], even though that function is also important to human languages. This function is, however, very well served by the manual modality'' (Goldin-Meadow and McNeill, p. 155).
-%\end{quote}
+\begin{quote}
+The oral modality is not well suited to conveying messages mimetically (i.e., iconically), even though that function is also important to human languages. This function is, however, very well served by the manual modality. \cite[p.155]{goldin-meadow_role_1999}
+\end{quote}
 
 %\todo[inline]{cite HoetjesEtAl15\_ReductionInGesture for reduction in gesture}
 
-While linguistic communication is powerful and prevalent, research on the dynamics of adaptation in other communication modalities is important in several ways.
-First, it is a core claim of our hierarchical learning model in Chapter 2 that the mechanisms underlying adaptation and convention formation are domain-general.
-In other words, there's nothing special about spoken or written language; any ad hoc system that we use to communicate and coordinate with other minds should display similar learning dynamics because they are all trying to convey underlying meaning. 
+More broadly, putting these results together with results from previous chapters raises a critical question about the role played by communication modality in convention formation.
+While linguistic communication is powerful and prevalent, research on the dynamics of adaptation in other communication modalities, including graphical and gestural modalities, is important in several ways.
+First, it is a core claim of our hierarchical learning model that the mechanisms underlying adaptation and convention formation are domain-general.
+In other words, there's nothing special about spoken or written language; any ad hoc system that we use to communicate and coordinate with other minds should display similar learning dynamics because they are all trying to coordinate on meaning. 
 
-Second, because the hierarchical learning model claims a critical role for the global priors we build up across many interactions with many individuals, we predict that different communication modalities should nevertheless display certain systematic differences in their dynamics.
+Second, because this hierarchical learning model claims a critical role for the global priors we build up across many interactions with many individuals, we predict that different communication modalities should nevertheless display certain systematic differences in their dynamics.
 For example, consider our reference game from Chapter 4 where the targets are complex, abstract geometric shapes like tangrams.
 In the verbal modality, these shapes are highly innominate -- we don't have much experience naming or describing them with words, thus our global prior is rather weak and we expect local adaptation to play a much bigger role.
 In the graphical modality, where you must communicate by drawing on a sketchpad, on the other hand, agents have a much stronger prior rooted in assumptions about shared perceptual systems and visual similarity (though see \citeNP{FanEtAl17_Drawing}: explaining these similarity judgements poses its own challenges).
@@ -492,8 +491,7 @@ Other stimuli have precisely the opposite property: to distinguish between natur
 
 Practically speaking, then, considering repeated reference games across different modalities is necessary to (1) test which adaptation effects, if any, are robust \& attributable to general mechanisms and (2) explain variance across settings where global priors and local adaptation trade off in different ways.
 If we adhered solely to the verbal modality, we would be limited to a fairly narrow range of stimuli (e.g. abstract shapes/tangrams) where behavior in the lab isn't totally dominated by strong prior conventions people bring into the interaction. 
-
-The clearest analogs to repeated linguistic reference games in the style of Krauss \& Weinheimer (1964) are Pictionary games like this ones used in this chapter
+The clearest analogs to repeated linguistic reference games in the style of \cite{krauss1964changes} are Pictionary games like this ones used in this chapter.
 %\footnote{Healey et al (2001) introduced an earlier version of the music drawing game, but for the purposes of this review, no piece appeared as the target more than once and the only dynamics reported were moderate levels of coordination on similar drawing types as coded by judges (i.e. player 1 is more likely to use Figurative drawings than Abstract drawings when player 2 also uses Figurative drawings). Similarly, Healey et al (2002) gives a brief overview of several repeated designs, but these data apparently only appear with full details in later publications.
 %}, 
 where participants were given a whiteboard to draw on instead of an auditory channel to talk through \cite{TheisenEtAl10_SystematicityArbitrariness}.
@@ -514,7 +512,7 @@ For example, \citeA{Galantucci05_EmergenceOfCommunication} introduced a novel `s
 The resulting messages consequently look nothing like the usual kinds of symbols people create: the relationship between motor actions and perceptual output is broken such that executing a familiar movement for a symbol or numeral instead produces an odd, wavy scribble.
 Despite the relative lack of priors on signal meanings in this medium, people were nevertheless able to converge on successful signaling systems in repeated reference games \cite{RobertsGalantucci12_DualityOfPatterning,RobertsEtAl15_IconocityOnCombinatoriality}.
 Other novel modalities used in iterated reference games include a `whistle' language where movements along a vertical touch bar slider correspond to changes in pitch \cite{VerhoefRobertsDingemanse15_Iconicity} and a visual analog where movements along the slider were presented visually \cite{VerhoefEtAl16_TemporalLanguage}.
-This growing literature 
+A unified model of coordination in communication ought to be able to account for production and comprehension across these modalities simply by exchanging its encoder and decoder components.
 
 % form a foundation for understanding visual abstraction and how abstract symbols may emerge from human interaction.
 % Our work suggests that over repeated visual communication, the meanings of abstract visual depictions are increasingly determined by shared knowledge between the communicators rather than their visual properties alone. We propose that a deeper understanding of the fine-grained factors that drive graphical convention formation will further help our understanding of \emph{how} these depictions derive their meaning.
