@@ -13,18 +13,22 @@ POLONIUS: Very like a whale.\\
 \chapter{Characterizing conventions: the dynamics of structure and content}
 \graphicspath{{./figures/tangrams/}}
 
-Talking with new partners about new referents poses a challenging coordination problem for social agents. 
-The computational approach developed in Chapters 2 and 3 explains key qualitative features of how speakers and listeners may solve this problem, and models derived from this approach function reasonably well in repeated reference games with humans. 
+Human language use is flexible, continuously adapting to the needs of the current situation. 
+In the previous chapter, we introduced a challenging repeated reference game benchmark for artificial agents, which requires such adaptability to succeed. 
+Inspired by the Bayesian model in Chapter 2, we proposed a continual learning approach that forms context-specific conventions by adapting general-purpose semantic knowledge.
+Even when models based on general-purpose knowledge perform poorly, our approach allowed human speakers working with adapted variants of such models to become more accurate and more efficient over time.
+
+The computational approach developed in these chapters explains key qualitative features of how speakers and listeners may dynamically solve the problem of talking with new partners about new referents.
+% poses a challenging coordination problem for social agents. , and models derived from this approach function reasonably well in repeated reference games with humans. 
 However, further model development depends critically upon a finer-grained characterization of the \emph{quantitative} signatures of semantic adaptation found in human communication. 
 %That is, distinguishing among different models requires  measurements 
 Certain fundamental descriptive questions remain unanswered, and important theoretical constructs remain poorly operationalized. 
-
 % in this literature. %on repeated reference games has extensively established a number of important qualitative properties of convention formation through careful experimental manipulations (see Chapter 1), but 
 For example, it has been widely observed that utterances reduce in length as common ground is accumulated.
 But a precise characterization \emph{what} gets reduced, and \emph{how}, has remained elusive.
-How systematic is the structure of reduction over time?
-Which sets of words are dropped together and in what sequence?
+%How systematic is the structure of reduction over time?
 What determines whether a particular word is dropped or preserved? 
+Are words dropped randomly or systematically in phrases?
 Similarly, while theoretical definitions of constructs like arbitrariness or stability have loomed over the theoretical analysis of conventions \cite{Lewis69_Convention}, it has been unclear how exactly to measure the extent to which these properties hold in a particular task and how they may evolve over the course of interaction. 
 Without addressing these gaps in measurement, it is difficult to set criteria to distinguish among different models.
 
@@ -383,12 +387,6 @@ The following analyses break down this broad reduction into a finer-grained set 
 \label{tab:words}
 \end{table*}
 
-\begin{figure}[t!]
-\centering
-\includegraphics[scale=.8]{posResults.pdf}
-\caption{(A) proportion of words in different part of speech on each repetition. (B) Closed-class parts of speech are more likely to be dropped than open-class parts of speech. Error bars are bootstrapped 95\% confidence intervals.} 
-\label{fig:pos}
-\end{figure}
 
 The first level of granularity concerns which \emph{kinds} of words are most likely to be dropped. 
 We used the SpaCy part-of-speech tagger \cite{spacy2} to count the number of words belonging to different parts of speech in each message.
@@ -398,6 +396,14 @@ To test which kinds of words are more likely to be dropped, we measured the perc
 We find that determiners (`the', `a', `an') are the most likely class of words to be dropped (90\%) and nouns (`dancer', `rabbit') are the least likely to be dropped (61\%).% with only an Y\% rate. 
 More generally, closed-class parts of speech, including function words like determiners, are strictly more likely to be dropped than open-class parts of speech (Fig. \ref{fig:pos}B).
 Because open-class parts of speech are statistically more likely to supply \emph{distinctive} words than closed-class parts of speech, these structural considerations may contribute to the patterns in distinctiveness reported in section \ref{sec:distinctive}.
+
+
+\begin{figure}[t!]
+\centering
+\includegraphics[scale=.8]{posResults.pdf}
+\caption{(A) proportion of words in different part of speech on each repetition. (B) Closed-class parts of speech are more likely to be dropped than open-class parts of speech. Error bars are bootstrapped 95\% confidence intervals.} 
+\label{fig:pos}
+\end{figure}
 
 One possible interpretation of these findings is that reduction may be driven mostly by the loss of function words as speakers shift to a less grammatical shorthand over the course of the task.
 However, when examining the n-grams most likely to be dropped (see Table \ref{tab:words}), we find that many of the most dropped closed-class words are used to form conjunctions (`and') or prepositional phases (`of', `with').
