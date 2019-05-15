@@ -8,9 +8,10 @@ We conclude by discussing some broader questions raised by the theoretical persp
 
 \section{Generalization in language acquisition}
 
-There is a broader debate over the timescales at which lexicons and lexicon learning mechanisms operate.
-Throughout our work, we assumed a discourse-level structure to the lexicon, where there is uncertainty over how words are used \emph{in the given conversation, by the current partner}. 
-But there is a particularly fascinating developmental parallel raised by these hierarchical learning mechanisms. 
+Throughout our work, we have assumed a discourse-level structure to an agent's priors. 
+We assume there is uncertainty over how words are used \emph{in the given conversation, by the current partner}. 
+However, there is a broader debate over the timescales at which lexicons and lexicon learning mechanisms operate.
+In particular, these hierarchical learning mechanisms suggest the possibility of a developmental parallel.
 Are the lexical learning mechanisms adults use to coordinate on local conventions \emph{within} an interaction the same as those supporting language-learning more broadly? 
 
 Most laboratory tasks investigating cross-situational word learning only use a single speaker, and even sophisticated models of cross-situational word learning that account for pragmatic reasoning about speaker intentions \cite[e.g.]{FrankGoodmanTenenbaum09_Wurwur} tend to collapse over \emph{who} is talking. 
@@ -24,15 +25,23 @@ When an experimenter feeds them the messages that adult speakers produced natura
 Kindergardeners continued to make errors even after 15-16 repetitions; children as old as fifth grade only improved with assistance from the experimenter and never approached the perfect levels of adult performance. 
 Instead of beginning with the long indefinite descriptions full of hedges and modifiers that adults provide, nursery-school speakers began with short, highly idiosyncratic descriptions like \emph{Mother's dress}. 
 If adult speakers' long hedge-filled messages are indeed motivated by lexical uncertainty, then perhaps young children have simply not obtained enough linguistic variability to calibrate their lexical prior. 
-Alternatively, if the pragmatic reasoning required to produce informative utterance depends on theory of mind, then the high processing demands of the task may simply be inhibited performance \cite<e.g.>{SetohScottBaillargeon16_FalseBelief}. This remains an underexplored puzzle for future developmental research. 
+Alternatively, if the pragmatic reasoning required to produce informative utterance depends on theory of mind, then the high processing demands of the task may simply be inhibited performance \cite<e.g.>{SetohScottBaillargeon16_FalseBelief}. This remains an under-explored puzzle for future developmental research. 
 
 \section{Mechanisms for adaptation}
 
-While we have thus far limited our discussed specifically to the reduction and simplification of messages as participants coordinate on meanings given a shared set of referents, this is only one of many levels at which conventions can form. In more complex circumstances, there is often initial uncertainty not just about which of a small set of targets a particular message refers to, but how to represent the relevant targets of reference in the first place. For instance, when using sketches to communicate about the identity of complex pieces of music \cite{HealeySwobodaUmataKing07_GraphicalLanguageGames}, a particular set of strokes could correspond to any number of properties (pitch, tempo, melody, rhythm, intensity) at any temporal granularity. This is made particularly clear in the classic maze game \cite{GarrodAnderson87_SayingWhatYouMean}: in order to give effective spatial directions, speakers had well-tuned lexical priors but had to coordinate on what space of \emph{referents} to use (e.g. paths, coordinates, lines, landmarks). Our probabilistic model can be extended to handle additional levels of coordination by placing uncertainty over a hyperparameter corresponding to the intended feature dimension that must be jointly with the corresondance along that dimension. 
+While we have focused on how participants coordinate on \emph{lexical} meaning, this is only one of many levels at which conventions may form. 
+In more complex circumstances, there is often initial uncertainty not just about which of a small set of targets a particular message refers to, but how to represent the relevant targets of reference in the first place. 
+Learning to communicate effectively may require discovering a lower-dimensional representation in which the targets of reference vary.
+For instance, when using sketches to communicate about the identity of complex pieces of music \cite{HealeySwobodaUmataKing07_GraphicalLanguageGames}, a particular set of strokes could correspond to any number of properties (pitch, tempo, melody, rhythm, intensity) at any temporal granularity. 
+This is made particularly clear in a classic maze game \cite{GarrodAnderson87_SayingWhatYouMean}: in order to give effective spatial directions, speakers had well-tuned lexical priors but had to coordinate on what space of \emph{referents} to use (e.g. paths, coordinates, lines, landmarks). 
 
-Throughout this paper, we assumed that stimuli like tangrams were fixed objects in fixed categories and all learning happened over the mapping from words to these objects or categories. The present discussion, however, raises the possibility that people are not in fact coordinating on \emph{lexical meanings}, but pushing the uncertainty back a level and coordinating instead on how to categorize the object. Perhaps meanings are fixed and the only learning taking place is how one's partner construes a multi-stable percept. This seems to be what \citeA{BrennanClark96_ConceptualPactsConversation} had in mind when they coined the term \emph{conceptual pact}. Given present data it is not clear how these two sources of uncertainty could be teased apart, though certain conventions (e.g. proper names or acronyms) are clearly not issues of conceptualization; both levels of coordination are likely to play a role. 
+Prior theories have assumed representations of lexical meanings are relatively fixed and the only learning taking place is how one's partner construes a multi-stable percept. 
+For examine, this seems to be what \citeA{BrennanClark96_ConceptualPactsConversation} had in mind when they coined the term \emph{conceptual pact}, and \cite{stolk2016conceptual} have influentially argued that partners in communication construct shared conceptual spaces. 
+Given present data it is not clear how these two sources of uncertainty could be teased apart, though certain kinds of conventions (e.g. proper names or acronyms) seem to rely more on binding new linguistic tokens to meanings than on constructing new conceptualizations.
+Thus, we expect both levels of coordination are likely to play an important role. 
+Our probabilistic model could be extended to handle additional levels of coordination by placing uncertainty over a hyper-parameter corresponding to the intended feature dimension that must be jointly inferred with the correspondence along that dimension. 
 
-\subsection{Conventions on networks}
+\section{Conventions on networks}
 
 In addition to updating our model of a particular partner based on immediate feedback, i.e. utterances and choices made in previous rounds of the game, a Bayesian learning model predicts that sparse observations of a partner's language use may license much broader inferences about their lexicon via diagnostic information about their social group or background. If someone's favorite song is an obscure B-side from an obscure Boston hardcore band, you can make fairly strong inferences about what else they like to listen to and how similar they might be to you \cite{VelezEtAl16_Overlaps, GershmanEtAl17_StructureSocialInfluence}. Similarly, if someone casually refers to an obscure New York landmark you also recognize, you can safely update your beliefs about their lexicon to include a number of other conventions shared among New Yorkers. Lexica cluster within social groups, so inverting this relationship can yield rapid lexical learning from inferences about social group membership.
 
