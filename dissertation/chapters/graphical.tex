@@ -34,7 +34,7 @@ Specifically, we explore the hypothesis that accumulation of shared knowledge vi
 
 To investigate this hypothesis, we used an interactive drawing-based reference game in which two participants repeatedly communicated about visual objects.
 We examined both how their task performance and the drawings they produced changed over time (see Fig.~\ref{sketch_gallery}).
-Our approach was inspired by a large literature that has explored how extended interaction influences communicative behavior in several modalities, including language \cite{ClarkWilkesGibbs86_ReferringCollaborative,HawkinsFrankGoodman17_ConventionFormation}, gesture \cite{goldin1996silence}, and drawings \cite{garrod_foundations_2007,Galantucci:2005uh}.
+Our approach was inspired by a large literature that has explored how extended interaction influences communicative behavior in several modalities, including language \cite{ClarkWilkesGibbs86_ReferringCollaborative,HawkinsFrankGoodman17_ConventionFormation}, gesture \cite{goldin1996silence}, and drawings \cite{GarrodFayLeeOberlanderMacLeod07_GraphicalSymbolSystems,Galantucci05_EmergenceOfCommunication}.
 There are three aspects of the current work that advance our prior understanding: \emph{first}, we include a control set of objects that were not repeatedly drawn but only shown at the beginning and end of the interaction, allowing us to measure the specific contribution of repeated reference vs. general practice effects; \emph{second}, we measure how strongly the visual properties of drawings drive recognition in the absence of interaction history for naive viewers, while equating other task variables; and \emph{third}, we employ recent advances in computer vision to quantitatively characterize changes in the high-level visual properties of drawings across repetitions.
 
 
@@ -119,7 +119,7 @@ In a pretest phase at the beginning of the experiment and a posttest phase at th
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.88\linewidth]{refgame_BIS_timeseries.pdf}
+\includegraphics[width=0.5\linewidth]{refgame_BIS_timeseries.pdf}
 \caption{Communication efficiency across repetitions. Efficiency combines both speed and accuracy, and is plotted relative to the first repetition. Error ribbons represent 95\% CI.}
 \label{refgame_bis}
 \end{center}
@@ -195,9 +195,9 @@ Insofar as interaction-specific shared knowledge contributed to the efficiency g
 We recruited 245 participants via Amazon Mechanical Turk.
 We excluded data from 22 participants who did not meet our inclusion criterion for accurate and consistent response on attention-check trials (see below).
 
-\begin{figure}[ht]
+\begin{figure}[t]
 \begin{center}
-\includegraphics[width=0.88 \linewidth]{recog_BIS_timeseries.pdf}
+\includegraphics[width=0.5 \linewidth]{recog_BIS_timeseries.pdf}
 \caption{Comparing drawing recognition performance between viewers in communication experiment with those of yoked and shuffled control groups. Error ribbons represent 95\% CI.}
 \label{recog_bis}
 \end{center}
@@ -292,7 +292,7 @@ Unlike viewers in the interactive visual communication experiment, participants 
 %Instead, yoked participants , and were unable to interrupt or await additional information from the sketcher if they were still uncertain.
 Sketchers could have used this feedback to modify their drawings on subsequent repetitions.
 %  about which object the viewer had selected and how quickly they were able to select it,
-As such, comparing the yoked and original communication groups provides an estimate of the contribution of these viewer feedback channels to gains in performance \cite{schober_understanding_1989}.
+As such, comparing the yoked and original communication groups provides an estimate of the contribution of these viewer feedback channels to gains in performance \cite{SchoberClark89_Overhearers}.
 In a mixed-effects model with random intercepts, slopes, and interactions for each unique trial sequence, we found a %estimated the magnitude of these changes by fitting a linear mixed-effects model that included group (i.e., communication vs. yoked), repetition (i.e., 1st through 8th), and their interaction as fixed effects, and maximal random effects structure, with random intercepts, slopes and interactions between group and repetition for each unique trial sequence.
 strong main effect of repetition ($b = 0.23, ~t = 12.8,~p < 0.001$), as well as a weaker but reliable interaction with group membership ($b = -0.05, ~t = -2.2, ~p = 0.032$, Fig.~\ref{recog_bis}), showing that the yoked group improved at a more modest rate than viewers in the original communication experiment had.
  %1x10^{-15}
@@ -437,7 +437,7 @@ Taken together, our findings suggest that repeated visual communication promotes
 
 % highlighting generative innovations relative to previous work
 % (i.e. we're not just doing reproducing the same thing but with better controls & analyses; we're exploring a different part of the space)
-A key experimental design choice was the use of visual objects as the targets of reference, by contrast with the verbal labels or audio clips used in prior work \cite{GalantucciGarrod11_ExperimentalSemiotics,fay2010interactive}. % both builds on and offers several innovative findings.
+A key experimental design choice was the use of visual objects as the targets of reference, by contrast with the verbal labels or audio clips used in prior work \cite{GalantucciGarrod11_ExperimentalSemiotics,FayGarrodRobertsSwoboda10_InteractiveEvolution}. % both builds on and offers several innovative findings.
 %First, it enabled greater exploration of iconicity and abstraction.
 % By using visual referents that belonged to the same modality as drawings,
 As such, communication between the sketcher and viewer was grounded in the same visual information about the appearance of these objects, encouraging the production of more `iconic' initial drawings that more strongly resembled the target object \cite{verhoef2016iconicity,perlman2015iconicity}.
@@ -470,63 +470,6 @@ Future work should disentangle these possibilities empirically and via developme
 %, in combination with the development of computational models of drawing production that account for part-level semantic structure.
 %\ndg{this last part is a little too technical and in the weeds for this point in the paper? at any rate its not clear why you need those particular ingredients... perhaps instead say that the importance / lesion analysis is a future direction with applications such as determining which strokes are dropped?}
 
-\paragraph{Similarities and differences across communication modalities}
-
-\begin{quote}
-The oral modality is not well suited to conveying messages mimetically (i.e., iconically), even though that function is also important to human languages. This function is, however, very well served by the manual modality. \cite[p.155]{goldin-meadow_role_1999}
-\end{quote}
-
-%\todo[inline]{cite HoetjesEtAl15\_ReductionInGesture for reduction in gesture}
-
-More broadly, putting these results together with results from previous chapters raises a critical question about the role played by communication modality in convention formation.
-While linguistic communication is powerful and prevalent, research on the dynamics of adaptation in other communication modalities, including graphical and gestural modalities, is important in several ways.
-First, it is a core claim of our hierarchical learning model that the mechanisms underlying adaptation and convention formation are domain-general.
-In other words, there's nothing special about spoken or written language; any ad hoc system that we use to communicate and coordinate with other minds should display similar learning dynamics because they are all trying to coordinate on meaning. 
-
-Second, because this hierarchical learning model claims a critical role for the global priors we build up across many interactions with many individuals, we predict that different communication modalities should nevertheless display certain systematic differences in their dynamics.
-For example, consider our reference game from Chapter 4 where the targets are complex, abstract geometric shapes like tangrams.
-In the verbal modality, these shapes are highly innominate -- we don't have much experience naming or describing them with words, thus our global prior is rather weak and we expect local adaptation to play a much bigger role.
-In the graphical modality, where you must communicate by drawing on a sketchpad, on the other hand, agents have a much stronger prior rooted in assumptions about shared perceptual systems and visual similarity (though see \citeNP{FanEtAl17_Drawing}: explaining these similarity judgements poses its own challenges).
-Other stimuli have precisely the opposite property: to distinguish between natural images of dogs, for instance, we may have very strong priors in the linguistic modality (e.g. `husky', `poodle', `pug', etc) but drawing the necessary fine distinctions in the graphical modality may be initially very costly, encouraging the formation of local conventions. 
-
-Practically speaking, then, considering repeated reference games across different modalities is necessary to (1) test which adaptation effects, if any, are robust \& attributable to general mechanisms and (2) explain variance across settings where global priors and local adaptation trade off in different ways.
-If we adhered solely to the verbal modality, we would be limited to a fairly narrow range of stimuli (e.g. abstract shapes/tangrams) where behavior in the lab isn't totally dominated by strong prior conventions people bring into the interaction. 
-The clearest analogs to repeated linguistic reference games in the style of \cite{krauss1964changes} are Pictionary games like this ones used in this chapter.
-%\footnote{Healey et al (2001) introduced an earlier version of the music drawing game, but for the purposes of this review, no piece appeared as the target more than once and the only dynamics reported were moderate levels of coordination on similar drawing types as coded by judges (i.e. player 1 is more likely to use Figurative drawings than Abstract drawings when player 2 also uses Figurative drawings). Similarly, Healey et al (2002) gives a brief overview of several repeated designs, but these data apparently only appear with full details in later publications.
-%}, 
-where participants were given a whiteboard to draw on instead of an auditory channel to talk through \cite{TheisenEtAl10_SystematicityArbitrariness}.
-For example, \citeA{GarrodFayLeeOberlanderMacLeod07_GraphicalSymbolSystems} used a set of 12 concept words with intuitively uncertain graphical priors as targets (``Robert de Niro'', ``poverty'').
-%The viewer was also given a list of these words, which also included four distractors for a total context size of 16, and the drawer was instructed to produce some graphical message for each concept so that the viewer could re-rank their list in the same order. 
-%After drawing all twelve words, the lists were shuffled and the pair referred to each several more times. 
-
-%Corresponding effects have been found in repeated graphical communication games where participants use a white board instead of an audio channel \cite<e.g.>{GarrodFayLeeOberlanderMacLeod07_GraphicalSymbolSystems}. In the complete absence of feedback, drawings also fail to reduce and in some cases grow more complex over time. Successively richer feedback mechanisms, however, do seem to increase the rate of reduction, like allowing the viewer to go through one or more rounds of `marking up' the drawing after it is completed (similar to repair or turn-taking in linguistic channels), swapping roles each round, or giving concurrent feedback by drawing side-by-side instead of waiting until completion (similar to verbal backchannels). Graphical experiments also allow for more fine-grained comparison of concurrent feedback: a non-repeated design provided evidence that coordination is impeded if participants are forced to draw in different boundaries of the screen, or if these boundaries are transposed across screens, preventing arrows or reference to elements of a partner's drawing. 
-
-%\begin{itemize}
-%\item Theisen et al, 2010 (Adaptation of Garrod et al 2007 focusing on systematicity)
-%\end{itemize}
-
-%\todo[inline]{Discuss failure to find conventionalization in LittleEtAl17\_ConventionalizationSpeechLike?}
-
-Another modality-based manipulation is to attempt to destroy or scramble any meaningful priors that people might carry into the social interaction.
-For example, \citeA{Galantucci05_EmergenceOfCommunication} introduced a novel `seismograph' interface for communication -- a stylus that could be moved side-to-side or lifted up or down to make contact with the sketch pad while the vertical dimension drifted downward at a constant rate.
-The resulting messages consequently look nothing like the usual kinds of symbols people create: the relationship between motor actions and perceptual output is broken such that executing a familiar movement for a symbol or numeral instead produces an odd, wavy scribble.
-Despite the relative lack of priors on signal meanings in this medium, people were nevertheless able to converge on successful signaling systems in repeated reference games \cite{RobertsGalantucci12_DualityOfPatterning,RobertsEtAl15_IconocityOnCombinatoriality}.
-Other novel modalities used in iterated reference games include a `whistle' language where movements along a vertical touch bar slider correspond to changes in pitch \cite{VerhoefRobertsDingemanse15_Iconicity} and a visual analog where movements along the slider were presented visually \cite{VerhoefEtAl16_TemporalLanguage}.
-A unified model of coordination in communication ought to be able to account for production and comprehension across these modalities simply by exchanging its encoder and decoder components.
-
-% form a foundation for understanding visual abstraction and how abstract symbols may emerge from human interaction.
-% Our work suggests that over repeated visual communication, the meanings of abstract visual depictions are increasingly determined by shared knowledge between the communicators rather than their visual properties alone. We propose that a deeper understanding of the fine-grained factors that drive graphical convention formation will further help our understanding of \emph{how} these depictions derive their meaning.
-% \rdh{Need a final sentence, maybe along the lines of: ``understanding the fine-grained factors that drive graphical convention formation is foundational for understanding how non-photorealistic abstractions derive their meaning.''}
-
-%\vspace{-.30cm}
-%\section{\bf Acknowledgments}
-%\small
-%RXDH was supported by the Stanford Graduate Fellowship and the National Science Foundation Graduate Research Fellowship (DGE-114747). NDG was supported by ONR grant N000141310341 and a Sloan Foundation fellowship.
-%\vspace{-.20cm}
-%% \bibliographystyle{apacite}
-
-%% \setlength{\bibleftmargin}{.125in}
-%% \setlength{\bibindent}{-\bibleftmargin}
 
 %% \bibliography{references}
 
