@@ -14,7 +14,7 @@ Such meanings, transient though they may be, are literal.
 \chapter{An inferential model of convention-formation}
 \graphicspath{{./figures/modeling/}}
 
-In this chapter, we present a computational model formalizing our theoretical account of how speakers coordinate on meaning under uncertainty. 
+In this chapter, we present a computational model formalizing an account of how speakers coordinate on meaning under uncertainty. 
 Our formal approach is grounded in the family of Rational Speech Act (RSA) models, which have been successful in explaining a wide range of linguistic phenomena---including scalar implicature \cite{GoodmanStuhlmuller13_KnowledgeImplicature}, adjectival vagueness \cite{LassiterGoodman15_AdjectivalVagueness}, overinformativeness \cite{degen2019redundancy}, indirect questions \cite{hawkins_why_2015}, and other non-literal language use \cite{KaoWuBergenGoodman14_NonliteralNumberWords}---as arising from a process of recursive social reasoning.% \cite{GoodmanFrank16_RSATiCS}. 
 %Most previous applications of RSA have focused on the listener's problem of language comprehension, but the puzzle of conventionalization is primarily a puzzle of speaker production. 
 
@@ -107,26 +107,18 @@ In this way, meaningful sub-phrases are omitted over time as the speaker becomes
 The model introduced in the previous section formally combines the first two mechanisms outlined in Chapter 1: a lexical prior and a learning mechanism to rapidly coordinate with a particular partner.
 However, it leaves the question of \emph{generalization} unaddressed: what happens when we start talking to a new partner?
 To what extent, if any, does an interaction with one partner change our expectations about the next? 
-In this section, we develop a theory of generalization capturing how agents transfer what they have learned about one partner to another partner. 
+In this section, we propose a hierarchical generalization mechanism capturing how agents transfer what they have learned about one partner to another partner. 
 
-Several theories of generalization have been proposed in prior work, but each has been limited in different ways.
-One possible theory is that speakers simply collapse over the identity of different partners, using the posterior from one partner as the prior for the next. 
-This idea is common among accounts of cultural evolution that draw on network science and economic games. 
-By using a single (egocentric) representation of linguistic conventions irrespective of one's partner, these accounts explain the emergence of conventions at the population level over long time scales via distributed interactions among minimal agents \cite{steels_self-organizing_1995,barr_establishing_2004,young_evolution_2015,spike_minimal_2017,baronchelli_emergence_2018,hawkins2018emergence}.
-
-A second theory is that speakers maintain separate representations of the meanings shared with each social partner. 
-In the simplest versions of this theory, information built up through the distinct history of interaction with one partner should crucially \emph{not} generalize to other partners \cite{clark_using_1996,brennan_partner-specific_2009,horton_revisiting_2016}.
-This idea has been fundamental for explaining the flexibility with which speakers adapt and switch between different social partners \cite{ClarkWilkesGibbs86_ReferringCollaborative,MetzingBrennan03_PartnerSpecificPacts} over the shorter timescales of language use studied in psycholinguistics.
-
-These two theories of generalization---ignoring partner identity versus maintaining distinct partner-specific representations---mirror the contrast between \emph{complete pooling} and \emph{no pooling} in multi-level statistical models \cite{gelman2006data}. 
+This hierarchical structure --- sometimes termed a \emph{partial pooling} model --- can be understood in contrast to two simpler mechanisms, roughly corresponding to \emph{complete pooling} and \emph{no pooling} in multi-level statistical models \cite{gelman2006data}.
+A complete pooling model simply ignores partner identity by updating a single internal model used with all partners. 
+A no pooling model, on the other hand, maintains completely distinct partner-specific representations.
 Like their statistical counterparts, these two theories of generalization in language face problems: each one is unable to explain the characteristic phenomena motivating the other. 
 Ignoring partner identity will fail in the settings of interest in psycholinguistics where distinct information about one’s partner is available and relevant for conversation. 
-On the other hand, entirely sealing off the meanings built up with one partner from expectations about others means speakers will revert to a fixed backdrop with each novel partner\footnote{Of course, theoretical surveys have extensively noted the importance of \emph{cultural} common ground associated with entire social groups rather than particular individuals \cite[e.g.]{Clark98_CommunalLexicons}. This distinction implicitly creates an avenue for generalization to new partners, insofar as talking to one individual is informative about that broader cultural common ground. Our approach formalizes this general idea.}.
+On the other hand, entirely sealing off the meanings built up with one partner from expectations about others means speakers will revert to a fixed backdrop with each novel partner.
 
-Here, we propose a third formal alternative, inspired by the solution to similar problems in the statistics and machine learning literature.
-Hierarchical \emph{partial pooling} models offer a compromise between these extremes: agents equipped with such a model can integrate rich knowledge of specific partners with a mechanism for abstracting away what is common across different partners.
+Hierarchical \emph{partial pooling} models offer a principled compromise between these extremes: agents equipped with such a model can integrate rich knowledge of specific partners with a mechanism for abstracting away what is common across different partners.
 These models have been key to explaining how the human mind solves other difficult inductive problems in domains like causal learning \cite{KempGoodmanTenenbaum10_LearningToLearn,GoodmanUllmanTenenbaum11_TheoryOfCausality}, speech perception \cite{KleinschmidtJaeger15_RobustSpeechPerception} and concept learning \cite{KempPerforsTenenbaum07_HBM} where abstract, shared properties must be jointly inferred with idiosyncratic particulars of instances. 
-Such a model has the potential to span the gap between these different traditions, and to capture how agents make use of multiple levels of social structure across partners and communities. 
+Such a model has the potential to capture how agents make use of multiple levels of social structure across partners and communities. 
 
 \begin{figure}
 \centering
@@ -204,23 +196,54 @@ We run 10,000 steps of gradient descent on the first observation to obtain a lex
 
 Our simulation results are shown in Fig. \ref{fig:specificity}.
 To observe behavior in the simplest case, we feed the model the same object-target pair ($\{o_1, w_1\}$) on every trial.  
-We find that the adapting listener begins at chance because of its uninformative prior, but after interacting with that partner for several rounds, it adapts its lexicon to select the target well above chance. 
+We find that the adapting listener begins at chance because of its uninformative prior, but after interacting with that partner for several rounds, it adapts its semantics to select the target well above chance. 
 When a new partner is introduced, however, it reverts nearly to its original state: because of the hierarchical structure of its lexical expectations, it was ambiguous whether the evidence from the first partner was idiosyncratic or due to shared structure.
 After adapting similarly to the second partner, however, it begins its interaction with a third partner with nearly the accuracy at the end of its interaction with the first partner.
-Thus, its expectations about individual partners' lexica are gradually being incorporated into community-level expectations.
+Thus, expectations about an individual partners' semantics are gradually being incorporated into community-level expectations.
 
-%\section{Discussion}
-%
-%
-%Theories of convention-formation vary in the extent to which social reasoning about common ground is required. 
-%Our agents lie on a spectrum between the heuristic updating agents of Barr (2004) and the sophisticated agents of Clark \& Wilkes-Gibbs (1986), who collaboratively build up explicit representations of mutual knowledge. 
-%Speakers and listeners in our model implicitly coordinate their beliefs through a shared history of observations, which serves as ``common ground'' in an informal sense.
-%They make critical use of pragmatic, social reasoning in order to learn meanings, but do not explicitly consider the fact that this history is shared, or represent their partner's own uncertainty.
-%
-%By capturing reduction, which purely heuristic theories have not yet demonstrated, we showed that minimal assumptions of social reasoning go a long way in accounting for key phenomena. 
-%Still, our model falls short in some ways. 
-%For instance, because we do not provide a mechanisms for the listener agent to respond with confirmation, repair, or follow-up questions, we cannot make explicit predictions about the reduction in \emph{listener messages} (as in Fig. \ref{fig:replication}) or the impact of early listener responses on conventionalization. 
-%These phenomena require our model to deal with planning over extended dialogues, and to potentially weaken the assumption that one's partner knows the true lexicon with complete certainty. 
+\section{Discussion}
+
+This chapter advanced an \emph{inferential} theory of meaning in which agents continually adapt their beliefs about the semantics used by their partner.
+We formalized this approach by integrating three core cognitive mechanisms in a probabilistic framework: (1) initial uncertainty about what a partner thinks words mean, (2) a mechanism for updating beliefs from observations of language use in context, and (3) a hierarchical structure for graded generalization to new partners.
+Across several simulations, we showed that agents equipped with these mechanisms coordinate on increasingly accurate and efficient conventions with different partners.
+
+Broadly, our model situates semantic meaning within a broader class of computational challenges facing agents in a constantly changing world.
+Similar inferential mechanisms have been used to understand how internal representations are adapted for motor control \cite{berniker2008estimating}, speech perception \cite{KleinschmidtJaeger15_RobustSpeechPerception}, and visual perception \cite{austerweil2013nonparametric}.
+What makes the problem of semantic adaptation particularly challenging, however, is its reliance on \emph{social inference}.
+The relevant functional quantity for understanding is the latent semantic representation used by another (rational) social agent in context. 
+Instead of assuming that a single true semantics exists, agents assume each partner has their own idiosyncratic representations.
+They must then infer the conventions at play using a generative model of their partner's behavior over the course of interaction.
+
+This social component of our inferential approach contrasts in several ways with prior theories of adaptation in language use. 
+First, we contrast the mechanisms in our model with the lower-level priming mechanisms proposed in the \emph{interactive alignment} account \cite{pickering2004toward, pickering2006alignment, garrod2009joint}.
+According to this account, coordination on the higher-level mental representations necessary for successful communication proceeds primarily through automatic and non-social priming or imitation of surface statistics at lower levels. 
+By appealing to classic spreading-activation connectionist models \cite<e.g.>{roelofs1992spreading}, \citeA{pickering2004toward} have argued that coupling of word choices \cite{louwerse2012behavior}, syntax \cite{gruberg2019syntactic,levelt1982surface}, body postures \cite{lakin2003using}, speech rate \cite{giles1991contexts}, or even informational complexity \cite{abney2014complexity} in dialogue leads to coordination of higher-level semantic representations.
+In these models, priming phonetic or syntactic features that are associated with specific lemmas in the lexicon can percolate and strengthen higher semantic levels of representation \cite{pickering1998representation}.
+
+While these \dots
+% While our approach shares a theoretical commitment to a tight interplay between production and comprehension \cite{pickering2013integrated}, 
+
+One possible theory is that speakers simply collapse over the identity of different partners, using the posterior from one partner as the prior for the next. 
+This idea is common among accounts of cultural evolution that draw on network science and economic games. 
+By using a single (egocentric) representation of linguistic conventions irrespective of one's partner, these accounts explain the emergence of conventions at the population level over long time scales via distributed interactions among minimal agents \cite{steels_self-organizing_1995,barr_establishing_2004,young_evolution_2015,spike_minimal_2017,baronchelli_emergence_2018,hawkins2018emergence}.
+
+A second theory is that speakers maintain separate representations of the meanings shared with each social partner. 
+In the simplest versions of this theory, information built up through the distinct history of interaction with one partner should crucially \emph{not} generalize to other partners \cite{clark_using_1996,brennan_partner-specific_2009,horton_revisiting_2016}.
+This idea has been fundamental for explaining the flexibility with which speakers adapt and switch between different social partners \cite{ClarkWilkesGibbs86_ReferringCollaborative,MetzingBrennan03_PartnerSpecificPacts} over the shorter timescales of language use studied in psycholinguistics.
+
+\todo[inline]{Also note that we're not exactly just implementing the full 'mutual knowledge' theory}
+These prior theories vary in the extent to which social reasoning about common ground is required. 
+Our agents lie on a spectrum spanning from the to the more sophisticated \emph{collaborative reference} theory of Clark \& Wilkes-Gibbs (1986).%, who collaboratively build up explicit representations of mutual knowledge. 
+They make critical use of pragmatic, social reasoning in order to learn meanings, but do not explicitly consider the fact that this history is shared, or represent their partner's own uncertainty.
+%Speakers and listeners in our model implicitly coordinate their beliefs through a shared history of observations, which serves as a minimal form of ``common ground.''
+
+Another key direction for future work is to account for richer forms of feedback.
+Our simulations used the simplest source of feedback: the utterance and response in a reference game.
+But listeners commonly respond using verbal back-channels (\emph{uh-huh}, \emph{hmmm}) or more sophisticated responses such as confirmation, suggestion, repair, or even follow-up questions. 
+Without elaborating the generative model of the listener to include these verbal behaviors, we cannot explain the inferences a speaker will make upon hearing them.
+Such an elaboration will thus be critical to explaining why listeners send fewer messages over time and what impact early listener responses on conventionalization. 
+
+%These phenomena may also require our model to deal with planning over extended dialogues, and to potentially weaken the assumption that one's partner knows the true lexicon with complete certainty. 
 %
 %Similarly, while our model was explicitly designed with linguistic conventions in mind, it remains to be seen whether the same formulation generalizes to broader behavioral conventions. 
 %For example, the real-time coordination games used in Hawkins \& Goldstone (2016) may not require players to reason about a structured lexicon with noise, but an action policy representation may play a similar role. 
