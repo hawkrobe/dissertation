@@ -1,8 +1,8 @@
 %!TEX root = ../dissertation.tex
-%\begin{savequote}[75mm]
-%This is some random quote to start off the chapter.
-%\qauthor{Firstname lastname}
-%\end{savequote}
+\begin{savequote}[75mm]
+The circle of the English language has a well-defined center but no discernible circumference.
+\qauthor{James Murray (1884)}
+\end{savequote}
 
 \chapter{Continuous adaptation for efficient machine communication}
 \graphicspath{{./figures/nn_modeling/}}
@@ -52,7 +52,7 @@ This task is a special case of the more general family of reference games, where
 In a \emph{repeated reference game}, each image in context appears as the target multiple times, allowing us to evaluate how communication about a particular image changes as the speaker and listener build up a shared history. 
 
 \subsection{Continual adaptation with Hierarchical Bayes}
-Before formalizing our algorithm as a generic update rule for neural networks, we describe the theoretical Bayesian foundations of our approach, reviewing material from previous chapters in the context of machine learning.
+Before formalizing our algorithm as a generic update rule for neural networks, we describe the theoretical Bayesian foundations of our approach, reviewing material from Chapter 2 in the context of machine learning.
 % \ndg{i generally think of this as the semantics, and a lexicon maps single words to meanings.... you could change or clarify, though i don't feel strongy}
 Under a Bayesian approach, semantic representations can be viewed probabilistically: we represent some uncertainty over meanings.
 %We define the lexicon as a function $\mathcal{L}: (w_n, o_m) \rightarrow \mathbb{R}$, assigning any word-object pair a real-valued meaning according to how well the word $w_n$ applies to the object $o_m$. 
