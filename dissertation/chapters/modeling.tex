@@ -207,34 +207,40 @@ This chapter advanced an \emph{inferential} theory of meaning in which agents co
 We formalized this approach by integrating three core cognitive mechanisms in a probabilistic framework: (1) initial uncertainty about what a partner thinks words mean, (2) a mechanism for updating beliefs from observations of language use in context, and (3) a hierarchical structure for graded generalization to new partners.
 Across several simulations, we showed that agents equipped with these mechanisms coordinate on increasingly accurate and efficient conventions with different partners.
 
-Broadly, our model situates semantic meaning within a broader class of computational challenges facing agents in a constantly changing world.
-Similar inferential mechanisms have been used to understand how internal representations are adapted for motor control \cite{berniker2008estimating}, speech perception \cite{KleinschmidtJaeger15_RobustSpeechPerception}, and visual perception \cite{austerweil2013nonparametric}.
-What makes the problem of semantic adaptation particularly challenging, however, is its reliance on \emph{social inference}.
-The relevant functional quantity for understanding is the latent semantic representation used by another (rational) social agent in context. 
-Instead of assuming that a single true semantics exists, agents assume each partner has their own idiosyncratic representations.
+Our model situates semantic meaning within a broader class of computational challenges facing agents in a constantly changing world.
+Critically, we appeal to domain-general learning mechanisms rather than specialized language modules: similar inferential mechanisms have been used to understand how internal representations are adapted for motor control \cite{berniker2008estimating}, speech perception \cite{KleinschmidtJaeger15_RobustSpeechPerception}, and visual perception \cite{austerweil2013nonparametric}.
+What makes the problem of semantic adaptation distinctive, however, is its reliance on \emph{social inference}.
+The relevant functional quantity for communicative understanding is the latent semantic representation used by another (rational) social agent in context. 
+Instead of assuming that a single true semantics independently exists, agents assume each partner has their own idiosyncratic representations.
 They must then infer the conventions at play using a generative model of their partner's behavior over the course of interaction.
 
 This social component of our inferential approach contrasts in several ways with prior theories of adaptation in language use. 
-First, we contrast the mechanisms in our model with the lower-level priming mechanisms proposed in the \emph{interactive alignment} account \cite{pickering2004toward, pickering2006alignment, garrod2009joint}.
-According to this account, coordination on the higher-level mental representations necessary for successful communication proceeds primarily through automatic and non-social priming or imitation of surface statistics at lower levels. 
-By appealing to classic spreading-activation connectionist models \cite<e.g.>{roelofs1992spreading}, \citeA{pickering2004toward} have argued that coupling of word choices \cite{louwerse2012behavior}, syntax \cite{gruberg2019syntactic,levelt1982surface}, body postures \cite{lakin2003using}, speech rate \cite{giles1991contexts}, or even informational complexity \cite{abney2014complexity} in dialogue leads to coordination of higher-level semantic representations.
-In these models, priming phonetic or syntactic features that are associated with specific lemmas in the lexicon can percolate and strengthen higher semantic levels of representation \cite{pickering1998representation}.
+First, we contrast the mechanisms in our model with the lower-level priming mechanisms proposed in the influential \emph{interactive alignment} account \cite{pickering2004toward, pickering2006alignment, garrod2009joint}.
+According to this account, coordination on the higher-level mental representations necessary for successful communication proceeds primarily through automatic and egocentric imitation of surface statistics at lower levels. 
+By appealing to classic spreading-activation connectionist models \cite<e.g.>{roelofs1992spreading}, \citeA{pickering2004toward} have argued that activating phonetic or syntactic features that are associated with specific lemmas in the lexicon can percolate to strengthen higher semantic levels of representation \cite{pickering1998representation}.
+Thus, unconsciously coupling word choices \cite{louwerse2012behavior}, syntax \cite{gruberg2019syntactic,levelt1982surface}, body postures \cite{lakin2003using}, speech rate \cite{giles1991contexts}, or even informational complexity \cite{abney2014complexity} in dialogue can contribute to the coordination of higher-level semantic representations.
 
-While these \dots
-% While our approach shares a theoretical commitment to a tight interplay between production and comprehension \cite{pickering2013integrated}, 
+We fully expect that these low-level priming effects are at play in repeated reference tasks --- they are inescapable in any memory-based retrieval process.
+But two signature phenomena are unable to be explained from priming mechanisms alone: \emph{partner-specificity} and \emph{reduction}.
+If a particular semantic representation has been activated due to precedent in the preceding dialogue, then the identity of the speaker should not alter its continued influence \cite{brennan2009partner}.
+Thus, egocentric priming-based theories are inconsistent with the empirical evidence of partner-specificity reviewed in Chapter 1.\footnote{Of course, more sophisticated memory retrieval accounts that represent different partners as different \emph{contexts} \cite<e.g>{polyn2009context} are consistent with partner-specificity. But evoking such an account presupposes that social information like partner identity is already a salient and relevant feature of the agent's context representation and thus no longer relies purely on ``egocentric'' activation mechanisms. In fact, socially-aware context reinstatement for episodic memory (with slower consolidation of ``shared'' conventions) would be a valid candidate for a process-level realization of our computational-level model.}
+Furthermore, the gradual reduction of the speaker's utterance length is not obviously imitating any features of the listener's language use. 
+Explaining why speakers think they can get away with shorter descriptions given sparse evidence of understanding (e.g. a correct response or a simple gesture of confirmation) and resort to longer descriptions given evidence of misunderstanding (e.g. an incorrect response) requires a mechanism for semantic coordination in the absence of lower-level statistics.
 
-One possible theory is that speakers simply collapse over the identity of different partners, using the posterior from one partner as the prior for the next. 
-This idea is common among accounts of cultural evolution that draw on network science and economic games. 
-By using a single (egocentric) representation of linguistic conventions irrespective of one's partner, these accounts explain the emergence of conventions at the population level over long time scales via distributed interactions among minimal agents \cite{steels_self-organizing_1995,barr_establishing_2004,young_evolution_2015,spike_minimal_2017,baronchelli_emergence_2018,hawkins2018emergence}.
+The phenomena of reduction and partner-specificity also pose challenges for computational models of convention formation that rely on simple variants of reinforcement learning \cite{steels_self-organizing_1995,barr_establishing_2004,young_evolution_2015,baronchelli_emergence_2018}.
+While a variety of different models fall under this category, they all share some mechanism that makes utterances more likely to be produced after communicative successes and less likely after communicative failures.
+Because agents in these models use a single (egocentric) representation of linguistic conventions irrespective of one's partner, they could not account for patterns of partner-specificity if these agents were placed in a series of repeated reference games. 
+And again, it is not clear how naively reinforcing initially long descriptions could lead to reduction\footnote{It is plausible that using more sophisticated reinforcement schemes on neural architectures incorporating compositionality or recurrence into production \cite<e.g>{lazaridou2018emergence} could yield reduction with the addition of a cost term. Such a scheme would be similar in spirit to the adaptive neural agent we propose in Chapter 3.}.
+Still, a clear success of these models is their focus on the conditions under which community-level convergence may be achieved, and it is imperative for future work to conduct similar large-scale simulations of an inferential model.
 
-A second theory is that speakers maintain separate representations of the meanings shared with each social partner. 
-In the simplest versions of this theory, information built up through the distinct history of interaction with one partner should crucially \emph{not} generalize to other partners \cite{clark_using_1996,brennan_partner-specific_2009,horton_revisiting_2016}.
-This idea has been fundamental for explaining the flexibility with which speakers adapt and switch between different social partners \cite{ClarkWilkesGibbs86_ReferringCollaborative,MetzingBrennan03_PartnerSpecificPacts} over the shorter timescales of language use studied in psycholinguistics.
-
-\todo[inline]{Also note that we're not exactly just implementing the full 'mutual knowledge' theory}
-These prior theories vary in the extent to which social reasoning about common ground is required. 
-Our agents lie on a spectrum spanning from the to the more sophisticated \emph{collaborative reference} theory of Clark \& Wilkes-Gibbs (1986).%, who collaboratively build up explicit representations of mutual knowledge. 
-They make critical use of pragmatic, social reasoning in order to learn meanings, but do not explicitly consider the fact that this history is shared, or represent their partner's own uncertainty.
+%A second theory is that speakers maintain separate representations of the meanings shared with each social partner. 
+%In the simplest versions of this theory, information built up through the distinct history of interaction with one partner should crucially \emph{not} generalize to other partners \cite{clark_using_1996,brennan_partner-specific_2009,horton_revisiting_2016}.
+%This idea has been fundamental for explaining the flexibility with which speakers adapt and switch between different social partners \cite{ClarkWilkesGibbs86_ReferringCollaborative,MetzingBrennan03_PartnerSpecificPacts} over the shorter timescales of language use studied in psycholinguistics.
+%
+%\todo[inline]{Also note that we're not exactly just implementing the full 'mutual knowledge' theory}
+%These prior theories vary in the extent to which social reasoning about common ground is required. 
+%Our agents lie on a spectrum spanning from the to the more sophisticated \emph{collaborative reference} theory of Clark \& Wilkes-Gibbs (1986).%, who collaboratively build up explicit representations of mutual knowledge. 
+%They make critical use of pragmatic, social reasoning in order to learn meanings, but do not explicitly consider the fact that this history is shared, or represent their partner's own uncertainty.
 %Speakers and listeners in our model implicitly coordinate their beliefs through a shared history of observations, which serves as a minimal form of ``common ground.''
 
 Another key direction for future work is to account for richer forms of feedback.
