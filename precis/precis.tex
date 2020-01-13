@@ -17,6 +17,9 @@
 \usepackage{svg}
 \usepackage{booktabs}
 \usepackage{afterpage}
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
 \usepackage[margin=1.25in]{geometry}
 
 \newcommand{\den}[2][]{
@@ -48,7 +51,7 @@
  
 %\makeatother
 
-\title{Pr\'ecis of \\ \emph{Coordinating on Meaning in Communication} }
+\title{Pr\'ecis of \emph{Coordinating on meaning in communication} }
 \author{Robert D. Hawkins \\ \small Department of Psychology, Stanford University}
 \date{}
 
@@ -62,44 +65,78 @@ Drop into any conversation between friends, however, and you wade into a stream 
 There is no guarantee, it seems, that any two speakers of a language will share the same dictionary.
 To make matters worse, we live in an ever-changing world where we need to talk about new things.
 There is also no guarantee that any dictionary could anticipate the meanings we will need to express in every new context.
-If we cannot rely on the existence of a shared dictionary for coordination, then, what can we rely on?
+If we cannot rely on the existence of a shared dictionary for coordination, what can we rely on?
 How do we manage to understand one another so effortlessly in this patchwork landscape of meaning?
 
 My dissertation investigates the cognitive mechanisms that allow individuals, and communities, to solve this challenge.
-The core theoretical contribution of this work is an account of communication relaxing the assumption that speakers of a language share the same ``protocol.''
-Instead, we propose that communication is better understood as a multi-agent meta-learning problem.
-Agents must integrate background expectations about reliable community-wide conventions \cite{Lewis69_Convention} with new \emph{ad hoc}, partner-specific conventions constructed on the fly \cite{clark_using_1996,davidson_nice_1986}.
+The core theoretical contribution is an account of communication relaxing the assumption that speakers of a language share the same ``protocol.''
+Instead, we propose that communication is better understood as a multi-agent meta-learning problem guided by social inference.
+Agents must integrate background expectations about reliable community-wide conventions with new \emph{ad hoc}, partner-specific pacts constructed on the fly.
 Chapters 1-2 formalize this proposal in a hierarchical Bayesian model and present simulation results capturing key effects from the literature. 
 Chapter 3 evaluates an algorithm scaling this proposal to a recurrent neural network that interactively adapts to human partners.
-Chapter 4 characterizes the dynamics of coordination in a large behavioral corpus of the classic Tangrams task. 
+Chapter 4 introduces a large behavioral corpus that provides a higher resolution look at the dynamics of \emph{ad hoc} convention formation. % of referring expressions in the classic Tangrams task. 
 Chapter 5 tests how the communicative needs of the context shape the resulting \emph{ad hoc} conventions. 
-Finally, Chapter 6 assesses the generality of the proposed mechanisms by examining coordination in a \emph{graphical} communication task. 
+Finally, Chapter 6 assesses the generality of the proposed mechanisms by examining coordination in a \emph{graphical} Pictionary task. 
 
-This work draws from , and developing computational cognitive models that give us mechanistic insight into how adaptive language use may be reverse-engineered from general principles of social cognition and learning. 
-More broadly, this work opens avenues for future work to understand how social conventions are represented in the mind, how these conventions are shaped by our goals and environment, and how they give rise to the remarkable feats of social coordination that are so distinctive of human cultures \cite{hawkins2019emergence}.
+Understanding the role of learning and social cognition in everyday language use is a foundational question at the intersection of psychology, neuroscience, and linguistics. 
+The methodological combination of computational modeling and naturalistic communication experiments gives new insight into how such rich, flexible language behavior may arise from these general-purpose cognitive mechanisms.
+This account builds on theories of social convention and meaning developed in mid-century analytic philosophy, particularly by \citeA{Lewis69_Convention} and \citeA{davidson_nice_1986}, and suggests broader application potential toward building more adaptive and socially intelligent AI, consistent with current directions in computer science. 
+More broadly, this work opens avenues for future work to understand how social conventions and norms are represented in the mind, how these conventions are shaped by local context, and how they give rise to the remarkable feats of social coordination that are so distinctive of human cultures \cite{hawkins2019emergence}.
 
 \section*{Introduction}
 
-Do people adapt at all? 
-Representations v. decisions, i.e. updating cognitively deep latent meanings v. priming/alignment.
+A core function of language is \emph{reference}: using words to convey the identity of an object in the environment. 
 
-Under this view, knowledge of community-wide linguistic conventions supplies a useful but uncertain first guess about the linguistic meanings that will be shared with a new partner. 
-Through interaction, these general expectations are gradually tuned to the local context via social inferences based on that partner's language use. 
-As each party learns about the other and attempts to be understood under their updated model of partner-specific meaning, they coordinate on a system of meaning that is tailored to be efficient and accurate for their present purposes.
-Finally, 
+Do people adapt at all? 
+Flexibility in meaning is partially explained by \emph{de novo} pragmatic reasoning, which allows listeners to use context to infer an intended meaning even in cases of ambiguous or non-literal usage \cite{Clark83_NonceSense,LascaridesCopestake98_PragmaticsWordMeaning,Glucksberg01_FigurativeLanguage,GoodmanFrank16_RSATiCS}.
+However, a rich theoretical thread has suggested that learning mechanisms may also play an important role, allowing speakers and listeners to dynamically adapt their representations of meaning over the course of an interaction \cite{BrennanClark96_ConceptualPactsConversation,pickering2004toward,delaney2019neural}.
+
+Recent probabilistic modeling framework which derives pragmatic considerations of language use from more generic computational principles of social cognition in rational agents.
+%, specifically recursive probabilistic inference about the beliefs and intentions of rational agents. 
+% \emph{Gricean pragmatics} due to their origins in Paul Grice's ``cooperative principle,'' operate within the production or comprehension of a single utterances. 
+For example, listeners treat the literal meaning of a question as a cue to infer and address the underlying goal of the questioner \cite{hawkins_why_2015, hawkins_QA_2018}.
+And even though many labels may be literally true of an object, speakers refer to objects at an appropriate level of specificity given the other objects in context \cite{graf_animal_2016, monroe2017colors}.
+They also increase the specificity of their utterances under additional uncertainty over what else might be in their partners' visual field \cite{hawkins_conversational_2016, hawkins2018speakers}.
+While powerful, these models are unable to explain the flexibility and adaptiveness of conventions over time, as they are constructed on top of \emph{fixed} linguistic meanings.
+
+The \emph{repeated reference game} task has provided a natural and productive paradigm for eliciting behavior under such conditions.
+In this task, pairs of participants are presented with arrays of novel images.
+On each trial, one player (the director) is privately shown a \emph{target} object and must produce a referring expression allowing their partner (the matcher) to correctly select that object from the array.
+The director is then given feedback at the end of each trial about which object the matcher selected, and the matcher is given feedback about the true target object.
+Critically, each object appears as the target multiple times in the trial sequence, allowing the experimenter to examine how referring expressions change as the director and matcher accumulate shared experience.
+To the extent that the director and matcher converge on an accurate system of stable referring expressions, and these referring expressions differ from the ones that were initially produced, it may be claimed that \emph{ad hoc conventions} or \emph{pacts} have formed within the dyad.
+
+One of the earliest and most intriguing phenomena observed in this task is that descriptions are dramatically shortened across repetitions: an initial description like ``the one that looks like an upside-down martini glass in a wire stand'' may gradually converge to ``martini'' by the end  \cite{KraussWeinheimer64_ReferencePhrases}.
+That is, speakers are able to communicate the same referential content much more efficiently over time.
+Subsequent work has established a number of signature properties of this process through careful experimental manipulation.
+First, the extent to which descriptions are shortened is contingent on evidence of understanding from the matcher \cite{KraussWeinheimer66_Tangrams,KraussEtAl77_AudioVisualBackChannel,HupetChantraine92_CollaborationOrRepitition}, and is therefore not easily explained as a mere practice or repetition effect.
+Second, the resulting labels are \emph{partner-specific} in the sense that they do not transfer if a novel matcher is introduced \cite{WilkesGibbsClark92_CoordinatingBeliefs,MetzingBrennan03_PartnerSpecificPacts,brennan_partner-specific_2009}.
+Third, they are \emph{sticky} in the sense that they persist through precedent with the same partner even after the referential context changes \cite{BrennanClark96_ConceptualPactsConversation}, and are readily extended to similar objects \cite{MarkmanMakin98_ReferentialCommunicationCategory}.
+%A variety of models, at varying levels of formal precision, have been proposed to explain these qualitative effects.
+These qualitative effects provide an empirical backbone for theories of communication to explain. %adaptation, common ground, and conventionalization
+
 
 Computational models of meaning must explain both the speaker’s initial expectations about how words will be understood by novel partners and the dynamics of how these expectations may shift over the course of a particular conversation. In \ proposes a computational model that formalizes the problem of coordinating on meaning as hierarchical probabilistic inference, which I argue satisfies both of these conditions. Community- level expectations provide a stable prior, and dynamics within an interaction are driven by partner- specific learning.
 
-Here we lay out the theoretical landscape and empirical evidence focusing on three key aspects of our theoretical approach: (1) the context-sensitive semantic priors that represent our initial uncertainty over what a novel partner is likely to mean by a word, (2) the path-dependence and increasing efficiency of our communicative behavior across even short periods of repeated interaction, and (3) the pattern of generalization from learning local interactions to new contexts and new partners. 
+Here we lay out the theoretical landscape and empirical evidence focusing on three key aspects of our theoretical approach: 
+\begin{enumerate}
+\item  the context-sensitive semantic priors that represent our initial uncertainty over what a novel partner is likely to mean by a word, 
+\item the path-dependence and increasing efficiency of our communicative behavior across even short periods of repeated interaction, and 
+\item the pattern of generalization from learning local interactions to new contexts and new partners. 
+\end{enumerate}
 
-This review also provides scaffolding for the experimental paradigm used in Chapters 2 and 4 and introduces the phenomena that we capture with our simulations in Chapter 3.
+%The core of this work is an inferential model of convention formation that explains flexible and adaptive language use across extended interaction as a consequence of hierarchical probabilistic learning. Through observing their partner's usage, agents attempt to infer and adopt their partner's underlying lexicon using global conventions as a prior. When both agents independently adopt such a learning strategy, they align to one another, coordinating on and implicitly creating new, shared conventions. 
 
-The core of this work is an inferential model of convention formation that explains flexible and adaptive language use across extended interaction as a consequence of hierarchical probabilistic learning. Through observing their partner's usage, agents attempt to infer and adopt their partner's underlying lexicon using global conventions as a prior. When both agents independently adopt such a learning strategy, they align to one another, coordinating on and implicitly creating new, shared conventions. 
-
-
-\vspace{1cm}
 
 \section*{An inferential theory of convention formation}
+
+Under this view, knowledge of community-wide linguistic conventions \cite{Lewis69_Convention} supplies a useful but uncertain first guess about the linguistic meanings that will be shared with a new partner. 
+Through interaction, these general expectations are gradually tuned to the local context via social inferences based on that partner's language use  \cite{clark_using_1996,davidson_nice_1986}. 
+As each party learns about the other and attempts to be understood under their updated model of partner-specific meaning, they coordinate on a system of meaning that is tailored to be efficient and accurate for their present purposes.
+
+Rather than priming or aligning on surface forms, these agents are making structured inferences about the underlying representation of meaning used by their partner.
+
+My research uses a rich, naturalistic communication paradigm called a \emph{repeated reference game} that (1) requires participants to find some way of referring to novel, ambiguous stimuli that they don't already have strong conventions for and (2) asks them to refer to these same objects across multiple rounds as they build up a shared history of interaction, or `common ground,' with their partner.
 
 In \textbf{Chapter 2}, we propose a hierarchical Bayesian model of convention formation that formalizes our proposal (see Fig. \ref{fig:modelschematic}): global conventions are learned and generalized over many extended interactions with many different people across a lifetime, and this shared semantic prototype is the backbone supporting rapid learning for new partners and situations. 
 
@@ -107,16 +144,12 @@ What cognitive mechanisms explain these phenomena?
 Recent probabilistic modeling framework which derives pragmatic considerations of language use from more generic computational principles of social cognition in rational agents.
 %, specifically recursive probabilistic inference about the beliefs and intentions of rational agents. 
 % \emph{Gricean pragmatics} due to their origins in Paul Grice's ``cooperative principle,'' operate within the production or comprehension of a single utterances. 
-For example, listeners treat the literal meaning of a question as a cue to infer and address the underlying goal of the questioner {\color{Red} \textbf{\shortcite{hawkins_why_2015, hawkins_QA_2018}}}. 
-And even though many labels may be literally true of an object, speakers refer to objects at an appropriate level of specificity given the other objects in context  {\color{Red} \textbf{\cite{graf_animal_2016, monroe2017colors}}}. 
-They also increase the specificity of their utterances under additional uncertainty over what else might be in their partners' visual field {\color{Red} \textbf{\shortcite{hawkins_conversational_2016, hawkins2018speakers}}}.
-While powerful, these models are unable to explain the flexibility and adaptiveness of conventions over time, as they are constructed on top of \emph{fixed} linguistic meanings.
 
 A central aim of my dissertation work was to extend these models to capture how agents represent and rapidly coordinate on new conventions.% that explains the results of the above experiments. 
 I have implemented this theory in a Bayesian model that relaxes the assumption of fixed word meanings in probabilistic pragmatics models and instead treats them as dynamic and learnable for different partners. 
 This captures a functional view of linguistic conventions as solutions to coordination problems, in which every agent is simultaneously seeking to infer the conventions that other agents are using, in order to support successful communication. 
 % assumes others are using some set of conventions and is trying to learn them such that they can be understood.  %: global conventions are learned and generalized over many extended interactions with many different people across a lifetime, and  this shared semantic prototype is the backbone supporting rapid learning for new partners and situations. 
-This model successfully predicts coordination on idiosyncratic but path-dependent and stable form-meaning mappings in simulations, and shows that a preference for less costly utterances combined with learning gives rise to shorter descriptions over time {\color{Red} \textbf{\shortcite{hawkins_convention-formation_2017}}}. 
+This model successfully predicts coordination on idiosyncratic but path-dependent and stable form-meaning mappings in simulations, and shows that a preference for less costly utterances combined with learning gives rise to shorter descriptions over time \cite{hawkins_convention-formation_2017}.
 
 
 Here, we briefly present a sketch of the modeling approach. We begin by defining a lexicon as a function $$\mathcal{L}_i: (w, o) \rightarrow [0,1]$$ assigning any word-object pair a real-valued meaning in the unit interval. Just as our concept of a dog, built up over many individual experiences across a lifetime, provides stable expectations about the properties of a new instance -- four legs, wagging tail, barking noises -- our accumulated lexical knowledge provides stable communicative expectations. 
@@ -155,16 +188,29 @@ First, we show in simulations of a repeated interaction with a single partner th
 \item how do local, partner-specific expectations generalize to global expectation over repeated interaction with multiple partners in the same community (see Fay et al. 2010).
 \end{enumerate}
 
+\section*{Chapter 3: Coordination between humans and machines}
 
+\begin{figure}[t]
+\centering
+\includegraphics[scale=.36]{model_results.png}
+\caption{ (A) Probability of speaker using one of two labels to refer to a state, broken out by initial observation: while players are initially ambivalent between the two labels (arbitrariness), the initial mapping is likely to persist (stability). (B) Accuracy rises as speaker and listener align. (C) When conjunctions are introduced into the grammar, utterances get shorter over time (reduction).}
+\label{fig:modelresults}
+\end{figure}
 
-\section{Chapter 4: How do people coordinate on new conventions in naturalistic interactions?}
+\section*{Chapter 4: Characterizing the dynamics of coordination} 
 
-A core function of language is \emph{reference}: using words to convey the identity of an object in the environment. 
-My research uses a rich, naturalistic communication paradigm called a \emph{repeated reference game} that (1) requires participants to find some way of referring to novel, ambiguous stimuli that they don't already have strong conventions for and (2) asks them to refer to these same objects across multiple rounds as they build up a shared history of interaction, or `common ground,' with their partner.
+\begin{figure}[t!]
+\centering
+\includegraphics[scale=0.8]{chapter4}
+\caption{\small Results from Chapter 4. (A) }
+\label{fig:chapter5}
+\end{figure}
+
 %In this paradigm, two participants are placed in an interactive environment containing a chat box and an array of objects. 
 %On each round of the game, one player---the speaker---is privately shown one object highlighted as the target. 
 %The speaker must then produce a message allowing their partner to identify and select the target from their own screen.
 %Thus, when participants are pre must coordinate with one another on a way of repeatedly referring to novel, difficult-to-describe tangram shapes. 
+
 I collected a large corpus ($> 15,000$ messages) of the natural language dialogue sent through a chat box by hundreds of pairs of participants playing this game over the web \cite{hawkins_convention-formation_2017}.
 I then used recent techniques developed from natural language processing to quantitatively characterize how the structure and content of participants' language evolves as they coordinate on new conventions.
 
@@ -175,57 +221,104 @@ I found that while different pairs coordinate on a wide range of idiosyncratic s
 These findings provide higher resolution into the quantitative dynamics of convention formation: based on usage, existing words systematically acquire new meaning with a partner and support more efficient communication.
 %The referring expressions generated by participants across these games reveals a number of rich qualitative phenomena about adaptation in communication. We conduct a large-scale replication of the matching task used by Clark \& Wilkes-Gibbs (1986) as well as a reference game variant with the same stimuli that allows us to track the change in referring expressions over time at a tangram-by-tangram level. We use modern natural language processing techniques to analyze the lexical and syntactic features of utterances and show (1) that the lexical pacts participants form are arbitrary and stable, and (2) that participants are reducing their referring expressions in a systematic and path-dependent manner to preserve distinctive information.
 
-\begin{figure}[t]
-\centering
-\includegraphics[scale=.45]{task_cropped.pdf}
-\caption{Generic setup for repeated reference game task in the lab using stimuli from Wilkes-Gibbs \& Clark (1986); on every round, the speaker refers to each target in some context, and the listener attempts to pick out the intended referent. Both players are free to speak at any time.}
-\label{fig:tangramsmethods}
-\end{figure}
-
-\begin{figure}[t]
-\includegraphics[scale=.35]{tangrams_results.png}
-\includegraphics[scale=.25]{pos_fig.pdf}
-\includegraphics[scale=.25]{pmi.pdf}
-\caption{Reduction phenomena reproduced from Hawkins et al, 2017. Clockwise from left: (1) proportion of messages with subordinate clause, broken out by tangram, (2) proportion of messages with conjunction, (3) proportion of utterances containing prepositional phrase, (4) point-wise mutual information on first repetition predicts the likelihood of that word appearing in the final repetition (5) Reduction rates for different parts of speech. Error bars are bootstrapped 95\% CIs}
-\label{fig:tangramsresults}
-\end{figure}
+%\begin{figure}[t]
+%\centering
+%\includegraphics[scale=.45]{task_cropped.pdf}
+%\caption{Generic setup for repeated reference game task in the lab using stimuli from Wilkes-Gibbs \& Clark (1986); on every round, the speaker refers to each target in some context, and the listener attempts to pick out the intended referent. Both players are free to speak at any time.}
+%\label{fig:tangramsmethods}
+%\end{figure}
+%
+%\begin{figure}[t]
+%\caption{Reduction phenomena reproduced from Hawkins et al, 2017. Clockwise from left: (1) proportion of messages with subordinate clause, broken out by tangram, (2) proportion of messages with conjunction, (3) proportion of utterances containing prepositional phrase, (4) point-wise mutual information on first repetition predicts the likelihood of that word appearing in the final repetition (5) Reduction rates for different parts of speech. Error bars are bootstrapped 95\% CIs}
+%\label{fig:tangramsresults}
+%\end{figure}
 
 \vspace{1cm}
 
-\section*{Lexical conventions are shaped by communicative context}
+\section*{Chapter 5: How does communicative context shape conventions?}
 
-These findings suggest that although there may be many equally effective solutions discovered by different pairs, the resulting conventions are nonetheless \emph{adaptive}: they are shaped by the functional demands of communication in the local environment.
-%While this first project emphasized the wide diversity of equally functional labels that different pairs converged on, it also raised new questions about the role of context. 
-\textbf{Chapter 5} tests this hypothesis using a controlled artificial-language paradigm adopted from studies of language evolution.
-As before, participants were paired to communicate about a set of target objects, but the statistics of the environment were manipulated across different pairs to make different distinctions relevant \cite{hawkins_emerging_abstractions_2018}. 
-%This allowed me to remove the stable priors of natural language and isolate the mechanisms of rapid coordination.
-In the `fine' condition, distractors were very similar to the target, thus inducing a communicative need for finer distinctions. 
-In the `coarse' condition, distractors differed from the target at higher levels of a concept hierarchy.  
+\begin{figure}[t!]
+\centering
+\includegraphics[scale=0.8]{chapter5}
+\caption{\small Methods and results from Chapter 5. (A) Example of \emph{fine} context where one of the distractors belongs to the same fine-grained branch of the hierarchy as the target (i.e. another striped circle), so any abstract label would be insufficient to disambiguate them. The target is highlighted for the speaker with a black square. (B) Drag-and-drop chat box interface with artificial labels. (C) Hierarchical organization of stimuli. (D) Participants became increasingly accurate over repeated interaction. (E) Statistics of environment lead to different systems of meaning: participants developed more abstract meanings (applying to 2 objects) than specific meanings (applying to 1 object) in the coarse condition.}
+\label{fig:chapter5}
+\end{figure}
+
+The rapid timescale of adaptation observed in dyadic interaction is not only of interest for cognitive theories of meaning and social coordination. 
+It may also be a key building block toward understanding the remarkable adaptiveness and efficiency that is characteristic of human languages over longer time scales \cite{RegierKempKay15_WordMeaningsEfficientCommunication,KirbyTamarizCornishSmith15_CompressionCommunication,gibson2019efficiency}.
+Recent computational approaches to language evolution have argued that the lexical conventions of languages balance simplicity, or learnability, with usage needs. 
+%A key prediction is that the lexicon of a language should be sensitive to the usage needs of its users. 
+For example, languages in warm regions ought to be more likely to collapse the distinction between ice and snow into a single word, simply because there are fewer occasions that require distinguishing between the two \shortcite{RegierCarstensenKemp16_WordsForSnow}. 
+This optimal expressivity principle accounts well for the lexical distributions found in natural languages across semantic domains like color words and kinship categories \cite{RegierKempKay15_WordMeaningsEfficientCommunication,GibsonEtAl17_ColorNamingUse}, as well as the compositional systems that emerge under iterated learning with communication in the lab \shortcite{WintersKirbySmith14_LanguagesAdapt, KirbyTamarizCornishSmith15_CompressionCommunication}. 
+While this is a powerful principle, prior work has largely focused on the functional \emph{outcomes} of the overall language evolution process rather than the individual-level cognitive mechanisms driving the process itself.
+If community-wide conventions emerge from agents generalizing across dyadic interactions, then understanding the local mechanisms leading to efficiency and informativity over repeated interactions \emph{within} a dyad may help explain how a community’s conventions become well-calibrated to their environment. 
+
+%A mechanistic account of lexical adaptation and convention-formation among individual agents. 
+
+\textbf{Chapter 5} examines how the cognitive mechanisms proposed in earlier chapters allow context to shape \emph{ad hoc} conventions \cite{hawkins_emerging_abstractions_2018}.
+Specifically, I propose that context-sensitivity results from the impact of inductive biases on meaning inference, specifically the Gricean expectations that a partner is trying to be appropriately informative.
+To isolate these mechanisms from the background priors speakers bring into new interactions, I adopted an artificial-language paradigm from work on language evolution.
+Participants were paired to communicate about a set of target objects (Fig. \ref{fig:chapter5}A) through a chatbox containing a fixed vocabulary (Fig. \ref{fig:chapter5}B) and given full feedback after each trial.
+The stimuli were designed to visually cluster in a three-level hierarchy (Fig. \ref{fig:chapter5}C).
+Critically, the statistics of the environment were manipulated across different pairs to make different distinctions relevant. 
+In the `fine' condition, every context contained distractors that were very similar to the target, thus inducing a communicative need for finer distinctions. 
+In the `coarse' condition, distractors always differed from the target at higher levels of the concept hierarchy.  
+Finally, a `mixed' condition randomly interspersed these two kinds of contexts.
+I hypothesized that pairs should coordinate on distinct names for each object (e.g. \emph{ice} and \emph{snow}) when the context frequently makes fine distinctions relevant. 
+Conversely, they should converge on a more efficient and compressed system of conventions for abstract categories in coarser contexts, even if a finer mapping would be sufficient.
+
 %where when the context requires frequently making fine distinctions between entities; conversely, they should converge on a more compressed system of conventions for abstract categories (e.g. dog) in coarser contexts, even if a finer mapping would be sufficient. 
-Using a post-test probing the resulting conventions and a statistical approach inferring the lexicon at early stages from usage, I found systematic differences in the \emph{level of abstraction} of conventions in these different contexts. 
-%In the coarse condition, participants learned to communicate with smaller vocabularies collapsing over distinctions within categories, while in the fine condition they had more specific labels for sub-categories. 
-%Additionally, I introduced a novel statistical approach to probe the dynamics of the lexicon at formative stages by inferring meanings from usage. 
-These results indicate that pragmatic considerations of \textit{informativity in context} shape the formation of lexical conventions over longer interactions.
+Over 100 trials, dyads were able to successfully coordinate on reliable systems (Fig. \ref{fig:chapter5}D).
+Using a post-test probing the resulting conventions and a statistical approach inferring participants' beliefs about conventions at earlier stages of the task, I found systematic differences in the \emph{level of abstraction} of meanings that formed across these different contexts. 
+In the coarse condition, participants learned to communicate with smaller vocabularies collapsing over distinctions within categories, while in the fine condition they coordinated on specific labels for sub-categories (Fig. \ref{fig:chapter5}E).
+These differences arose even though both groups referred to each target object the same number of times; the only difference was the identity of distractors.
+%Additionally, using  of the game to probe the trajectory of emergence.
+These results indicate that lexical conventions are shaped by pragmatic considerations of \textit{informativity in context} as each speaker attempts to infer what the other intends to mean.
+For example, listeners can infer that the speaker would be unlikely to intend an abstract meaning like `the red squares' in a fine context: it would be underinformative and uncooperative. 
+Conversely, a speaker in the coarse condition can be confident about extending a word previously used for the dark red square to the light red square because their partner is unlikely to be confused by the presence of the original object. 
+Our minds organize the world into meaningful conceptual hierarchies but our shared language may only come to reflect this structure when it is communicatively relevant. 
 
-\begin{figure}[b]
-\centering
-\includegraphics[scale=.5]{fig.png}
-\caption{(A) Example of fine context where one of the distractors belongs to the same fine-grained branch of the hierarchy as the target (i.e. another striped circle), so any abstract label would be insufficient to disambiguate them. The target is highlighted for the speaker with a black square. (B) Drag-and-drop chat box interface. (C) Hierarchical organization of stimuli.}
-\label{fig:2018task}
-\end{figure}
 
-\begin{figure}[t]
-\centering
-\includegraphics[scale=.7]{resultsFig_v1.pdf}
-\caption{ Pragmatic demands of context shape the formation of abstractions. (A) Mean number of words participants reported
-with specific meanings (applying to 1 object) or abstract meanings (applying to 2 objects). (B) Diversity of terms within
-reported lexica: many participants in the coarse condition reported a mixture of abstract and specific terms.}
-\label{fig:modelresults}
-\end{figure}
+%\begin{figure}[h]
+%\centering
+%\includegraphics[scale=.7]{resultsFig_v1.pdf}
+%\caption{ . (A)  (B) Diversity of terms within
+%reported lexica: many participants in the coarse condition reported a mixture of abstract and specific terms.}
+%\label{fig:modelresults}
+%\end{figure}
 
 %Words exist for referring at many levels of specificity: from the broadest (thing) to the most specific (Fido). What drives the emergence of these taxonomies of reference? Recent computational theories of language evolution suggest that communicative demands of the environment may play a deciding role. Here, we investigate local pragmatic mechanisms of lexical adaptation that may undergird global emergence by manipulating context in a repeated reference game where pairs of participants interactively coordinate on an artificial communication system (see Fig. \ref{fig:2018task}). We hypothesize that pairs should coordinate on conventions for specific names (e.g. Fido) when the context requires frequently making fine distinctions between entities; conversely, they should converge on a more compressed system of conventions for abstract categories (e.g. dog) in coarser contexts, even if a finer mapping would be sufficient. We show differences in the levels of abstraction that emerged in different environments (see Fig. \ref{fig:2018task}) and introduce a statistical approach to probe the dynamics of emergence. Finally, we use these data as a quantitative test for the model we proposed in Chapter 3. 
 
 %There are \emph{many} potential ways this function could be represented in the mind at the algorithmic level. It could be derived from a store of exemplars, a set of independent prototypes for each word, a neural network embedding words and objects in a vector space, and so on \cite<see>[for a recent review of candidates]{JonesEtAl15_SemanticMemory}.
+
+\section*{Chapter 6: How general are mechanisms across modalities?}
+
+\begin{figure}[t]
+\centering
+\includegraphics[scale=0.8]{chapter6}
+\caption{\small Results from the graphical reference game in Chapter 6. (A) Examples of two dyads depicting the same object over successive trials (B) Performance improves for repeated objects more than for control objects only seen at the beginning and end. (C) Drawings were harder for naive viewers to recognize in the absence of interaction history.}
+\label{fig:chapter6}
+\end{figure}
+
+While linguistic communication is powerful and prevalent, research on the dynamics of adaptation in other communication modalities, including drawing \cite{GarrodFayLeeOberlanderMacLeod07_GraphicalSymbolSystems,Galantucci05_EmergenceOfCommunication,HealeySwobodaUmataKing07_GraphicalLanguageGames,TheisenEtAl10_SystematicityArbitrariness,FayGarrodRobertsSwoboda10_InteractiveEvolution} and gesture  \cite{goldin1996silence,goldin-meadow_role_1999}, is important for two reasons.
+First, a core claim of the proposed hierarchical Bayesian model is that the learning and social cognition mechanisms underlying communication are domain-general.
+In other words, there is nothing special about spoken or written language; any ad hoc system that we use to send messages should display similar learning dynamics.
+In all cases we are trying to coordinate on meaning with other minds. 
+Second, because this model also claims a critical role for background priors about what is expected to be meaningful, different communication modalities should nevertheless display certain systematic differences.
+For example, the abstract tangram shapes used in Chapter 4 were hard to name but would be easy to draw.
+Conversely, common objects like pieces of furniture are easy to refer to in the linguistic modality (e.g. `armchair', `lawn chair') due to strong background conventions, but hand-drawing the necessary distinctions may be costly, creating a functional need to form local conventions. 
+
+In \textbf{Chapter 6}, I explored the hypothesis that extended visual communication may promote the development of increasingly idiosyncratic yet effective ways of depicting objects \cite{hawkins2019disentangling}.
+Specifically, I designed an interactive drawing-based reference game (i.e.~\emph{Pictionary}) similar to those used in previous chapters in which two participants repeatedly referred to targets in a context of chair images.
+I examined both how their task performance and the drawings they produced changed over time (see Fig.~\ref{fig:chapter6}A).
+There are three aspects of this current work that advance previous work in this modality \cite<e.g.>[]{GarrodFayLeeOberlanderMacLeod07_GraphicalSymbolSystems}.
+First, I included a set of control objects that were not repeatedly drawn but only shown at the beginning and end of the interaction, allowing measurement of the specific contribution of repeated reference vs. general practice effects.
+These control objects did not show the same performance gains as the repeated objects (Fig. \ref{fig:chapter6}B), suggesting that conventions were object-specific. 
+In a second experiment, I measured how strongly the visual properties of drawings drive recognition in the absence of interaction history for naive viewers (the \emph{scrambled} condition), while equating other task variables (the \emph{yoked} condition).
+Drawings became substantially harder for independent viewers to recognize without sharing the full interaction history (Fig. \ref{fig:chapter6}C).
+\emph{Third}, I employed a convolutional neural network to quantitatively characterize changes in the high-level visual properties of drawings across repetitions \cite{simonyan2014very,FanCommon2018}---a graphical analog of the semantic embeddings used in Chapter 4.
+Drawings became increasingly consistent within an interaction, but different pairs discovered different equilibria in the space of viable graphical conventions.
+The strong correspondence between these results and those found using linguistic communication suggests that the same generic learning and social reasoning mechanisms may support coordination across communication modalities.
 
 \section*{Conclusions}
 
