@@ -64,7 +64,7 @@ It is tempting to think of word meanings as entries in a dictionary shared by sp
 Drop into any conversation between friends, however, and you wade into a stream of shorthand, jargon, slang, references, nicknames, and inside jokes --- some of which you may understand, but the rest of which may be meaningful to them alone. 
 There is no guarantee, it seems, that any two speakers of a language will share the same dictionary.
 To make matters worse, we live in an ever-changing world where we need to talk about new things.
-There is also no guarantee that any dictionary could anticipate the meanings we will need to express in every new context.
+There is also no guarantee that any dictionary could anticipate the meanings we will need to express in each new context.
 If we cannot rely on the existence of a shared dictionary for coordination, what can we rely on?
 How do we manage to understand one another so effortlessly in this patchwork landscape of meaning?
 
@@ -73,54 +73,45 @@ The core theoretical contribution is an account of communication relaxing the as
 Instead, we propose that communication is better understood as a multi-agent meta-learning problem guided by social inference.
 Agents must integrate background expectations about reliable community-wide conventions with new \emph{ad hoc}, partner-specific pacts constructed on the fly.
 Chapters 2 formalizes this proposal in a hierarchical Bayesian model and presents simulation results capturing key effects from the literature. 
-Chapter 3 evaluates an algorithm scaling this proposal to a recurrent neural network that interactively adapts to human partners.
+Chapter 3 evaluates an algorithm scaling this proposal to a recurrent neural network that interactively adapts to human partners using natural language.
 Chapter 4 introduces a large behavioral corpus that provides a higher resolution look at the dynamics of \emph{ad hoc} convention formation. % of referring expressions in the classic Tangrams task. 
 Chapter 5 tests how the communicative needs of the context shape the resulting \emph{ad hoc} conventions. 
-Finally, Chapter 6 assesses the generality of the proposed mechanisms by examining coordination in a \emph{graphical} Pictionary task. 
+Finally, Chapter 6 assesses the generality of the proposed mechanisms by examining convention formation in a \emph{graphical} Pictionary task. 
 
 Understanding the role of learning and social cognition in everyday language use is a foundational question at the intersection of psychology, neuroscience, and linguistics. 
 The methodological combination of computational modeling and naturalistic communication experiments gives new insight into how such rich, flexible language behavior may arise from these general-purpose cognitive mechanisms.
-The proposed theory builds on accounts of social convention and meaning developed in mid-century analytic philosophy, particularly by \citeA{Lewis69_Convention} and \citeA{davidson_nice_1986}, and suggests broader application potential toward building more adaptive and socially intelligent AI, consistent with current directions in computer science. 
+The proposed theory builds on accounts of social convention and meaning developed in analytic philosophy, particularly by \citeA{Lewis69_Convention} and \citeA{davidson_nice_1986}, and suggests broader application potential toward building more adaptive and socially intelligent AI, consistent with current directions in computer science. 
 More broadly, this work opens avenues for future work to understand how social conventions and norms are represented in the mind, how these conventions are shaped by local context, and how they give rise to the remarkable feats of social coordination that are so distinctive of human cultures \cite{hawkins2019emergence}.
 
 \section*{Introduction}
 
-\todo[inline]{Start with phenomena; smooth into what makes reference hard/interesting}
+A core function of communication is \emph{reference}: using words to convey the identity of an object in the environment \cite{Brown58_HowShallAThingBeCalled,Searle69_SpeechActs,van_deemter_computational_2016}.
+Throughout this dissertation, I use a rich, naturalistic communication paradigm called a \emph{repeated reference game} \cite{KraussWeinheimer64_ReferencePhrases} that requires a pair of participants to find some way of referring to novel, ambiguous stimuli they don't already have strong conventions for.
+%In this task, pairs of participants are presented with arrays of novel images.
+On each trial, one participant (the director) is privately shown a \emph{target} object in an array of distractors and must produce a referring expression allowing their partner (the matcher) to correctly select that object from the array. 
+Critically, each object appears as the target multiple times in the trial sequence, allowing the experimenter to examine how referring expressions change as the director and matcher accumulate a shared history of interaction, or `common ground' \cite{clark_using_1996}.
+To the extent that the director and matcher converge on a stable and accurate system of referring expressions, and these referring expressions differ from the ones that were initially produced, it may be claimed that \emph{ad hoc conventions} or \emph{pacts} have been constructed within the dyad.
 
-My research uses a rich, naturalistic communication paradigm called a \emph{repeated reference game} that (1) requires participants to find some way of referring to novel, ambiguous stimuli that they don't already have strong conventions for and (2) asks them to refer to these same objects across multiple rounds as they build up a shared history of interaction, or `common ground,' with their partner.
-
-
-A core function of language is \emph{reference}: using words to convey the identity of an object in the environment. 
-Throughout this dissertation, the \emph{repeated reference game} task has provided a natural and productive paradigm for eliciting adaptive behavior under referential challenging conditions.
-In this task, pairs of participants are presented with arrays of novel images.
-On each trial, one player (the director) is privately shown a \emph{target} object and must produce a referring expression allowing their partner (the matcher) to correctly select that object from the array.
-The director is then given feedback at the end of each trial about which object the matcher selected, and the matcher is given feedback about the true target object.
-Critically, each object appears as the target multiple times in the trial sequence, allowing the experimenter to examine how referring expressions change as the director and matcher accumulate shared experience.
-To the extent that the director and matcher converge on an accurate system of stable referring expressions, and these referring expressions differ from the ones that were initially produced, it may be claimed that \emph{ad hoc conventions} or \emph{pacts} have formed within the dyad.
-
-One of the earliest and most intriguing phenomena observed in this task is that descriptions are dramatically shortened across repetitions: an initial description like ``the one that looks like an upside-down martini glass in a wire stand'' may gradually converge to ``martini'' by the end  \cite{KraussWeinheimer64_ReferencePhrases}.
+One of the earliest and most intriguing phenomena observed in this task is that descriptions are dramatically shortened across repetitions: an initial description like ``the one that looks like an upside-down martini glass in a wire stand'' may gradually converge to ``martini'' by the end.
 That is, speakers are able to communicate the same referential content much more efficiently over time.
 Subsequent work has established a number of signature properties of this process through careful experimental manipulation.
-First, the extent to which descriptions are shortened is contingent on evidence of understanding from the matcher \cite{KraussWeinheimer66_Tangrams,KraussEtAl77_AudioVisualBackChannel,HupetChantraine92_CollaborationOrRepitition}, and is therefore not easily explained as a mere practice or repetition effect.
-Second, the resulting labels are \emph{partner-specific} in the sense that they do not transfer if a novel matcher is introduced \cite{WilkesGibbsClark92_CoordinatingBeliefs,MetzingBrennan03_PartnerSpecificPacts,brennan_partner-specific_2009}.
+First, the extent to which descriptions are shortened is \emph{contingent} on evidence of understanding from the matcher \shortcite{KraussWeinheimer66_Tangrams,KraussEtAl77_AudioVisualBackChannel,HupetChantraine92_CollaborationOrRepitition}, and is therefore not easily explained as a mere practice or repetition effect.
+Second, the resulting labels are \emph{partner-specific} in the sense that they do not transfer if a novel matcher is introduced \shortcite{WilkesGibbsClark92_CoordinatingBeliefs,MetzingBrennan03_PartnerSpecificPacts,brennan_partner-specific_2009}.
 Third, they are \emph{sticky} in the sense that they persist through precedent with the same partner even after the referential context changes \cite{BrennanClark96_ConceptualPactsConversation}, and are readily extended to similar objects \cite{MarkmanMakin98_ReferentialCommunicationCategory}.
-%A variety of models, at varying levels of formal precision, have been proposed to explain these qualitative effects.
-These qualitative effects provide an empirical backbone for theories of communication to explain. %adaptation, common ground, and conventionalization
 
-\todo[inline]{Transition to idea that earlier models have a hard time with these phenomena. In particular, one-shot pragmatics doesn't seem to do the trick; we need learning.}
-Do people adapt at all? 
-Flexibility in meaning is partially explained by \emph{de novo} pragmatic reasoning, which allows listeners to use context to infer an intended meaning even in cases of ambiguous or non-literal usage \cite{Clark83_NonceSense,LascaridesCopestake98_PragmaticsWordMeaning,Glucksberg01_FigurativeLanguage,GoodmanFrank16_RSATiCS}.
-However, a rich theoretical thread has suggested that learning mechanisms may also play an important role, allowing speakers and listeners to dynamically adapt their representations of meaning over the course of an interaction \cite{BrennanClark96_ConceptualPactsConversation,pickering2004toward,delaney2019neural}.
+These qualitative effects provide a core empirical backbone for theories of communication to explain, but immediately pose difficulties for current computational cognitive models.
+One of the most promising candidates is a family of probabilistic models which derive flexibility in meaning from \emph{de novo} Gricean reasoning, formalized as recursive social inference \cite{GoodmanFrank16_RSATiCS,FrankeJager16_ProbabilisticPragmatics}.
+These models show how listeners use context to draw enriched inferences about intended meaning even in cases of ambiguous or non-literal usage \cite{Clark83_NonceSense,LascaridesCopestake98_PragmaticsWordMeaning,Glucksberg01_FigurativeLanguage}.
+While one-shot pragmatic reasoning has provided a powerful explanation of many elusive phenomena, it remains insufficient to explain the dynamics of how new meanings become shared \emph{over time}.
+Like other models of communication descended from \citeA{Shannon48}, the problem is that recursive reasoning still grounds out in \emph{fixed}  `dictionary' of literal meanings assumed to be already shared.
+To overcome this problem, I turned to a rich theoretical thread in the literature suggesting that, in addition to social inference, \emph{learning} may play an important role \shortcite{BrennanClark96_ConceptualPactsConversation,pickering2004toward,delaney2019neural}.
 
-Recent probabilistic modeling framework which derives pragmatic considerations of language use from more generic computational principles of social cognition in rational agents.
-%, specifically recursive probabilistic inference about the beliefs and intentions of rational agents. 
-% \emph{Gricean pragmatics} due to their origins in Paul Grice's ``cooperative principle,'' operate within the production or comprehension of a single utterances. 
-For example, listeners treat the literal meaning of a question as a cue to infer and address the underlying goal of the questioner \cite{hawkins_why_2015, hawkins_QA_2018}.
-And even though many labels may be literally true of an object, speakers refer to objects at an appropriate level of specificity given the other objects in context \cite{graf_animal_2016, monroe2017colors}.
-They also increase the specificity of their utterances under additional uncertainty over what else might be in their partners' visual field \cite{hawkins_conversational_2016, hawkins2018speakers}.
-While powerful, these models are unable to explain the flexibility and adaptiveness of conventions over time, as they are constructed on top of \emph{fixed} linguistic meanings.
-
-\todo[inline]{Bring in tension between Lewis's conventions and davidson's passing theories?}
+%Recent probabilistic modeling framework which derives pragmatic considerations of language use from more generic computational principles of social cognition in rational agents.
+%%, specifically recursive probabilistic inference about the beliefs and intentions of rational agents. 
+%% \emph{Gricean pragmatics} due to their origins in Paul Grice's ``cooperative principle,'' operate within the production or comprehension of a single utterances. 
+%For example, listeners treat the literal meaning of a question as a cue to infer and address the underlying goal of the questioner \cite{hawkins_why_2015, hawkins_QA_2018}.
+%And even though many labels may be literally true of an object, speakers refer to objects at an appropriate level of specificity given the other objects in context \cite{graf_animal_2016, monroe2017colors}.
+%They also increase the specificity of their utterances under additional uncertainty over what else might be in their partners' visual field \cite{hawkins_conversational_2016, hawkins2018speakers}.
 
 %Here we lay out the theoretical landscape and empirical evidence focusing on three key aspects of our theoretical approach: 
 %\begin{enumerate}
@@ -253,7 +244,7 @@ Similarly, while speakers did not simplify their utterances to the same extent a
 \begin{figure}[t!]
 \centering
 \includegraphics[scale=.93]{chapter4}
-\caption{\small Experimental design for repeated reference game used in Chapter 4.  Participants were paired over the web and communicated freely using a chat box. Tangram stimuli were reproduced from Clark \& Wilkes-Gibbs (1986).}
+\caption{\small Experimental design for repeated reference game used in Chapter 4.  Participants were paired over the web and communicated freely using a chat box. After a selection is made, the director is given feedback about which object was selected, and the matcher is given feedback about the true target object. Tangram stimuli were reproduced from Clark \& Wilkes-Gibbs (1986).}
 \label{fig:chapter4}
 \end{figure}
 
