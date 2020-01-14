@@ -86,7 +86,7 @@ More broadly, this work opens avenues for future work to understand how social c
 \section*{Introduction}
 
 A core function of communication is \emph{reference}: using words to convey the identity of an object in the environment \cite{Brown58_HowShallAThingBeCalled,Searle69_SpeechActs,van_deemter_computational_2016}.
-Throughout this dissertation, I use a rich, naturalistic communication paradigm called a \emph{repeated reference game} \cite{KraussWeinheimer64_ReferencePhrases} that requires a pair of participants to find some way of referring to novel, ambiguous stimuli they don't already have strong conventions for.
+Throughout my dissertation, I use a rich, naturalistic communication paradigm called a \emph{repeated reference game} \cite{KraussWeinheimer64_ReferencePhrases} that requires a pair of participants to find some way of referring to novel, ambiguous stimuli they don't already have strong conventions for.
 %In this task, pairs of participants are presented with arrays of novel images.
 On each trial, one participant (the director) is privately shown a \emph{target} object in an array of distractors and must produce a referring expression allowing their partner (the matcher) to correctly select that object from the array. 
 Critically, each object appears as the target multiple times in the trial sequence, allowing the experimenter to examine how referring expressions change as the director and matcher accumulate a shared history of interaction, or `common ground' \cite{clark_using_1996}.
@@ -99,12 +99,13 @@ First, the extent to which descriptions are shortened is \emph{contingent} on ev
 Second, the resulting labels are \emph{partner-specific} in the sense that they do not transfer if a novel matcher is introduced \shortcite{WilkesGibbsClark92_CoordinatingBeliefs,MetzingBrennan03_PartnerSpecificPacts,brennan_partner-specific_2009}.
 Third, they are \emph{sticky} in the sense that they persist through precedent with the same partner even after the referential context changes \cite{BrennanClark96_ConceptualPactsConversation}, and are readily extended to similar objects \cite{MarkmanMakin98_ReferentialCommunicationCategory}.
 
-These qualitative effects provide a core empirical backbone for theories of communication to explain, but immediately pose difficulties for current computational cognitive models.
+These qualitative effects provide a core empirical backbone for theories of communication to explain, but immediately pose difficulties for current computational models.
 One of the most promising candidates is a family of probabilistic models which derive flexibility in meaning from \emph{de novo} Gricean reasoning, formalized as recursive social inference \cite{GoodmanFrank16_RSATiCS,FrankeJager16_ProbabilisticPragmatics}.
 These models show how listeners use context to draw enriched inferences about intended meaning even in cases of ambiguous or non-literal usage \cite{Clark83_NonceSense,LascaridesCopestake98_PragmaticsWordMeaning,Glucksberg01_FigurativeLanguage}.
-While one-shot pragmatic reasoning has provided a powerful explanation of many elusive phenomena, it remains insufficient to explain the dynamics of how new meanings become shared \emph{over time}.
-Like other models of communication descended from \citeA{Shannon48}, the problem is that recursive reasoning still grounds out in \emph{fixed}  `dictionary' of literal meanings assumed to be already shared.
-To overcome this problem, I turned to a rich theoretical thread in the literature suggesting that, in addition to social inference, \emph{learning} may play an important role \shortcite{BrennanClark96_ConceptualPactsConversation,pickering2004toward,delaney2019neural}.
+While such one-shot pragmatic reasoning has provided a powerful explanation of many forms of flexibility, it remains insufficient to explain the dynamics of how new meanings become shared \emph{over time}.
+Like other models of communication descended from \citeA{Shannon48}, the problem is that recursive reasoning still bottoms out in a fixed  `dictionary' of literal meanings assumed to be already shared between speakers.
+To overcome this problem, I turned to the literature on language acquisition and language evolution, which focus on how meaning arises in the first place.
+I suggest that the same learning mechanisms may play a ubiquitous role in establishing meaning even in ordinary interactions between adults. 
 
 %Recent probabilistic modeling framework which derives pragmatic considerations of language use from more generic computational principles of social cognition in rational agents.
 %%, specifically recursive probabilistic inference about the beliefs and intentions of rational agents. 
@@ -122,69 +123,57 @@ To overcome this problem, I turned to a rich theoretical thread in the literatur
 
 %The core of this work is an inferential model of convention formation that explains flexible and adaptive language use across extended interaction as a consequence of hierarchical probabilistic learning. Through observing their partner's usage, agents attempt to infer and adopt their partner's underlying lexicon using global conventions as a prior. When both agents independently adopt such a learning strategy, they align to one another, coordinating on and implicitly creating new, shared conventions. 
 
-
-\section*{Chapter 2: An inferential theory of convention formation}
-
-\todo[inline]{Lay out desiderata for the components of such a model}
-
-Computational models of meaning must explain both the speaker’s initial expectations about how words will be understood by novel partners and the dynamics of how these expectations may shift over the course of a particular conversation. proposes a computational model that formalizes the problem of coordinating on meaning as hierarchical probabilistic inference, which I argue satisfies both of these conditions. Community- level expectations provide a stable prior, and dynamics within an interaction are driven by partner- specific learning.
-
-\todo[inline]{Argue that HBMs satisfy these desiderata and describe what an HBM is, connection to other HBMs like Kleinschmidt}
-
-Under this view, knowledge of community-wide linguistic conventions \cite{Lewis69_Convention} supplies a useful but uncertain first guess about the linguistic meanings that will be shared with a new partner. 
-Through interaction, these general expectations are gradually tuned to the local context via social inferences based on that partner's language use  \cite{clark_using_1996,davidson_nice_1986}. 
-As each party learns about the other and attempts to be understood under their updated model of partner-specific meaning, they coordinate on a system of meaning that is tailored to be efficient and accurate for their present purposes.
-
-Rather than priming or aligning on surface forms, these agents are making structured inferences about the underlying representation of meaning used by their partner.
-
-In \textbf{Chapter 2}, we propose a hierarchical Bayesian model of convention formation that formalizes our proposal (see Fig. \ref{fig:modelschematic}): global conventions are learned and generalized over many extended interactions with many different people across a lifetime, and this shared semantic prototype is the backbone supporting rapid learning for new partners and situations. 
-
-What cognitive mechanisms explain these phenomena? 
-Recent probabilistic modeling framework which derives pragmatic considerations of language use from more generic computational principles of social cognition in rational agents.
-%, specifically recursive probabilistic inference about the beliefs and intentions of rational agents. 
-% \emph{Gricean pragmatics} due to their origins in Paul Grice's ``cooperative principle,'' operate within the production or comprehension of a single utterances. 
-
-\todo[inline]{Explain roughly how model works}
-
-A central aim of my dissertation work was to extend these models to capture how agents represent and rapidly coordinate on new conventions.% that explains the results of the above experiments. 
-I have implemented this theory in a Bayesian model that relaxes the assumption of fixed word meanings in probabilistic pragmatics models and instead treats them as dynamic and learnable for different partners. 
-This captures a functional view of linguistic conventions as solutions to coordination problems, in which every agent is simultaneously seeking to infer the conventions that other agents are using, in order to support successful communication. 
-% assumes others are using some set of conventions and is trying to learn them such that they can be understood.  %: global conventions are learned and generalized over many extended interactions with many different people across a lifetime, and  this shared semantic prototype is the backbone supporting rapid learning for new partners and situations. 
-This model successfully predicts coordination on idiosyncratic but path-dependent and stable form-meaning mappings in simulations, and shows that a preference for less costly utterances combined with learning gives rise to shorter descriptions over time \cite{hawkins_convention-formation_2017}.
-
-
-Here, we briefly present a sketch of the modeling approach. We begin by defining a lexicon as a function $$\mathcal{L}_i: (w, o) \rightarrow [0,1]$$ assigning any word-object pair a real-valued meaning in the unit interval. Just as our concept of a dog, built up over many individual experiences across a lifetime, provides stable expectations about the properties of a new instance -- four legs, wagging tail, barking noises -- our accumulated lexical knowledge provides stable communicative expectations. 
-This knowledge is represented by a `overhypothesis' or shared lexical representation $\Theta_0$, which parameterizes the prior expectations about any individual partner's lexicon: $P(\mathcal{L}_i | \Theta_0)$. 
-
-%\begin{figure}[b]
-%\centering
-%\includegraphics[scale=.4]{model_schematic.png}
-%\caption{Schematic of our hierarchical model: $\Theta_0$ parameterizes the agent's global beliefs about how their partner uses language, and then through interaction with each partner, they update a partner-specific lexical model based on data $D$ from that interaction.}
-%\label{fig:modelschematic}
-%\end{figure}
-
-Now that we have defined a hierarchical likelihood on lexical beliefs, we must say how we \emph{learn} partner-specific models. Our beliefs about a particular partner's lexicon $\mathcal{L}_i$ are formed by integrating our abstract lexical knowledge $\Theta_0$ with particular  observations $D_i$ of that particular individual:
-$$%\begin{array}{rcl}
-P(\mathcal{L}_i | D_i)  \propto \int_{\Theta_0}P(\mathcal{L}_i | D_i,  \Theta_0) P(\Theta_0 | D_i) 
-%                     & = & \mathbb{E}_{\Theta_0}[P(\mathcal{L}_i | \Theta_0, D_i)] 
-%\end{array}
-$$
-where the posteriors in the integral can be computed using Bayes rule:
-$$
-P(\mathcal{L}_i | D_i, \Theta_0) \propto P(D_i | \mathcal{L}_i, \Theta_0) P(\mathcal{L}_i | \Theta_0)
-$$
-While this holds when we only have observations from a single speaker, note that our posterior beliefs about $\Theta_0$ are in fact informed by observations from \emph{all} speakers: $D = \bigcup_{i=1}^k D_i$. Finally, to fully specify our model and compute our partner-specific lexical posterior $P(\mathcal{L}_i |D_i, \Theta_0)$, we must link our beliefs about a partner's lexica to their actual behavior with a likelihood function $P(D_i | \mathcal{L}_i, \Theta_0)$. This is naturally supplied by the Rational Speech Act framework: we assume speakers produce utterances that are parsimonious yet informative in context with respect to their lexicon, and listeners interpret utterances by inverting a speaker model. Because we expect our partner to use language rationally given some lexicon, the utterance they choose to refer to some object will be probable under some lexica and highly improbable under others. In this way, a particular agent's language use is a cue to their particular lexicon. 
-
-\begin{figure}[t]
+\begin{figure}[t!]
 \centering
-\includegraphics[scale=.36]{model_results.png}
-\caption{ (A) Probability of speaker using one of two labels to refer to a state, broken out by initial observation: while players are initially ambivalent between the two labels (arbitrariness), the initial mapping is likely to persist (stability). (B) Accuracy rises as speaker and listener align. (C) When conjunctions are introduced into the grammar, utterances get shorter over time (reduction).}
-\label{fig:modelresults}
+\includegraphics[scale=.85]{chapter2}
+\caption{\small Model and simulation results from Chapter 2. (A) Schematic of hierarchical Bayesian model. (B) Accuracy rises as speaker and listener coordinate. (C) Utterances reduce as speaker becomes more confident of partner's meaning. (D) Model initially represents meanings as partner-specific but generalizes convention after several partners use same meanings.}
+\label{fig:chapter2}
 \end{figure}
 
-\todo[inline]{Describe simulations}
+\section*{Chapter 2: An inferential model of convention formation}
 
-First, we show in simulations of a repeated interaction with a single partner that this model successfully allows coordination on arbitrary but path-dependent and stable form-meaning mappings and that a preference for less costly utterances combined with learning gives rise to reduction (see Fig. \ref{fig:modelresults}). Second, we test the generalization properties of our model by manipulating partners and contexts: 
+A key difficulty of rejecting the assumption of a shared `dictionary' is that adults \emph{do} nonetheless bring strong background expectations about meanings into their interactions. 
+After all, these expectations are precisely the end-point that models of language acquisition and language evolution seek to explain, over different timescales.
+How can agents both maintain stable beliefs about what will be meaningful to new partners, and also flexibly deviate from these meanings on a partner-specific basis?
+This apparent tension between stability and flexibility suggests three functional desiderata for computational models of meaning:
+
+\begin{enumerate}
+\item a mechanism for how community-wide \emph{conventions} \cite{Lewis69_Convention} shape initial interactions with a new partner.\vspace{-.75em}
+\item a mechanism for how new \emph{ad hoc} conventions can be so rapidly constructed with an individual partner.\vspace{-.75em}
+\item a mechanism connecting the two: how and when are meanings generalized from individuals to communities?
+\end{enumerate}
+
+In \textbf{Chapter 2}, I propose a hierarchical Bayesian model (HBM) of convention formation and argue that it satisfies these three desiderata. 
+HBMs have been key to understanding how the human mind solves a range of other difficult inductive problems where abstract, shared properties must be jointly inferred with idiosyncratic particulars of instances, including causal learning \cite{KempGoodmanTenenbaum10_LearningToLearn,GoodmanUllmanTenenbaum11_TheoryOfCausality}, speech perception \cite{KleinschmidtJaeger15_RobustSpeechPerception} and concept learning \cite{KempPerforsTenenbaum07_HBM}. 
+In the context of communication, the first step is to replace the shared `dictionary' of meanings with a distribution representing ``lexical uncertainty'' over different possible dictionaries a particular partner might be using \cite<see>{CooperEtAl15_ProbabilisticTypeTheory,BergenLevyGoodman16_LexicalUncertainty,SmithGoodmanFrank13_RecursivePragmaticReasoningNIPS,PottsEtAl16_EmbeddedImplicatures}.
+In an HBM, this uncertainty is assumed to be hierarchically structured (see Fig. \ref{fig:chapter2}A).
+The top level is a stable prior representing abstract conventions shared across all agents in the community, while idiosyncratic partner-specific knowledge is represented at the lower level.
+This roughly corresponds to the distinction made by \citeA{davidson_nice_1986} between a ``prior theory'' and a ``passing theory.''
+In other words, conventions supply a useful but often uncertain first guess about the linguistic meanings that will be shared with a new partner.
+
+Critically, these expectations may then be updated using evidence of a partner's language use.
+Specifically, agents use Bayesian theory of mind to make inferences about that partner's latent `dictionary,' leading to local \emph{ad hoc} conventions.
+As each party learns about the other and attempts to be understood under their updated model of partner-specific meaning, they may coordinate on a system of meaning that is tailored to be efficient and accurate for their present purposes.
+Thus the shared semantic prototype can be thought of as a backbone supporting rapid learning for new partners and situations, and may in turn be learned by pooling across many extended interactions with individuals.
+In summary, this model formalizes a functional view of linguistic conventions as solutions to a meta-learning problem, in which every agent is simultaneously seeking to infer and use the conventions that other agents are using, to support more successful communication. 
+%This model can be contrasted Rather than priming or aligning on surface forms, these agents are making structured inferences about the underlying representation of meaning used by their partner.
+
+%In \textbf{Chapter 2}, we propose a hierarchical Bayesian model of convention formation that formalizes our proposal (see Fig. \ref{fig:modelschematic}): global conventions are learned and generalized over many extended interactions with many different people across a lifetime, and 
+
+I evaluated this model through a series of simulations.
+First, I showed that two agents updating their beliefs about meaning in this way can coordinate even in the absence of strong initial priors (Fig. \ref{fig:chapter2}B).
+Their initial choices can be taken as evidence for a particular lexicon and become the basis for successful communication.
+Second, I showed that a preference for less costly utterances combined with learning gives rise to shorter descriptions over time (Fig. \ref{fig:chapter2}C).
+The speaker model initially produces longer utterances as a way of hedging against their own uncertainty about what meanings will be understood, but omits words over time as they become more confident. 
+Third, I tested the model's pattern of generalization over different partners (Fig. \ref{fig:chapter2}D).
+When a new partner is first introduced, it reverts nearly to its original state, displaying the signature phenomenon of partner-specificity. 
+As it interacts with different partners using language in a similar way, however, these \emph{ad hoc} conventions gradually become bona fide \emph{community-level} conventions that are readily extended to initial encounters with new partners. 
+These simulations of key qualitative phenomena suggest that the proposed HBM is a promising computational account of how conventions are represented and learned at different scales.
+
+% assumes others are using some set of conventions and is trying to learn them such that they can be understood.  %: global conventions are learned and generalized over many extended interactions with many different people across a lifetime, and  this shared semantic prototype is the backbone supporting rapid learning for new partners and situations. 
+%This model successfully predicts coordination on idiosyncratic but path-dependent and stable form-meaning mappings in simulations, and shows that 
+
+%First, we show in simulations of a repeated interaction with a single partner that this model successfully allows coordination on arbitrary but path-dependent and stable form-meaning mappings and that a preference for less costly utterances combined with learning gives rise to reduction (see Fig. \ref{fig:modelresults}). Second, we test the generalization properties of our model by manipulating partners and contexts: 
 %\begin{enumerate}
 %\item how `sticky' are the pacts formed in one context (i.e. a Dalmatian in the context of other dogs) when the same target is transplanted to a new, less restrictive context (i.e. a Dalmatian in the context of a cat and bear; see Brennen \& Clark, 1996), 
 %\item to what extent do agents revert to longer utterances after swapping out partners mid-way through a game (see  Wilkes-Gibbs \& Clark, 1992; Metzing \& Brennen, 2003; Yoon \& Brown-Schmidt, 2014), and 
@@ -196,52 +185,30 @@ First, we show in simulations of a repeated interaction with a single partner th
 \begin{figure}[t]
 \centering
 \includegraphics[scale=.7]{chapter3}
-\caption{\small Modeling approach and experiments used in Chapter 3. (A) Schematic of a regularized continual learning approach that allows artificial agents to rapidly adapt to their partner through interaction, which was evaluated using both (B) an interactive listening task where the agent interpreted referring expressions from a human speaker and (C) a speaker task where the agent produced descriptions for a human listener.}
-\label{fig:modelresults}
+\caption{\small Modeling approach and experiments from Chapter 3. (A) Schematic of a regularized continual learning approach that allows artificial agents to rapidly adapt to their partner through interaction, which was evaluated using both (B) an interactive listening task where the agent interpreted referring expressions from a human speaker and (C) a speaker task where the agent produced descriptions for a human listener.}
+\label{fig:chapter3}
 \end{figure}
 
-\todo[inline]{Clean this up}
+While the hierarchical Bayesian model explored in Chapter 2 is shown to have desirable theoretical properties, it also becomes intractable to use as the vocabulary and object set grows, making it untenable for modeling arbitrary natural language.
+In \textbf{Chapter 3}, I instead take the community-level expectations to be an initialization for the weights of an image-captioning neural network.
+Just as probabilistic models have assumed a fixed `dictionary,' approaches based on deep neural networks typically learn a monolithic meaning function during training, with fixed weights during use.
+I exploit theoretical connections between the hierarchical Bayesian framework and recent  approaches to multi-task- and meta-learning in deep neural networks \cite{nagabandi_deep_2018,grant_recasting_2018,jerfel_online_2018} to propose an online continual learning approach for a neural image-captioning model.
+Specifically, the community-level prior corresponds to a pre-trained, task-general initialization.
+Conditioning on new data from a particular partner corresponds to regularized gradient descent (Fig. \ref{fig:chapter3}A).
 
-\todo[inline]{Motivate why we might want to scale this up to real natural language; HBM is very theoretically neat but representationally limited...}
-
-While the $N \times M$ word-object matrix used as the semantics in Chapter 2 cannot straightforwardly generalize to unseen words and objects. 
-It also quickly becomes intractable as the vocabulary and object set grows, making it untenable for modeling arbitrary natural language.
-Here we will instead take $\Theta$ to be an initialization for the weights of an image-captioning neural network (see Fig. \ref{fig:arch}A).
-
-Approaches based on deep neural networks typically learn a monolithic meaning function during training, with fixed weights during use.
-For an in-home robot to communicate as flexibly and efficiently with patients as a human nurse, it must be equipped with a continual learning mechanism. Such a mechanism would present two specific advantages for interaction and communication applications.
-First, to the extent that current models have difficulty communicating in a new setting, an adaptive approach can quickly improve performance on the relevant subset of language.
-Second, for human-robot contexts, an adaptive model enables speakers to communicate more efficiently as they build up common ground, remaining understandable while expending significantly fewer words as humans naturally do \cite{ClarkWilkesGibbs86_ReferringCollaborative}.
-
-\todo[inline]{Say basically how we implemented this thing}
-
-There is a deep theoretical connection between the hierarchical Bayesian framework presented in the previous section and recent deep learning approaches to multi-task learning \cite{nagabandi_deep_2018,grant_recasting_2018,jerfel_online_2018}. 
-Given a task-general initialization, regularized gradient descent on a particular task is equivalent to conditioning on new data under a Bayesian prior.
-We exploit this connection to propose an online continual learning scheme for a neural language model that can adapt to human speakers and listeners in a challenging referential communication task.
-
-\todo[inline]{Say basically how we evaluated this thing}
-
-To evaluate our model, we implemented a repeated reference game using images from the validation set of COCO \cite{lin2014microsoft} as the targets of reference.
-We consider our model's performance in two different tasks, which present distinct challenges for adaptation.
-First, in a \emph{listening} task (Fig. \ref{fig:results}A), our model is paired with a human speaker and must learn to interpret their referring expressions in challenging contexts.
-Second, in a \emph{speaking} task (Fig. \ref{fig:results}B), our model is paired with a human listener and must learn to \emph{generate} appropriate referring expressions in simple contexts.
-The pre-trained model is poorly calibrated for each of these tasks in different ways. 
-In the listening task, we expect accuracy to be initially low because the images are nearly indistinguishable and the speaker may use idiosyncratic and out-of-sample language. 
-In the speaking task, we expect efficiency to be initially low because the model will produce more complex referring expressions than required to distinguish the images (COCO captions are relatively exhaustive).
-In both cases, we find that adaptation is able to quickly resolve these issues.
-
-Next, we evaluated how our adaptive listener performed in \emph{real-time interaction} with human speakers. 
-This message was then sent to a GPU where the model weights from the previous trial were loaded, used to generate a response, and updated in real-time for the next round.
-We found that a listener based on a pre-trained neural captioning model---the initialization for our adapting model---performs much less accurately than humans due to the challenging nature of the reference task. 
-Yet our model rapidly improves in accuracy as it coordinates on appropriate meanings with human speakers.
-Similarly, while speakers did not simplify their utterances to the same extent as they did with other humans, perhaps due to early feedback about errors, they nonetheless became significantly more efficient over time, $b = -19, t = -5$ (see Fig. \ref{fig:results}A).
-
-
-
+To evaluate this approach, I implemented a repeated reference game using images from the validation set of COCO \cite{lin2014microsoft} as the targets of reference.
+I considered the model's ability to form \emph{ad hoc} conventions with human partners in two different tasks, which presented distinct challenges for its initialized background expectations.
+First, in a \emph{listening} task (Fig. \ref{fig:chapter3}B), the model is paired with a human speaker and must learn to interpret their natural referring expressions in challenging contexts.
+Chatbox messages were sent to a GPU where the model weights from the previous trial were loaded, used to generate a response, and updated in real-time for the next round with a latency of approximately 6-10 seconds.
+The listener model initially performs much less accurately than a baseline human listener because of the idiosyncratic and out-of-sample language produced by the human speaker.
+Yet our model rapidly improves in accuracy as it fine-tunes a parthner-specific representation.
+Second, in a \emph{speaking} task (Fig. \ref{fig:chapter3}C), the model is paired with a human listener and must learn to \emph{generate} appropriate referring expressions in easier contexts.
+The model initially produced more complex referring expressions than required to distinguish the images, due to biases from its training corpus, but it became dramatically more efficient over the course of the interaction while maintaining high accuracy. 
+These results validate the proposed inferential model of convention formation on real natural-language input and output, and suggest further avenues of application potential for adaptive artificial intelligence based on basic cognitive principles.
 
 \section*{Chapter 4: Characterizing the dynamics of coordination} 
 
-\begin{figure}[t!]
+\begin{figure}[b!]
 \centering
 \includegraphics[scale=.93]{chapter4}
 \caption{\small Experimental design for repeated reference game used in Chapter 4.  Participants were paired over the web and communicated freely using a chat box. After a selection is made, the director is given feedback about which object was selected, and the matcher is given feedback about the true target object. Tangram stimuli were reproduced from Clark \& Wilkes-Gibbs (1986).}
@@ -378,8 +345,7 @@ The strong correspondence between these results and those found using linguistic
 
 \section*{Conclusions}
 
-\todo[inline]{TODO: Make this less bad, more coherent.}
-
+The goal of my dissertation was to 
 Language is not some monolithic body of knowledge that we acquire at an early age and deploy mechanically for the rest of our lives. Nor is its evolution a slow, inter-generational drift. It is a means for communication -- a shared interface between minds -- and must therefore adapt over the rapid timescales required by communication. In other words, we are constantly learning language. Not just one language, but a large variety of related languages, across every repeated interaction with every partner. 
 
 My research program seeks to understand the core cognitive mechanisms that give rise to human social intelligence.
